@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
+using ACT.TTSYukkuri;
 
 namespace ACTTimeline
 {
@@ -113,6 +115,8 @@ namespace ACTTimeline
         }
         public double ReminderTimeOffset { get; set; }
         public AlertSound Sound { get; set; }
+        public TtsSpeaker TtsSpeaker { get; set; }
+        public string TtsSentence { get; set; }
         public TimelineActivity Activity { get; set; }
         public bool Processed { get; set; }
 
