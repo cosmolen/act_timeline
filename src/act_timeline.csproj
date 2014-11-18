@@ -141,10 +141,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ACT.TTSYukkuri">
-      <HintPath>3rdparty\ACT.TTSYukkuri.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>3rdparty\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>

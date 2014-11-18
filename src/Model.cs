@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
-using ACT.TTSYukkuri;
 
 namespace ACTTimeline
 {

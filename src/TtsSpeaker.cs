@@ -1,10 +1,11 @@
 ﻿namespace ACTTimeline
 {
     using System;
+    using System.Reflection;
     using System.Speech.Synthesis;
     using System.Windows.Forms;
 
-    using ACT.TTSYukkuri;
+    using Advanced_Combat_Tracker;
 
     public class TtsSpeaker : IDisposable
     {
@@ -41,8 +42,34 @@
 
             if (this.Name.ToUpper() == "TTSYUKKURI")
             {
-                // スピークdelegateにゆっくりプラグインを割り当てる
-                synthesizerWrapper.SpeakAsyncByYukkuriDelegate = SpeechController.Default.Speak;
+                object ttsPlugin = null;
+
+                if (ActGlobals.oFormActMain.Visible)
+                {
+                    foreach (var item in ActGlobals.oFormActMain.ActPlugins)
+                    {
+                        if (item.pluginFile.Name.ToUpper() == "ACT.TTSYukkuri.dll".ToUpper() &&
+                            item.lblPluginStatus.Text.ToUpper() == "Plugin Started".ToUpper())
+                        {
+                            ttsPlugin = item.pluginObj;
+                            break;
+                        }
+                    }
+                }
+
+                if (ttsPlugin != null)
+                {
+                    // スピークdelegateにゆっくりプラグインを割り当てる
+                    synthesizerWrapper.SpeakAsyncByYukkuriDelegate = (textToSpeak) =>
+                    {
+                        var speak = ttsPlugin.GetType().InvokeMember(
+                            "Speak",
+                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod,
+                            null,
+                            ttsPlugin,
+                            new object[] { textToSpeak });
+                    };
+                }
             }
             else
             {

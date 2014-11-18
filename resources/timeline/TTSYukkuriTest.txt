@@ -1,0 +1,17 @@
+﻿# define speaker "TTSYukkuri" 0 100 でACT.TTSYukkuri経由で読上げます
+# スピードと音量の設定はTL側からは制御されません。TTSYukkuri側の設定で変更してください
+define speaker "TTSYukkuri" 0 100
+
+# waveを定義する
+define alertsound "ピンポン" "se_maoudamashii_chime10.wav"
+
+# alertall イベント名 before <秒数> speak <話者名> <内容> で喋るタイミングと内容を指定します
+alertall Phase1 before 0 speak "TTSYukkuri" "フェーズ1、かいし"
+alertall アトミックレイ before 10 speak "TTSYukkuri" "アトミックレイまで、あと10びょう"
+alertall アトミックレイ before 5 speak "TTSYukkuri" "アトミックレイまで、あと5びょう"
+alertall アトミックレイ before 1 sound "ピンポン"
+alertall アトミックレイ before 0 speak "TTSYukkuri" "アトミックレイ"
+
+# タイムライン定義
+0 Phase1
+15 アトミックレイ
