@@ -125,8 +125,16 @@ namespace ACTTimeline
             TimelineAnchor anchor = timeline.FindAnchorMatchingLogline(CurrentTime, logInfo.logLine);
             if (anchor != null)
             {
-                CurrentTime = anchor.TimeFromStart;
-                Paused = false;
+                if (anchor.Jump == 0)
+                {
+                    CurrentTime = 0;
+                    Paused = true;
+                }
+                else
+                {
+                    CurrentTime = anchor.Jump > 0 ? anchor.Jump : anchor.TimeFromStart;
+                    Paused = false;
+                }
             }
         }
 

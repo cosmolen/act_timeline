@@ -143,6 +143,7 @@ namespace ACTTimeline
                 WindowAfter = value / 2;
             }
         }
+        public double Jump { get; set; }
 
         public TimelineInterval Interval
         {
@@ -175,6 +176,7 @@ namespace ACTTimeline
 
         const double Instant = 0.1;
         public double Duration { get; set; }
+        public double Jump { get; set; }
 
         public bool Hidden { get; set; }
 

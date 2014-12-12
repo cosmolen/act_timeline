@@ -93,6 +93,12 @@ namespace ACTTimeline
             from spaces2 in Spaces
             from value in BeforeAfterWindow.Or(SingleWindow)
             select value;
+        static readonly Parser<double> Jump =
+            from spaces in Spaces
+            from gotoPrefix in Parse.String("jump")
+            from spaces2 in Parse.Optional(Spaces)
+            from value in DecimalDouble
+            select value;
 
         static readonly Parser<Tuple<string, SyncWindowSettings>> Sync =
             from spaces in Spaces
@@ -107,7 +113,10 @@ namespace ACTTimeline
             from name in MaybeQuotedString
             from duration in Parse.Optional(Duration)
             from sync in Parse.Optional(Sync)
-            select new Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>(new TimelineActivity {
+            from jump in Parse.Optional(Jump)
+            select new Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>(new TimelineActivity
+            {
+                Jump = jump.GetOrElse(-1),
                 TimeFromStart = double.Parse(timeFromStart, CultureInfo.InvariantCulture),
                 Name = name,
                 Duration = duration.GetOrElse(0)
@@ -121,6 +130,7 @@ namespace ACTTimeline
                 {
                     var windowSettings = t.Item2.Item2;
                     config.Anchors.Add(new TimelineAnchor {
+                        Jump = t.Item1.Jump,
                         TimeFromStart = t.Item1.TimeFromStart,
                         Regex = new System.Text.RegularExpressions.Regex(t.Item2.Item1),
                         WindowBefore = windowSettings.WindowBefore,
