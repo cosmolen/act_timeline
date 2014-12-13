@@ -1,4 +1,4 @@
-﻿namespace ACTTimeline
+﻿﻿namespace ACTTimeline
 {
     partial class ACTTabPageControl
     {
@@ -69,6 +69,7 @@
             this.labelLoadedTimeline = new System.Windows.Forms.Label();
             this.labelLoadedTimelineLabel = new System.Windows.Forms.Label();
             this.trackBar = new System.Windows.Forms.TrackBar();
+            this.checkBoxAutoloadAfterChangeZone = new System.Windows.Forms.CheckBox();
             this.checkBoxMoveOverlayByDrag = new System.Windows.Forms.CheckBox();
             this.groupBoxEnvironment.SuspendLayout();
             this.groupBoxTimelines.SuspendLayout();
@@ -112,6 +113,7 @@
             // 
             // groupBoxEnvironment
             // 
+            this.groupBoxEnvironment.Controls.Add(this.checkBoxAutoloadAfterChangeZone);
             this.groupBoxEnvironment.Controls.Add(this.labelResourceDirStatus);
             this.groupBoxEnvironment.Controls.Add(this.textBoxResourceDir);
             this.groupBoxEnvironment.Controls.Add(this.checkBoxPlaySoundByACT);
@@ -587,6 +589,17 @@
             this.trackBar.TickFrequency = 30;
             this.trackBar.Scroll += new System.EventHandler(this.trackbar_Scroll);
             // 
+            // checkBoxAutoloadAfterChangeZone
+            // 
+            this.checkBoxAutoloadAfterChangeZone.AutoSize = true;
+            this.checkBoxAutoloadAfterChangeZone.Location = new System.Drawing.Point(141, 105);
+            this.checkBoxAutoloadAfterChangeZone.Name = "checkBoxAutoloadAfterChangeZone";
+            this.checkBoxAutoloadAfterChangeZone.Size = new System.Drawing.Size(164, 16);
+            this.checkBoxAutoloadAfterChangeZone.TabIndex = 4;
+            this.checkBoxAutoloadAfterChangeZone.Text = "Autoload after change zone";
+            this.checkBoxAutoloadAfterChangeZone.UseVisualStyleBackColor = true;
+            this.checkBoxAutoloadAfterChangeZone.CheckedChanged += new System.EventHandler(this.checkBoxAutoloadAfterChangeZone_CheckedChanged);
+            // 
             // checkBoxMoveOverlayByDrag
             // 
             this.checkBoxMoveOverlayByDrag.AutoSize = true;
@@ -672,5 +685,6 @@
         private System.Windows.Forms.Label labelOpacity;
         private System.Windows.Forms.Label labelCurrOpacity;
         private System.Windows.Forms.CheckBox checkBoxMoveOverlayByDrag;
+        private System.Windows.Forms.CheckBox checkBoxAutoloadAfterChangeZone;
     }
 }

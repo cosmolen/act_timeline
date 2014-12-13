@@ -31,6 +31,7 @@ namespace ACTTimeline
             settings.AddControlSetting("MoveOverlayByDrag", checkBoxMoveOverlayByDrag);
             settings.AddControlSetting("ShowOverlayButtons", checkBoxShowOverlayButtons);
             settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
+            settings.AddControlSetting("Autoload", checkBoxAutoloadAfterChangeZone);
 
             plugin.TimelineView.Move += TimelineView_Move;
             plugin.TimelineView.TimelineFontChanged += TimelineView_TimelineFontChanged;
@@ -269,6 +270,11 @@ namespace ACTTimeline
         private void checkBoxPlaySoundByACT_CheckedChanged(object sender, EventArgs e)
         {
             plugin.TimelineView.PlaySoundByACT = checkBoxPlaySoundByACT.Checked;
+        }
+
+        private void checkBoxAutoloadAfterChangeZone_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.TimelineAutoLoader.Autoload = checkBoxAutoloadAfterChangeZone.Checked;
         }
     }
 }

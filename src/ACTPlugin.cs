@@ -19,6 +19,7 @@ namespace ACTTimeline
 
         private ACTTabPageControl tabPageControl;
         public TimelineView TimelineView { get; private set; }
+        public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
 
         #region delegates for PluginSettings
@@ -87,6 +88,9 @@ namespace ACTTimeline
                 TimelineView = new TimelineView(Controller);
                 TimelineView.Show();
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
+
+                TimelineAutoLoader = new TimelineAutoLoader(Controller);
+                TimelineAutoLoader.Start();
 
                 Settings = new PluginSettings(this);
                 Settings.AddStringSetting("TimelineTxtFilePath");
@@ -189,6 +193,9 @@ namespace ACTTimeline
         {
             if (checkBoxShowView != null)
                 ActGlobals.oFormActMain.Controls.Remove(checkBoxShowView);
+
+            if (TimelineAutoLoader != null)
+                TimelineAutoLoader.Stop();
 
             if (Settings != null)
                 Settings.Save();
