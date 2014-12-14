@@ -117,6 +117,14 @@ alertall "アクティビティの名前" before アクティビティキャス�
 alertall "防衛反応" before 3 sound "se_maoudamasii_chime10.wav"
 ```
 
+### TTS
+警告音名を"tts 3秒前"のように設定すると、ACT本体のTTSで読み上げます。
+
+```
+alertall "防衛反応" before 3 sound "tts 防衛反応"
+```
+
+
 ### 警告音の別名設定
 警告音には、別名を設定することができます。
 

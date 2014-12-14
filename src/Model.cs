@@ -41,11 +41,15 @@ namespace ACTTimeline
         {
             aliases = new List<string>();
             Filename = filename;
-
-            if (!System.IO.File.Exists(filename))
-                throw new ResourceNotFoundException(filename);
         }
     };
+    //TTS用クラス
+    public class AlertTTS : AlertSound
+    {
+        public AlertTTS(string txt) : base(txt)
+        {
+        }
+    }
 
     public class AlertSoundAssets
     {
@@ -70,6 +74,10 @@ namespace ACTTimeline
 
             if (!File.Exists(filenameOrAlias))
             {
+                //tts判定
+                if (filenameOrAlias.IndexOf("tts ") == 0)
+                    return new AlertTTS(filenameOrAlias.Substring(4));
+
                 // try prepending resource path
                 string filenameWithResourcePath = String.Format("{0}/{1}", Globals.SoundFilesRoot, filenameOrAlias);
                 if (!File.Exists(filenameWithResourcePath))

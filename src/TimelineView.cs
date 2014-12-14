@@ -269,7 +269,8 @@ namespace ACTTimeline
 
             foreach (AlertSound sound in controller.Timeline.AlertSoundAssets.All)
             {
-                soundplayer.WarmUpCache(sound.Filename);
+                if (System.IO.File.Exists(sound.Filename))
+                    soundplayer.WarmUpCache(sound.Filename);
             }
         }
 
@@ -301,6 +302,12 @@ namespace ACTTimeline
 
         void ProcessAlert(ActivityAlert alert)
         {
+            //TTSクラスならACT本体に読み上げさせる
+            if (alert.Sound is AlertTTS)
+            {
+                ActGlobals.oFormActMain.TTS(alert.Sound.Filename);
+            }
+            else 
             if (PlaySoundByACT)
             {
                 ActGlobals.oFormActMain.PlaySoundMethod(alert.Sound.Filename, 100);
