@@ -117,6 +117,27 @@ namespace ACTTimeline
                 OpacityChanged(this, EventArgs.Empty);
         }
 
+
+        private bool playSoundByACT;
+        public bool PlaySoundByACT
+        {
+            get { return playSoundByACT; }
+            set
+            {
+                playSoundByACT = value;
+                OnPlaySoundByACTChanged();
+            }
+        }
+
+        public event EventHandler PlaySoundByACTChanged;
+        public void OnPlaySoundByACTChanged()
+        {
+            WarmUpSoundPlayerCache();
+
+            if (PlaySoundByACTChanged != null)
+                PlaySoundByACTChanged(this, EventArgs.Empty);
+        }
+
         private TimelineController controller;
         DataGridViewTextBoxColumn textColumn;
         TimeLeftColumn timeLeftColumn;
@@ -239,10 +260,17 @@ namespace ACTTimeline
             if (controller.Timeline == null)
                 return;
 
+            WarmUpSoundPlayerCache();
+        }
+
+        private void WarmUpSoundPlayerCache()
+        {
+            if (playSoundByACT)
+                return;
+
             foreach (AlertSound sound in controller.Timeline.AlertSoundAssets.All)
             {
-                if (System.IO.File.Exists(sound.Filename))
-                    soundplayer.WarmUpCache(sound.Filename);
+                soundplayer.WarmUpCache(sound.Filename);
             }
         }
 
@@ -288,11 +316,12 @@ namespace ACTTimeline
             {
                 ActGlobals.oFormActMain.TTS(alert.Sound.Filename);
             }
-            else 
-            if (PlaySoundByACT)
+            else if (PlaySoundByACT)
             {
                 ActGlobals.oFormActMain.PlaySoundMethod(alert.Sound.Filename, 100);
-            } else {
+            } 
+            else 
+            {
                 soundplayer.PlaySound(alert.Sound.Filename);
             }
 
