@@ -1,3 +1,9 @@
+### 改造版
+* エリア移動後にZone名のファイルを自動読み込み
+* タイムラインの構文にsyncに連動して時間移動できるjumpの追加
+* sync /END/ jump 0 で初期位置にリセットできるように
+* "tts TTSで読み上げ"
+
 act_timeline
 ============
 レイドボスの攻撃パターン(タイムライン)を画面に表示するACTプラグインです。
@@ -13,7 +19,7 @@ act_timelineを導入すると、ボスの攻撃パターンをオーバーレ�
 
 ## インストール方法
 1. ACTを導入する。
-2. [act_timeline.zip](https://github.com/grindingcoil/act_timeline/blob/master/act_timeline.zip?raw=true) をダウンロードし、適当なフォルダに展開する。
+2. [act_timeline.zip](act_timeline.zip?raw=true) をダウンロードし、適当なフォルダに展開する。
 3. ACTを起動する。
 
 ![Plugin Listing](https://raw.githubusercontent.com/grindingcoil/act_timeline/master/doc/install1.png)
@@ -37,7 +43,7 @@ act_timelineを導入すると、ボスの攻撃パターンをオーバーレ�
 ## 使い方
 ![usage](https://raw.githubusercontent.com/grindingcoil/act_timeline/master/doc/usage.png)
 
-[タイムラインの自作方法はこちら](https://github.com/grindingcoil/act_timeline/blob/master/doc/TimelineSyntax.md)
+[タイムラインの自作方法はこちら](doc/TimelineSyntax.md)
 
 ## ライセンス
 ソースコード/タイムラインtxtファイルは三条項BSDライセンスです。

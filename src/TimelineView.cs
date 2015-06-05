@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 
 namespace ACTTimeline
 {
@@ -240,7 +241,8 @@ namespace ACTTimeline
 
             foreach (AlertSound sound in controller.Timeline.AlertSoundAssets.All)
             {
-                soundplayer.WarmUpCache(sound.Filename);
+                if (System.IO.File.Exists(sound.Filename))
+                    soundplayer.WarmUpCache(sound.Filename);
             }
         }
 
@@ -277,6 +279,24 @@ namespace ACTTimeline
                 dataGridView.DataSource = null;
                 dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime - TimeLeftCell.THRESHOLD, numberOfRowsToDisplay).ToList();
             }
+        }
+
+        void ProcessAlert(ActivityAlert alert)
+        {
+            //TTSクラスならACT本体に読み上げさせる
+            if (alert.Sound is AlertTTS)
+            {
+                ActGlobals.oFormActMain.TTS(alert.Sound.Filename);
+            }
+            else 
+            if (PlaySoundByACT)
+            {
+                ActGlobals.oFormActMain.PlaySoundMethod(alert.Sound.Filename, 100);
+            } else {
+                soundplayer.PlaySound(alert.Sound.Filename);
+            }
+
+            alert.Processed = true;
         }
     }
 
