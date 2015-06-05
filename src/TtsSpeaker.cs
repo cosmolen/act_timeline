@@ -9,6 +9,8 @@
 
     public class TtsSpeaker : IDisposable
     {
+        private dynamic ttsYukkuriPlugin;
+
         private SynthesizerWrapper synthesizer;
         public SynthesizerWrapper Synthesizer
         {
@@ -42,32 +44,28 @@
 
             if (this.Name.ToUpper() == "TTSYUKKURI")
             {
-                object ttsPlugin = null;
-
-                if (ActGlobals.oFormActMain.Visible)
+                if (ttsYukkuriPlugin == null)
                 {
-                    foreach (var item in ActGlobals.oFormActMain.ActPlugins)
+                    if (ActGlobals.oFormActMain.Visible)
                     {
-                        if (item.pluginFile.Name.ToUpper() == "ACT.TTSYukkuri.dll".ToUpper() &&
-                            item.lblPluginStatus.Text.ToUpper() == "Plugin Started".ToUpper())
+                        foreach (var item in ActGlobals.oFormActMain.ActPlugins)
                         {
-                            ttsPlugin = item.pluginObj;
-                            break;
+                            if (item.pluginFile.Name.ToUpper() == "ACT.TTSYukkuri.dll".ToUpper() &&
+                                item.lblPluginStatus.Text.ToUpper() == "Plugin Started".ToUpper())
+                            {
+                                ttsYukkuriPlugin = item.pluginObj;
+                                break;
+                            }
                         }
                     }
                 }
 
-                if (ttsPlugin != null)
+                if (ttsYukkuriPlugin != null)
                 {
                     // スピークdelegateにゆっくりプラグインを割り当てる
                     synthesizerWrapper.SpeakAsyncByYukkuriDelegate = (textToSpeak) =>
                     {
-                        var speak = ttsPlugin.GetType().InvokeMember(
-                            "Speak",
-                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod,
-                            null,
-                            ttsPlugin,
-                            new object[] { textToSpeak });
+                        ttsYukkuriPlugin.Speak(textToSpeak);
                     };
                 }
             }
