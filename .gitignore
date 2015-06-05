@@ -218,3 +218,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+src/3rdparty/NAudio.dll
+src/3rdparty/aqtk1-win/lib/AquesTalk.dll
+src/3rdparty/NAudio.xml
+src/3rdparty/NAudio.WindowsMediaFormat.dll
