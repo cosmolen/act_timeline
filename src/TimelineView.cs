@@ -265,6 +265,9 @@ namespace ACTTimeline
 
         private void WarmUpSoundPlayerCache()
         {
+            if (controller.Timeline == null)
+                return;
+
             if (playSoundByACT)
                 return;
 

@@ -21,6 +21,7 @@ namespace ACTTimeline
         public TimelineView TimelineView { get; private set; }
         public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
+        private VisibilityControl visibilityControl;
 
         #region delegates for PluginSettings
 
@@ -86,8 +87,10 @@ namespace ACTTimeline
                 Controller = new TimelineController();
 
                 TimelineView = new TimelineView(Controller);
-                TimelineView.Show();
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
+
+                visibilityControl = new VisibilityControl(TimelineView);
+                visibilityControl.Visible = true;
 
                 TimelineAutoLoader = new TimelineAutoLoader(Controller);
                 TimelineAutoLoader.Start();
@@ -117,7 +120,7 @@ namespace ACTTimeline
 
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
-            TimelineView.Hide();
+            visibilityControl.Visible = false;
             checkBoxShowView.Checked = false;
         }
 
@@ -144,10 +147,7 @@ namespace ACTTimeline
 
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxShowView.Checked)
-                TimelineView.Show();
-            else
-                TimelineView.Hide();
+            visibilityControl.Visible = checkBoxShowView.Checked;
         }
 
         void formMain_Resize(object sender, EventArgs e)
@@ -199,6 +199,9 @@ namespace ACTTimeline
 
             if (Settings != null)
                 Settings.Save();
+
+            if (visibilityControl != null)
+                visibilityControl.Close();
 
             if (TimelineView != null)
                 TimelineView.Close();
