@@ -5,6 +5,9 @@ using System.Drawing;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ACTTimeline
 {
@@ -22,6 +25,10 @@ namespace ACTTimeline
         public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
         private VisibilityControl visibilityControl;
+
+        private System.Threading.Timer xivWindowTimer;
+
+        public bool AutoHide { get; set; }
 
         #region delegates for PluginSettings
 
@@ -110,6 +117,37 @@ namespace ACTTimeline
                 SetupUpdateChecker();
 
                 StatusText.Text = "Plugin Started (^^)!";
+
+
+                xivWindowTimer = new System.Threading.Timer(e => {
+                    try
+                    {
+                        if (this.AutoHide)
+                        {
+                            uint pid;
+                            var hWndFg = NativeMethods.GetForegroundWindow();
+                            if (hWndFg == IntPtr.Zero)
+                            {
+                                return;
+                            }
+                            NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
+                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+
+                            if (Path.GetFileName(exePath) == "ffxiv.exe" ||
+                                Path.GetFileName(exePath) == "ffxiv_dx11.exe")
+                            {
+                                this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = true));
+                            }
+                            else
+                            {
+                                this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = false));
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
+                });
             }
             catch(Exception e)
             {
@@ -213,6 +251,15 @@ namespace ACTTimeline
 
             if (StatusText != null)
                 StatusText.Text = "Plugin Exited m(_ _)m";
+        }
+
+        static class NativeMethods
+        {
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetForegroundWindow();
         }
     }
 }
