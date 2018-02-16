@@ -402,7 +402,7 @@ namespace ACTTimeline
 
             {
                 double timeTillEnd = activity.EndTime - controller.CurrentTime;
-                string text = timeTillEnd > 0 ? timeTillEnd.ToString("0") : "ACTION!";
+                string text = ((int)timeTillEnd > 9) ? (Math.Floor(timeTillEnd).ToString("0")) : ((timeTillEnd > 0) ? (timeTillEnd.ToString("0.0")) : ("ACTION!"));
                 PaintText(graphics, cellBounds, text);
             }
         }
