@@ -238,13 +238,13 @@ namespace ACTTimeline
 
         private void TimelineView_ColumnWidthChanged(object sender, EventArgs e)
         {
-            udTextWidth.Value = plugin.TimelineView.TextWidth;
+            udBarHeight.Value = plugin.TimelineView.BarHeight;
             udBarWidth.Value = plugin.TimelineView.BarWidth;
         }
 
         private void udTextWidth_ValueChanged(object sender, EventArgs e)
         {
-            plugin.TimelineView.TextWidth = (int)udTextWidth.Value;
+            plugin.TimelineView.BarHeight = (int)udBarHeight.Value;
         }
 
         private void udBarWidth_ValueChanged(object sender, EventArgs e)

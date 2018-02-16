@@ -44,10 +44,10 @@ namespace ACTTimeline
             set { TimelineView.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
         }
 
-        public int TextWidth
+        public int BarHeight
         {
-            get { return TimelineView.TextWidth; }
-            set { TimelineView.TextWidth = value; }
+            get { return TimelineView.BarHeight; }
+            set { TimelineView.BarHeight = value; }
         }
 
         public int BarWidth
@@ -105,7 +105,7 @@ namespace ACTTimeline
                 Settings = new PluginSettings(this);
                 Settings.AddStringSetting("TimelineTxtFilePath");
                 Settings.AddStringSetting("FontString");
-                Settings.AddIntSetting("TextWidth");
+                Settings.AddIntSetting("BarHeight");
                 Settings.AddIntSetting("BarWidth");
                 Settings.AddIntSetting("OpacityPercentage");
 

@@ -25,13 +25,13 @@ namespace ACTTimeline
             }
         }
 
-        private int textWidth;
-        public int TextWidth
+        private int barHeight;
+        public int BarHeight
         {
-            get { return textWidth; }
+            get { return barHeight; }
             set
             {
-                textWidth = value;
+                barHeight = value;
                 OnColumnWidthChanged();
             }
         }
@@ -148,7 +148,7 @@ namespace ACTTimeline
             controller.TimelineUpdate += controller_TimelineUpdate;
             controller.CurrentTimeUpdate += controller_CurrentTimeUpdate;
 
-            textWidth = 100;
+            barHeight = 25;
             barWidth = 200;
 
             SetupUI();
@@ -231,6 +231,7 @@ namespace ACTTimeline
 
         void UpdateLayout()
         {
+            dataGridView.RowTemplate.Height = barHeight;
             int gridHeight = dataGridView.RowTemplate.Height * numberOfRowsToDisplay;
             ClientSize = new Size(barWidth, gridHeight);
             dataGridView.Size = ClientSize;
@@ -239,6 +240,8 @@ namespace ACTTimeline
 
             // update buttons location
             TimelineView_Move(this, EventArgs.Empty);
+
+            controller.OnCurrentTimeUpdate();
         }
 
         void TimelineView_Move(object sender, EventArgs e)

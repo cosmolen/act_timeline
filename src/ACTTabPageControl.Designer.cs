@@ -41,6 +41,7 @@
             this.buttonLoad = new System.Windows.Forms.Button();
             this.listTimelines = new System.Windows.Forms.ListBox();
             this.groupBoxOverlay = new System.Windows.Forms.GroupBox();
+            this.checkBoxAutohide = new System.Windows.Forms.CheckBox();
             this.trackBarOpacity = new System.Windows.Forms.TrackBar();
             this.checkBoxShowOverlayButtons = new System.Windows.Forms.CheckBox();
             this.checkBoxMoveOverlayByDrag = new System.Windows.Forms.CheckBox();
@@ -51,7 +52,7 @@
             this.labelOverlayX = new System.Windows.Forms.Label();
             this.udOverlayY = new System.Windows.Forms.NumericUpDown();
             this.udBarWidth = new System.Windows.Forms.NumericUpDown();
-            this.udTextWidth = new System.Windows.Forms.NumericUpDown();
+            this.udBarHeight = new System.Windows.Forms.NumericUpDown();
             this.udNumRows = new System.Windows.Forms.NumericUpDown();
             this.udOverlayX = new System.Windows.Forms.NumericUpDown();
             this.labelCurrentFont = new System.Windows.Forms.Label();
@@ -71,14 +72,13 @@
             this.labelLoadedTimeline = new System.Windows.Forms.Label();
             this.labelLoadedTimelineLabel = new System.Windows.Forms.Label();
             this.trackBar = new System.Windows.Forms.TrackBar();
-            this.checkBoxAutohide = new System.Windows.Forms.CheckBox();
             this.groupBoxEnvironment.SuspendLayout();
             this.groupBoxTimelines.SuspendLayout();
             this.groupBoxOverlay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTextWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udNumRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayX)).BeginInit();
             this.groupBoxTracker.SuspendLayout();
@@ -230,7 +230,7 @@
             this.groupBoxOverlay.Controls.Add(this.labelOverlayX);
             this.groupBoxOverlay.Controls.Add(this.udOverlayY);
             this.groupBoxOverlay.Controls.Add(this.udBarWidth);
-            this.groupBoxOverlay.Controls.Add(this.udTextWidth);
+            this.groupBoxOverlay.Controls.Add(this.udBarHeight);
             this.groupBoxOverlay.Controls.Add(this.udNumRows);
             this.groupBoxOverlay.Controls.Add(this.udOverlayX);
             this.groupBoxOverlay.Controls.Add(this.labelCurrentFont);
@@ -246,6 +246,19 @@
             this.groupBoxOverlay.TabIndex = 5;
             this.groupBoxOverlay.TabStop = false;
             this.groupBoxOverlay.Text = "Overlay";
+            // 
+            // checkBoxAutohide
+            // 
+            this.checkBoxAutohide.AutoSize = true;
+            this.checkBoxAutohide.Checked = true;
+            this.checkBoxAutohide.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAutohide.Location = new System.Drawing.Point(13, 215);
+            this.checkBoxAutohide.Name = "checkBoxAutohide";
+            this.checkBoxAutohide.Size = new System.Drawing.Size(77, 16);
+            this.checkBoxAutohide.TabIndex = 5;
+            this.checkBoxAutohide.Text = "Auto hide";
+            this.checkBoxAutohide.UseVisualStyleBackColor = true;
+            this.checkBoxAutohide.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // trackBarOpacity
             // 
@@ -384,33 +397,23 @@
             0});
             this.udBarWidth.ValueChanged += new System.EventHandler(this.udBarWidth_ValueChanged);
             // 
-            // udTextWidth
+            // udBarHeight
             // 
-            this.udTextWidth.Increment = new decimal(new int[] {
-            10,
+            this.udBarHeight.Location = new System.Drawing.Point(185, 80);
+            this.udBarHeight.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-            this.udTextWidth.Location = new System.Drawing.Point(185, 80);
-            this.udTextWidth.Maximum = new decimal(new int[] {
-            1000,
+            this.udBarHeight.Name = "udBarHeight";
+            this.udBarHeight.Size = new System.Drawing.Size(93, 21);
+            this.udBarHeight.TabIndex = 1;
+            this.udBarHeight.Value = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-            this.udTextWidth.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.udTextWidth.Name = "udTextWidth";
-            this.udTextWidth.Size = new System.Drawing.Size(93, 21);
-            this.udTextWidth.TabIndex = 1;
-            this.udTextWidth.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.udTextWidth.ValueChanged += new System.EventHandler(this.udTextWidth_ValueChanged);
+            this.udBarHeight.ValueChanged += new System.EventHandler(this.udTextWidth_ValueChanged);
             // 
             // udNumRows
             // 
@@ -616,19 +619,6 @@
             this.trackBar.TickFrequency = 30;
             this.trackBar.Scroll += new System.EventHandler(this.trackbar_Scroll);
             // 
-            // checkBox1
-            // 
-            this.checkBoxAutohide.AutoSize = true;
-            this.checkBoxAutohide.Checked = true;
-            this.checkBoxAutohide.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutohide.Location = new System.Drawing.Point(13, 215);
-            this.checkBoxAutohide.Name = "checkBox1";
-            this.checkBoxAutohide.Size = new System.Drawing.Size(77, 16);
-            this.checkBoxAutohide.TabIndex = 5;
-            this.checkBoxAutohide.Text = "Auto hide";
-            this.checkBoxAutohide.UseVisualStyleBackColor = true;
-            this.checkBoxAutohide.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // ACTTabPageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -647,7 +637,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTextWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udNumRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayX)).EndInit();
             this.groupBoxTracker.ResumeLayout(false);
@@ -696,7 +686,7 @@
         private System.Windows.Forms.Label labelBar;
         private System.Windows.Forms.Label labelTextWidth;
         private System.Windows.Forms.NumericUpDown udBarWidth;
-        private System.Windows.Forms.NumericUpDown udTextWidth;
+        private System.Windows.Forms.NumericUpDown udBarHeight;
         private System.Windows.Forms.TrackBar trackBarOpacity;
         private System.Windows.Forms.Label labelOpacity;
         private System.Windows.Forms.Label labelCurrOpacity;
