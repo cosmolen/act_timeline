@@ -352,8 +352,9 @@ namespace ACTTimeline
 
     class TimeLeftCell : DataGridViewTextBoxCell
     {
-        public const float BAR_START = 10.0F;
-        public const float THRESHOLD = 1.0F;
+        public const float BLUE_BAR_START = 30.0F;
+        public const float RED_BAR_START = 10.0F;
+        public const float THRESHOLD = 0.0F;
         
         public const int MARGIN = 0; // px
 
@@ -366,12 +367,8 @@ namespace ACTTimeline
 
         public static Color BarColorAtTimeLeft(float timeLeft)
         {
-            if (timeLeft > 5)
-                return Color.GreenYellow;
-            else if (timeLeft > 3)
-                return Color.Orange;
-            else if (timeLeft > 0)
-                return Color.OrangeRed;
+            if (timeLeft > 10)
+                return Color.FromArgb(64, 80, 176);
             else
                 return Color.Red;
         }
@@ -452,23 +449,38 @@ namespace ACTTimeline
             Color colorA;
             Color colorB;
             Rectangle gradientRect;
-            if (timeTillStart > BAR_START)
+            if (timeTillStart > BLUE_BAR_START)
             {
-                // draw nothing.
-                return;
+                float bar = 1.0F;
+                
+                barFill.Width *= bar;
+
+                colorA = BarColorAtTimeLeft(timeTillStart);
+                colorB = ControlPaint.Dark(colorA, 0.2F);
+                gradientRect = Rectangle.Ceiling(barFill);
+            }
+            else if (timeTillStart > 10)
+            {
+                float bar = timeTillStart / BLUE_BAR_START;
+                if (bar > 1.0F)
+                    bar = 1.0F;
+                
+                barFill.Width *= bar;
+
+                colorA = BarColorAtTimeLeft(timeTillStart);
+                colorB = ControlPaint.Dark(colorA, 0.2F);
+                gradientRect = Rectangle.Ceiling(barFill);
             }
             else if (timeTillStart > 0)
             {
-                float bar = (BAR_START - timeTillStart) / BAR_START;
+                float bar = timeTillStart / RED_BAR_START;
                 if (bar > 1.0F)
                     bar = 1.0F;
 
-                barFill.X += barFill.Width;
                 barFill.Width *= bar;
-                barFill.X -= barFill.Width;
 
                 colorA = BarColorAtTimeLeft(timeTillStart);
-                colorB = ControlPaint.Light(colorA, 1.0F);
+                colorB = ControlPaint.Dark(colorA, 0.2F);
                 gradientRect = Rectangle.Ceiling(barFill);
             }
             else
@@ -476,11 +488,13 @@ namespace ACTTimeline
                 float bar = -timeTillStart / duration;
                 if (bar > 1.0F)
                     bar = 1.0F;
+                
+                graphics.FillRectangle(new SolidBrush(Color.FromArgb(247, 154, 0)), barFill);
 
                 barFill.Width *= bar;
 
-                colorA = Color.Aqua;
-                colorB = ControlPaint.Light(colorA, 1.0F);
+                colorA = Color.White;
+                colorB = Color.White;
                 gradientRect = Rectangle.Ceiling(barFill);
             }
 

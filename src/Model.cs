@@ -260,7 +260,7 @@ namespace ACTTimeline
         {
             return (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden
-                    select e).Take(limit);
+                    select e).Take(limit).Reverse();
         }
 
         List<TimelineAnchor> anchors;
