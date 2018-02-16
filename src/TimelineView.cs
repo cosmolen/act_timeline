@@ -83,7 +83,8 @@ namespace ACTTimeline
         public event EventHandler TimelineFontChanged;
         public void OnTimelineFontChanged()
         {
-            textColumn.DefaultCellStyle.Font = TimelineFont;
+            timeLeftColumn.DefaultCellStyle.Font = TimelineFont;
+            timeLeftColumn.TimelineFont = TimelineFont;
             UpdateLayout();
 
             if (TimelineFontChanged != null)
@@ -139,7 +140,6 @@ namespace ACTTimeline
         }
 
         private TimelineController controller;
-        DataGridViewTextBoxColumn textColumn;
         TimeLeftColumn timeLeftColumn;
         
         public TimelineView(TimelineController controller_)
@@ -149,7 +149,7 @@ namespace ACTTimeline
             controller.CurrentTimeUpdate += controller_CurrentTimeUpdate;
 
             textWidth = 100;
-            barWidth = 100;
+            barWidth = 200;
 
             SetupUI();
 
@@ -163,7 +163,6 @@ namespace ACTTimeline
                 SetValue(dataGridView, true, null);
             dataGridView.SelectionChanged += (object sender, EventArgs args) => dataGridView.ClearSelection();
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.Columns.Add(textColumn = new DataGridViewTextBoxColumn { DataPropertyName = "Name", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
             dataGridView.Columns.Add(timeLeftColumn = new TimeLeftColumn { Controller = controller_ });
 
             MyOpacity = 0.8;
@@ -208,6 +207,10 @@ namespace ACTTimeline
             dataGridView.RowHeadersVisible = false;
             dataGridView.ScrollBars = ScrollBars.None;
             dataGridView.Size = new Size(200, 80);
+            dataGridView.BorderStyle = BorderStyle.None;
+            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dataGridView.BackgroundColor = Color.FromArgb(80, 80, 80);
+            dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(80, 80, 80);
 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -221,16 +224,17 @@ namespace ACTTimeline
             ((System.ComponentModel.ISupportInitialize)(dataGridView)).EndInit();
             this.ResumeLayout(false);
 
+            TransparencyKey = Color.FromArgb(80, 80, 80);
+
             buttons = new OverlayButtonsForm(controller);
         }
 
         void UpdateLayout()
         {
             int gridHeight = dataGridView.RowTemplate.Height * numberOfRowsToDisplay;
-            ClientSize = new Size(textWidth + barWidth, gridHeight);
+            ClientSize = new Size(barWidth, gridHeight);
             dataGridView.Size = ClientSize;
-
-            textColumn.Width = textWidth;
+            
             timeLeftColumn.Width = barWidth;
 
             // update buttons location
@@ -239,7 +243,7 @@ namespace ACTTimeline
 
         void TimelineView_Move(object sender, EventArgs e)
         {
-            buttons.Location = new Point(this.Location.X + textWidth + barWidth - buttons.Width, this.Location.Y - buttons.Height);
+            buttons.Location = new Point(this.Location.X + barWidth - buttons.Width, this.Location.Y - buttons.Height);
         }
 
         void TimelineView_FormClosing(object sender, FormClosingEventArgs e)
@@ -335,6 +339,7 @@ namespace ACTTimeline
     class TimeLeftColumn : DataGridViewColumn
     {
         public TimelineController Controller;
+        public Font TimelineFont;
 
         public TimeLeftColumn()
         {
@@ -350,12 +355,14 @@ namespace ACTTimeline
         public const float BAR_START = 10.0F;
         public const float THRESHOLD = 1.0F;
         
-        public const int MARGIN = 4; // px
+        public const int MARGIN = 0; // px
 
-        static private readonly Font ValueFont = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold);
+        private Font valueFont = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold);
         static private readonly StringFormat ValueStringFormat = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center };
-        static private readonly Pen ValuePen = new Pen(Brushes.White, 1.0F) { LineJoin = LineJoin.Round };
-        static private readonly Brush ValueFill = Brushes.Black;
+        static private readonly Pen ValuePen = new Pen(Brushes.Black, 2.0F) { LineJoin = LineJoin.Round };
+        static private readonly Brush ValueFill = Brushes.White;
+
+        static private readonly StringFormat NameStringFormat = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
 
         public static Color BarColorAtTimeLeft(float timeLeft)
         {
@@ -372,9 +379,10 @@ namespace ACTTimeline
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
             base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, "", "", errorText, cellStyle, advancedBorderStyle, paintParts);
-
+            
             TimelineActivity activity = (TimelineActivity)value;
             TimelineController controller = ((TimeLeftColumn)OwningColumn).Controller;
+            valueFont = ((TimeLeftColumn)OwningColumn).TimelineFont;
 
             {
                 double timeTillStart = activity.TimeFromStart - controller.CurrentTime;
@@ -388,25 +396,30 @@ namespace ACTTimeline
             }
 
             {
+                string text = activity.Name;
+                PaintName(graphics, cellBounds, text);
+            }
+
+            {
                 double timeTillEnd = activity.EndTime - controller.CurrentTime;
                 string text = timeTillEnd > 0 ? timeTillEnd.ToString("0") : "ACTION!";
                 PaintText(graphics, cellBounds, text);
             }
         }
 
-        private static RectangleF DrawAreaFromCellBounds(Rectangle cellBounds)
+        private RectangleF DrawAreaFromCellBounds(Rectangle cellBounds)
         {
             return new RectangleF(cellBounds.X + MARGIN, cellBounds.Y + MARGIN, cellBounds.Width - MARGIN * 2, cellBounds.Height - MARGIN * 2);
         }
 
-        private static void PaintText(Graphics graphics, Rectangle cellBounds, string valueString)
+        private void PaintText(Graphics graphics, Rectangle cellBounds, string valueString)
         {
             RectangleF drawArea = DrawAreaFromCellBounds(cellBounds);
 
             RectangleF textRect = drawArea;
 
             GraphicsPath pathText = new GraphicsPath();
-            pathText.AddString(valueString, ValueFont.FontFamily, (int)ValueFont.Style, ValueFont.Size, textRect, ValueStringFormat);
+            pathText.AddString(valueString, valueFont.FontFamily, (int)valueFont.Style, valueFont.Size, textRect, ValueStringFormat);
 
             GraphicsState state = graphics.Save();
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -415,7 +428,23 @@ namespace ACTTimeline
             graphics.Restore(state);
         }
 
-        private static void PaintBar(Graphics graphics, Rectangle cellBounds, float timeTillStart, float duration)
+        private void PaintName(Graphics graphics, Rectangle cellBounds, string valueString)
+        {
+            RectangleF drawArea = DrawAreaFromCellBounds(cellBounds);
+
+            RectangleF textRect = drawArea;
+
+            GraphicsPath pathText = new GraphicsPath();
+            pathText.AddString(valueString, valueFont.FontFamily, (int)valueFont.Style, valueFont.Size, textRect, NameStringFormat);
+
+            GraphicsState state = graphics.Save();
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.DrawPath(ValuePen, pathText);
+            graphics.FillPath(ValueFill, pathText);
+            graphics.Restore(state);
+        }
+
+        private void PaintBar(Graphics graphics, Rectangle cellBounds, float timeTillStart, float duration)
         {
             RectangleF drawArea = DrawAreaFromCellBounds(cellBounds);
             RectangleF barFill = drawArea;

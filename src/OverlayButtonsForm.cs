@@ -22,12 +22,14 @@ namespace ACTTimeline
             this.ShowInTaskbar = false;
 
             // Force set small window size below OS minimum.
-            Win32APIUtils.SetWindowSize(Handle, 55, 20);
+            Win32APIUtils.SetWindowSize(Handle, 64, 20);
 
             Win32APIUtils.SetWS_EX_NOACTIVATE(Handle, true);
 
             controller.PausedUpdate += controller_PausedUpdate;
             controller_PausedUpdate(null, EventArgs.Empty);
+
+            TransparencyKey = BackColor;            
         }
 
         void controller_PausedUpdate(object sender, EventArgs e)
