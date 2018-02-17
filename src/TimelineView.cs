@@ -123,6 +123,9 @@ namespace ACTTimeline
             set
             {
                 popupMode = value;
+                timeLeftColumn.popupMode = value;
+                UpdateLayout();
+
                 if (controller != null)
                     controller.OnCurrentTimeUpdate();
             }
@@ -367,16 +370,24 @@ namespace ACTTimeline
 
                 // sync dataGridView
                 dataGridView.DataSource = null;
-                if (over10)
+                if (popupMode)
+                {
+                    dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime - 5, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                }
+                else if (over10)
+                {
                     if (under10)
-                        if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime, numberOfRowsToDisplay).ToList();
-                        else dataGridView.DataSource = timeline.VisibleItemsAtWithoutCasting(controller.CurrentTime, numberOfRowsToDisplay).ToList();
-                    else dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                        else              dataGridView.DataSource = timeline.VisibleItemsAtWithoutCasting(controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                    else                  dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                }
                 else
+                {
                     if (under10)
-                        if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                        else dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                    else if(showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                        else              dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                    else if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                }
             }
         }
 
@@ -404,6 +415,7 @@ namespace ACTTimeline
     {
         public TimelineController Controller;
         public Font TimelineFont;
+        public bool popupMode;
 
         public TimeLeftColumn()
         {
@@ -428,6 +440,7 @@ namespace ACTTimeline
         static private readonly Brush ValueFill = Brushes.White;
 
         static private readonly StringFormat NameStringFormat = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
+        static private readonly StringFormat PopupStringFormat = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
 
         public static Color BarColorAtTimeLeft(float timeLeft)
         {
@@ -444,6 +457,16 @@ namespace ACTTimeline
             TimelineActivity activity = (TimelineActivity)value;
             TimelineController controller = ((TimeLeftColumn)OwningColumn).Controller;
             valueFont = ((TimeLeftColumn)OwningColumn).TimelineFont;
+
+            if(((TimeLeftColumn)OwningColumn).popupMode)
+            {
+                double timeTillStart = activity.TimeFromStart - controller.CurrentTime;
+                float timeTillStartF = (float)timeTillStart;
+
+                string text = activity.Name;
+                PopupName(graphics, cellBounds, text, timeTillStartF);
+                return;
+            }
 
             {
                 double timeTillStart = activity.TimeFromStart - controller.CurrentTime;
@@ -497,6 +520,29 @@ namespace ACTTimeline
 
             GraphicsPath pathText = new GraphicsPath();
             pathText.AddString(valueString, valueFont.FontFamily, (int)valueFont.Style, valueFont.Size, textRect, NameStringFormat);
+
+            GraphicsState state = graphics.Save();
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.DrawPath(ValuePen, pathText);
+            graphics.FillPath(ValueFill, pathText);
+            graphics.Restore(state);
+        }
+
+        private void PopupName(Graphics graphics, Rectangle cellBounds, string valueString, float timeTillStart)
+        {
+            float size = 1.0F;
+
+            RectangleF drawArea = DrawAreaFromCellBounds(cellBounds);
+
+            RectangleF textRect = drawArea;
+
+            if(timeTillStart > -0.15F)
+                size = 1.0F - 0.2F * timeTillStart / 0.15F;
+            else if(timeTillStart > -0.3F)
+                size = 1.4F + 0.2F * timeTillStart / 0.3F;
+
+            GraphicsPath pathText = new GraphicsPath();
+            pathText.AddString(valueString, valueFont.FontFamily, (int)valueFont.Style, valueFont.Size * size, textRect, PopupStringFormat);
 
             GraphicsState state = graphics.Save();
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
