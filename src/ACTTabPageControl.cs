@@ -33,6 +33,10 @@ namespace ACTTimeline
             settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
             settings.AddControlSetting("Autoload", checkBoxAutoloadAfterChangeZone);
             settings.AddControlSetting("Autohide", checkBoxAutohide);
+            settings.AddControlSetting("Over10", checkBoxOver10);
+            settings.AddControlSetting("Under10", checkBoxUnder10);
+            settings.AddControlSetting("ShowCasting", checkBoxShowCasting);
+            settings.AddControlSetting("PopupMode", checkBoxPopup);
 
             plugin.TimelineView.Move += TimelineView_Move;
             plugin.TimelineView.TimelineFontChanged += TimelineView_TimelineFontChanged;
@@ -281,6 +285,26 @@ namespace ACTTimeline
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             plugin.AutoHide = this.checkBoxAutohide.Checked;
+        }
+
+        private void checkBoxOver10_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.TimelineView.Over10 = this.checkBoxOver10.Checked;
+        }
+
+        private void checkBoxUnder10_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.TimelineView.Under10 = this.checkBoxUnder10.Checked;
+        }
+
+        private void checkBoxShowCasting_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.TimelineView.ShowCasting = this.checkBoxShowCasting.Checked;
+        }
+
+        private void checkBoxPopup_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.TimelineView.PopupMode = this.checkBoxPopup.Checked;
         }
     }
 }

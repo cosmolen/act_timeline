@@ -244,7 +244,7 @@
             this.checkBoxAutohide.AutoSize = true;
             this.checkBoxAutohide.Checked = true;
             this.checkBoxAutohide.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutohide.Location = new System.Drawing.Point(382, 72);
+            this.checkBoxAutohide.Location = new System.Drawing.Point(382, 6);
             this.checkBoxAutohide.Name = "checkBoxAutohide";
             this.checkBoxAutohide.Size = new System.Drawing.Size(77, 16);
             this.checkBoxAutohide.TabIndex = 5;
@@ -269,7 +269,7 @@
             this.checkBoxShowOverlayButtons.AutoSize = true;
             this.checkBoxShowOverlayButtons.Checked = true;
             this.checkBoxShowOverlayButtons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(382, 50);
+            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(382, 72);
             this.checkBoxShowOverlayButtons.Name = "checkBoxShowOverlayButtons";
             this.checkBoxShowOverlayButtons.Size = new System.Drawing.Size(136, 16);
             this.checkBoxShowOverlayButtons.TabIndex = 3;
@@ -282,7 +282,7 @@
             this.checkBoxMoveOverlayByDrag.AutoSize = true;
             this.checkBoxMoveOverlayByDrag.Checked = true;
             this.checkBoxMoveOverlayByDrag.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMoveOverlayByDrag.Location = new System.Drawing.Point(382, 28);
+            this.checkBoxMoveOverlayByDrag.Location = new System.Drawing.Point(382, 50);
             this.checkBoxMoveOverlayByDrag.Name = "checkBoxMoveOverlayByDrag";
             this.checkBoxMoveOverlayByDrag.Size = new System.Drawing.Size(128, 16);
             this.checkBoxMoveOverlayByDrag.TabIndex = 3;
@@ -370,7 +370,7 @@
             0});
             this.udBarWidth.Location = new System.Drawing.Point(297, 65);
             this.udBarWidth.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -392,6 +392,11 @@
             // udBarHeight
             // 
             this.udBarHeight.Location = new System.Drawing.Point(171, 65);
+            this.udBarHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.udBarHeight.Minimum = new decimal(new int[] {
             1,
             0,
@@ -614,32 +619,41 @@
             // checkBoxOver10
             // 
             this.checkBoxOver10.AutoSize = true;
+            this.checkBoxOver10.Checked = true;
+            this.checkBoxOver10.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxOver10.Location = new System.Drawing.Point(382, 94);
             this.checkBoxOver10.Name = "checkBoxOver10";
             this.checkBoxOver10.Size = new System.Drawing.Size(107, 16);
             this.checkBoxOver10.TabIndex = 6;
             this.checkBoxOver10.Text = "Show over 10s";
             this.checkBoxOver10.UseVisualStyleBackColor = true;
+            this.checkBoxOver10.CheckedChanged += new System.EventHandler(this.checkBoxOver10_CheckedChanged);
             // 
             // checkBoxUnder10
             // 
             this.checkBoxUnder10.AutoSize = true;
+            this.checkBoxUnder10.Checked = true;
+            this.checkBoxUnder10.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxUnder10.Location = new System.Drawing.Point(382, 116);
             this.checkBoxUnder10.Name = "checkBoxUnder10";
             this.checkBoxUnder10.Size = new System.Drawing.Size(115, 16);
             this.checkBoxUnder10.TabIndex = 7;
             this.checkBoxUnder10.Text = "Show under 10s";
             this.checkBoxUnder10.UseVisualStyleBackColor = true;
+            this.checkBoxUnder10.CheckedChanged += new System.EventHandler(this.checkBoxUnder10_CheckedChanged);
             // 
             // checkBoxShowCasting
             // 
             this.checkBoxShowCasting.AutoSize = true;
+            this.checkBoxShowCasting.Checked = true;
+            this.checkBoxShowCasting.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxShowCasting.Location = new System.Drawing.Point(382, 138);
             this.checkBoxShowCasting.Name = "checkBoxShowCasting";
             this.checkBoxShowCasting.Size = new System.Drawing.Size(103, 16);
             this.checkBoxShowCasting.TabIndex = 8;
             this.checkBoxShowCasting.Text = "Show Casting";
             this.checkBoxShowCasting.UseVisualStyleBackColor = true;
+            this.checkBoxShowCasting.CheckedChanged += new System.EventHandler(this.checkBoxShowCasting_CheckedChanged);
             // 
             // checkBoxPopup
             // 
@@ -650,6 +664,7 @@
             this.checkBoxPopup.TabIndex = 9;
             this.checkBoxPopup.Text = "Popup mode";
             this.checkBoxPopup.UseVisualStyleBackColor = true;
+            this.checkBoxPopup.CheckedChanged += new System.EventHandler(this.checkBoxPopup_CheckedChanged);
             // 
             // tabControl1
             // 

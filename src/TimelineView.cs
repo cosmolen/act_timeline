@@ -80,6 +80,54 @@ namespace ACTTimeline
             }
         }
 
+        private bool over10;
+        public bool Over10
+        {
+            get { return over10; }
+            set
+            {
+                over10 = value;
+                if (controller != null)
+                    controller.OnCurrentTimeUpdate();
+            }
+        }
+
+        private bool under10;
+        public bool Under10
+        {
+            get { return under10; }
+            set
+            {
+                under10 = value;
+                if(controller != null)
+                    controller.OnCurrentTimeUpdate();
+            }
+        }
+
+        private bool showCasting;
+        public bool ShowCasting
+        {
+            get { return showCasting; }
+            set
+            {
+                showCasting = value;
+                if (controller != null)
+                    controller.OnCurrentTimeUpdate();
+            }
+        }
+
+        private bool popupMode;
+        public bool PopupMode
+        {
+            get { return popupMode; }
+            set
+            {
+                popupMode = value;
+                if (controller != null)
+                    controller.OnCurrentTimeUpdate();
+            }
+        }
+
         public event EventHandler TimelineFontChanged;
         public void OnTimelineFontChanged()
         {
@@ -169,6 +217,10 @@ namespace ACTTimeline
             NumberOfRowsToDisplay = 3;
             MoveByDrag = true;
             ShowOverlayButtons = true;
+            Over10 = true;
+            Under10 = true;
+            ShowCasting = true;
+            PopupMode = false;
             UpdateLayout();
 
             soundplayer = new CachedSoundPlayer();
@@ -315,10 +367,16 @@ namespace ACTTimeline
 
                 // sync dataGridView
                 dataGridView.DataSource = null;
-                dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime - TimeLeftCell.THRESHOLD, numberOfRowsToDisplay).ToList();
-                //dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                //dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                //dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                if (over10)
+                    if (under10)
+                        if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                        else dataGridView.DataSource = timeline.VisibleItemsAtWithoutCasting(controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                    else dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                else
+                    if (under10)
+                        if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                        else dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                    else if(showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay).ToList();
             }
         }
 
