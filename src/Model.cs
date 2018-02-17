@@ -263,6 +263,41 @@ namespace ACTTimeline
                     select e).Take(limit).Reverse();
         }
 
+        public IEnumerable<TimelineActivity> VisibleItemsAtWithoutCasting(double t, double ttt, int limit)
+        {
+            return (from e in ItemsBeforeEndTime(t)
+                    where !e.Hidden && e.TimeFromStart - ttt > 0
+                    select e).Take(limit).Reverse();
+        }
+
+        public IEnumerable<TimelineActivity> VisibleItemsAtLeast(double t, double tt, int limit)
+        {
+            return (from e in ItemsBeforeEndTime(t)
+                    where !e.Hidden && e.TimeFromStart > tt
+                    select e).Take(limit).Reverse();
+        }
+
+        public IEnumerable<TimelineActivity> VisibleItemsAtLeastWithoutCasting(double t, double tt, double ttt, int limit)
+        {
+            return (from e in ItemsBeforeEndTime(t)
+                    where !e.Hidden && e.TimeFromStart > tt && e.TimeFromStart - ttt > 0
+                    select e).Take(limit).Reverse();
+        }
+
+        public IEnumerable<TimelineActivity> VisibleItemsAtMost(double t, double tt, int limit)
+        {
+            return (from e in ItemsBeforeEndTime(t)
+                    where !e.Hidden && e.TimeFromStart < tt
+                    select e).Take(limit).Reverse();
+        }
+
+        public IEnumerable<TimelineActivity> VisibleItemsAtMostWithoutCasting(double t, double tt, double ttt, int limit)
+        {
+            return (from e in ItemsBeforeEndTime(t)
+                    where !e.Hidden && e.TimeFromStart < tt && e.TimeFromStart - ttt > 0
+                    select e).Take(limit).Reverse();
+        }
+
         List<TimelineAnchor> anchors;
         IntervalTree.IntervalTree<double, TimelineAnchor> anchorsTree;
         public IEnumerable<TimelineAnchor> Anchors

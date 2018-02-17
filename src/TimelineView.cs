@@ -316,6 +316,9 @@ namespace ACTTimeline
                 // sync dataGridView
                 dataGridView.DataSource = null;
                 dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime - TimeLeftCell.THRESHOLD, numberOfRowsToDisplay).ToList();
+                //dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                //dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                //dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime - TimeLeftCell.THRESHOLD, controller.CurrentTime + 10, controller.CurrentTime, numberOfRowsToDisplay).ToList();
             }
         }
 
