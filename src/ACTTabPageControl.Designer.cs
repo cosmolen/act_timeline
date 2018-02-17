@@ -72,6 +72,16 @@
             this.labelLoadedTimeline = new System.Windows.Forms.Label();
             this.labelLoadedTimelineLabel = new System.Windows.Forms.Label();
             this.trackBar = new System.Windows.Forms.TrackBar();
+            this.checkBoxOver10 = new System.Windows.Forms.CheckBox();
+            this.checkBoxUnder10 = new System.Windows.Forms.CheckBox();
+            this.checkBoxShowCasting = new System.Windows.Forms.CheckBox();
+            this.checkBoxPopup = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBoxEnvironment.SuspendLayout();
             this.groupBoxTimelines.SuspendLayout();
             this.groupBoxOverlay.SuspendLayout();
@@ -83,6 +93,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayX)).BeginInit();
             this.groupBoxTracker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonResourceDirSelect
@@ -219,27 +231,7 @@
             // 
             // groupBoxOverlay
             // 
-            this.groupBoxOverlay.Controls.Add(this.checkBoxAutohide);
-            this.groupBoxOverlay.Controls.Add(this.trackBarOpacity);
-            this.groupBoxOverlay.Controls.Add(this.checkBoxShowOverlayButtons);
-            this.groupBoxOverlay.Controls.Add(this.checkBoxMoveOverlayByDrag);
-            this.groupBoxOverlay.Controls.Add(this.labelOverlayY);
-            this.groupBoxOverlay.Controls.Add(this.buttonFontSelect);
-            this.groupBoxOverlay.Controls.Add(this.labelBar);
-            this.groupBoxOverlay.Controls.Add(this.labelTextWidth);
-            this.groupBoxOverlay.Controls.Add(this.labelOverlayX);
-            this.groupBoxOverlay.Controls.Add(this.udOverlayY);
-            this.groupBoxOverlay.Controls.Add(this.udBarWidth);
-            this.groupBoxOverlay.Controls.Add(this.udBarHeight);
-            this.groupBoxOverlay.Controls.Add(this.udNumRows);
-            this.groupBoxOverlay.Controls.Add(this.udOverlayX);
-            this.groupBoxOverlay.Controls.Add(this.labelCurrentFont);
-            this.groupBoxOverlay.Controls.Add(this.labelFont);
-            this.groupBoxOverlay.Controls.Add(this.labelColumnSize);
-            this.groupBoxOverlay.Controls.Add(this.labelCurrOpacity);
-            this.groupBoxOverlay.Controls.Add(this.labelOpacity);
-            this.groupBoxOverlay.Controls.Add(this.labelNumRows);
-            this.groupBoxOverlay.Controls.Add(this.labelOverlayOrientation);
+            this.groupBoxOverlay.Controls.Add(this.tabControl1);
             this.groupBoxOverlay.Location = new System.Drawing.Point(19, 382);
             this.groupBoxOverlay.Name = "groupBoxOverlay";
             this.groupBoxOverlay.Size = new System.Drawing.Size(548, 234);
@@ -252,7 +244,7 @@
             this.checkBoxAutohide.AutoSize = true;
             this.checkBoxAutohide.Checked = true;
             this.checkBoxAutohide.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutohide.Location = new System.Drawing.Point(13, 215);
+            this.checkBoxAutohide.Location = new System.Drawing.Point(382, 72);
             this.checkBoxAutohide.Name = "checkBoxAutohide";
             this.checkBoxAutohide.Size = new System.Drawing.Size(77, 16);
             this.checkBoxAutohide.TabIndex = 5;
@@ -262,7 +254,7 @@
             // 
             // trackBarOpacity
             // 
-            this.trackBarOpacity.Location = new System.Drawing.Point(185, 113);
+            this.trackBarOpacity.Location = new System.Drawing.Point(64, 92);
             this.trackBarOpacity.Maximum = 100;
             this.trackBarOpacity.Minimum = 1;
             this.trackBarOpacity.Name = "trackBarOpacity";
@@ -277,11 +269,11 @@
             this.checkBoxShowOverlayButtons.AutoSize = true;
             this.checkBoxShowOverlayButtons.Checked = true;
             this.checkBoxShowOverlayButtons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(274, 193);
+            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(382, 50);
             this.checkBoxShowOverlayButtons.Name = "checkBoxShowOverlayButtons";
-            this.checkBoxShowOverlayButtons.Size = new System.Drawing.Size(175, 16);
+            this.checkBoxShowOverlayButtons.Size = new System.Drawing.Size(136, 16);
             this.checkBoxShowOverlayButtons.TabIndex = 3;
-            this.checkBoxShowOverlayButtons.Text = "Show mini button controls.";
+            this.checkBoxShowOverlayButtons.Text = "Show control button";
             this.checkBoxShowOverlayButtons.UseVisualStyleBackColor = true;
             this.checkBoxShowOverlayButtons.CheckedChanged += new System.EventHandler(this.checkBoxShowOverlayButtons_CheckedChanged);
             // 
@@ -290,18 +282,18 @@
             this.checkBoxMoveOverlayByDrag.AutoSize = true;
             this.checkBoxMoveOverlayByDrag.Checked = true;
             this.checkBoxMoveOverlayByDrag.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMoveOverlayByDrag.Location = new System.Drawing.Point(13, 193);
+            this.checkBoxMoveOverlayByDrag.Location = new System.Drawing.Point(382, 28);
             this.checkBoxMoveOverlayByDrag.Name = "checkBoxMoveOverlayByDrag";
-            this.checkBoxMoveOverlayByDrag.Size = new System.Drawing.Size(256, 16);
+            this.checkBoxMoveOverlayByDrag.Size = new System.Drawing.Size(128, 16);
             this.checkBoxMoveOverlayByDrag.TabIndex = 3;
-            this.checkBoxMoveOverlayByDrag.Text = "Move by drag && right doubleclick to hide.";
+            this.checkBoxMoveOverlayByDrag.Text = "Allow mouse click";
             this.checkBoxMoveOverlayByDrag.UseVisualStyleBackColor = true;
             this.checkBoxMoveOverlayByDrag.CheckedChanged += new System.EventHandler(this.checkBoxMoveOverlayByDrag_CheckedChanged);
             // 
             // labelOverlayY
             // 
             this.labelOverlayY.AutoSize = true;
-            this.labelOverlayY.Location = new System.Drawing.Point(293, 23);
+            this.labelOverlayY.Location = new System.Drawing.Point(252, 13);
             this.labelOverlayY.Name = "labelOverlayY";
             this.labelOverlayY.Size = new System.Drawing.Size(17, 12);
             this.labelOverlayY.TabIndex = 2;
@@ -309,7 +301,7 @@
             // 
             // buttonFontSelect
             // 
-            this.buttonFontSelect.Location = new System.Drawing.Point(437, 160);
+            this.buttonFontSelect.Location = new System.Drawing.Point(273, 150);
             this.buttonFontSelect.Name = "buttonFontSelect";
             this.buttonFontSelect.Size = new System.Drawing.Size(99, 20);
             this.buttonFontSelect.TabIndex = 0;
@@ -320,27 +312,27 @@
             // labelBar
             // 
             this.labelBar.AutoSize = true;
-            this.labelBar.Location = new System.Drawing.Point(293, 82);
+            this.labelBar.Location = new System.Drawing.Point(252, 67);
             this.labelBar.Name = "labelBar";
-            this.labelBar.Size = new System.Drawing.Size(28, 12);
+            this.labelBar.Size = new System.Drawing.Size(39, 12);
             this.labelBar.TabIndex = 2;
-            this.labelBar.Text = "Bar:";
+            this.labelBar.Text = "Width:";
             this.labelBar.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // labelTextWidth
             // 
             this.labelTextWidth.AutoSize = true;
-            this.labelTextWidth.Location = new System.Drawing.Point(142, 82);
+            this.labelTextWidth.Location = new System.Drawing.Point(124, 67);
             this.labelTextWidth.Name = "labelTextWidth";
-            this.labelTextWidth.Size = new System.Drawing.Size(34, 12);
+            this.labelTextWidth.Size = new System.Drawing.Size(44, 12);
             this.labelTextWidth.TabIndex = 2;
-            this.labelTextWidth.Text = "Text:";
+            this.labelTextWidth.Text = "Height:";
             this.labelTextWidth.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // labelOverlayX
             // 
             this.labelOverlayX.AutoSize = true;
-            this.labelOverlayX.Location = new System.Drawing.Point(162, 23);
+            this.labelOverlayX.Location = new System.Drawing.Point(124, 13);
             this.labelOverlayX.Name = "labelOverlayX";
             this.labelOverlayX.Size = new System.Drawing.Size(17, 12);
             this.labelOverlayX.TabIndex = 2;
@@ -348,7 +340,7 @@
             // 
             // udOverlayY
             // 
-            this.udOverlayY.Location = new System.Drawing.Point(334, 21);
+            this.udOverlayY.Location = new System.Drawing.Point(297, 11);
             this.udOverlayY.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -360,7 +352,7 @@
             0,
             -2147483648});
             this.udOverlayY.Name = "udOverlayY";
-            this.udOverlayY.Size = new System.Drawing.Size(93, 21);
+            this.udOverlayY.Size = new System.Drawing.Size(75, 21);
             this.udOverlayY.TabIndex = 1;
             this.udOverlayY.Value = new decimal(new int[] {
             200,
@@ -376,7 +368,7 @@
             0,
             0,
             0});
-            this.udBarWidth.Location = new System.Drawing.Point(334, 80);
+            this.udBarWidth.Location = new System.Drawing.Point(297, 65);
             this.udBarWidth.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -388,7 +380,7 @@
             0,
             0});
             this.udBarWidth.Name = "udBarWidth";
-            this.udBarWidth.Size = new System.Drawing.Size(93, 21);
+            this.udBarWidth.Size = new System.Drawing.Size(75, 21);
             this.udBarWidth.TabIndex = 1;
             this.udBarWidth.Value = new decimal(new int[] {
             10,
@@ -399,14 +391,14 @@
             // 
             // udBarHeight
             // 
-            this.udBarHeight.Location = new System.Drawing.Point(185, 80);
+            this.udBarHeight.Location = new System.Drawing.Point(171, 65);
             this.udBarHeight.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.udBarHeight.Name = "udBarHeight";
-            this.udBarHeight.Size = new System.Drawing.Size(93, 21);
+            this.udBarHeight.Size = new System.Drawing.Size(75, 21);
             this.udBarHeight.TabIndex = 1;
             this.udBarHeight.Value = new decimal(new int[] {
             1,
@@ -417,7 +409,7 @@
             // 
             // udNumRows
             // 
-            this.udNumRows.Location = new System.Drawing.Point(185, 49);
+            this.udNumRows.Location = new System.Drawing.Point(171, 38);
             this.udNumRows.Name = "udNumRows";
             this.udNumRows.Size = new System.Drawing.Size(47, 21);
             this.udNumRows.TabIndex = 1;
@@ -430,7 +422,7 @@
             // 
             // udOverlayX
             // 
-            this.udOverlayX.Location = new System.Drawing.Point(185, 21);
+            this.udOverlayX.Location = new System.Drawing.Point(171, 11);
             this.udOverlayX.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -442,7 +434,7 @@
             0,
             -2147483648});
             this.udOverlayX.Name = "udOverlayX";
-            this.udOverlayX.Size = new System.Drawing.Size(93, 21);
+            this.udOverlayX.Size = new System.Drawing.Size(75, 21);
             this.udOverlayX.TabIndex = 1;
             this.udOverlayX.Value = new decimal(new int[] {
             200,
@@ -454,7 +446,7 @@
             // labelCurrentFont
             // 
             this.labelCurrentFont.AutoSize = true;
-            this.labelCurrentFont.Location = new System.Drawing.Point(52, 164);
+            this.labelCurrentFont.Location = new System.Drawing.Point(49, 154);
             this.labelCurrentFont.Name = "labelCurrentFont";
             this.labelCurrentFont.Size = new System.Drawing.Size(90, 12);
             this.labelCurrentFont.TabIndex = 0;
@@ -463,7 +455,7 @@
             // labelFont
             // 
             this.labelFont.AutoSize = true;
-            this.labelFont.Location = new System.Drawing.Point(9, 164);
+            this.labelFont.Location = new System.Drawing.Point(6, 154);
             this.labelFont.Name = "labelFont";
             this.labelFont.Size = new System.Drawing.Size(33, 12);
             this.labelFont.TabIndex = 0;
@@ -472,16 +464,16 @@
             // labelColumnSize
             // 
             this.labelColumnSize.AutoSize = true;
-            this.labelColumnSize.Location = new System.Drawing.Point(9, 82);
+            this.labelColumnSize.Location = new System.Drawing.Point(7, 67);
             this.labelColumnSize.Name = "labelColumnSize";
-            this.labelColumnSize.Size = new System.Drawing.Size(83, 12);
+            this.labelColumnSize.Size = new System.Drawing.Size(49, 12);
             this.labelColumnSize.TabIndex = 0;
-            this.labelColumnSize.Text = "Column Width";
+            this.labelColumnSize.Text = "Column";
             // 
             // labelCurrOpacity
             // 
             this.labelCurrOpacity.AutoSize = true;
-            this.labelCurrOpacity.Location = new System.Drawing.Point(465, 117);
+            this.labelCurrOpacity.Location = new System.Drawing.Point(343, 107);
             this.labelCurrOpacity.Name = "labelCurrOpacity";
             this.labelCurrOpacity.Size = new System.Drawing.Size(27, 12);
             this.labelCurrOpacity.TabIndex = 0;
@@ -490,7 +482,7 @@
             // labelOpacity
             // 
             this.labelOpacity.AutoSize = true;
-            this.labelOpacity.Location = new System.Drawing.Point(9, 117);
+            this.labelOpacity.Location = new System.Drawing.Point(6, 107);
             this.labelOpacity.Name = "labelOpacity";
             this.labelOpacity.Size = new System.Drawing.Size(52, 12);
             this.labelOpacity.TabIndex = 0;
@@ -499,7 +491,7 @@
             // labelNumRows
             // 
             this.labelNumRows.AutoSize = true;
-            this.labelNumRows.Location = new System.Drawing.Point(9, 51);
+            this.labelNumRows.Location = new System.Drawing.Point(6, 40);
             this.labelNumRows.Name = "labelNumRows";
             this.labelNumRows.Size = new System.Drawing.Size(159, 12);
             this.labelNumRows.TabIndex = 0;
@@ -508,7 +500,7 @@
             // labelOverlayOrientation
             // 
             this.labelOverlayOrientation.AutoSize = true;
-            this.labelOverlayOrientation.Location = new System.Drawing.Point(9, 23);
+            this.labelOverlayOrientation.Location = new System.Drawing.Point(6, 13);
             this.labelOverlayOrientation.Name = "labelOverlayOrientation";
             this.labelOverlayOrientation.Size = new System.Drawing.Size(112, 12);
             this.labelOverlayOrientation.TabIndex = 0;
@@ -619,6 +611,134 @@
             this.trackBar.TickFrequency = 30;
             this.trackBar.Scroll += new System.EventHandler(this.trackbar_Scroll);
             // 
+            // checkBoxOver10
+            // 
+            this.checkBoxOver10.AutoSize = true;
+            this.checkBoxOver10.Location = new System.Drawing.Point(382, 94);
+            this.checkBoxOver10.Name = "checkBoxOver10";
+            this.checkBoxOver10.Size = new System.Drawing.Size(107, 16);
+            this.checkBoxOver10.TabIndex = 6;
+            this.checkBoxOver10.Text = "Show over 10s";
+            this.checkBoxOver10.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxUnder10
+            // 
+            this.checkBoxUnder10.AutoSize = true;
+            this.checkBoxUnder10.Location = new System.Drawing.Point(382, 116);
+            this.checkBoxUnder10.Name = "checkBoxUnder10";
+            this.checkBoxUnder10.Size = new System.Drawing.Size(115, 16);
+            this.checkBoxUnder10.TabIndex = 7;
+            this.checkBoxUnder10.Text = "Show under 10s";
+            this.checkBoxUnder10.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxShowCasting
+            // 
+            this.checkBoxShowCasting.AutoSize = true;
+            this.checkBoxShowCasting.Location = new System.Drawing.Point(382, 138);
+            this.checkBoxShowCasting.Name = "checkBoxShowCasting";
+            this.checkBoxShowCasting.Size = new System.Drawing.Size(103, 16);
+            this.checkBoxShowCasting.TabIndex = 8;
+            this.checkBoxShowCasting.Text = "Show Casting";
+            this.checkBoxShowCasting.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPopup
+            // 
+            this.checkBoxPopup.AutoSize = true;
+            this.checkBoxPopup.Location = new System.Drawing.Point(382, 160);
+            this.checkBoxPopup.Name = "checkBoxPopup";
+            this.checkBoxPopup.Size = new System.Drawing.Size(96, 16);
+            this.checkBoxPopup.TabIndex = 9;
+            this.checkBoxPopup.Text = "Popup mode";
+            this.checkBoxPopup.UseVisualStyleBackColor = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Location = new System.Drawing.Point(6, 20);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(536, 208);
+            this.tabControl1.TabIndex = 7;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.checkBoxPopup);
+            this.tabPage1.Controls.Add(this.labelOverlayOrientation);
+            this.tabPage1.Controls.Add(this.checkBoxShowCasting);
+            this.tabPage1.Controls.Add(this.labelNumRows);
+            this.tabPage1.Controls.Add(this.checkBoxUnder10);
+            this.tabPage1.Controls.Add(this.labelOpacity);
+            this.tabPage1.Controls.Add(this.checkBoxOver10);
+            this.tabPage1.Controls.Add(this.labelCurrOpacity);
+            this.tabPage1.Controls.Add(this.checkBoxAutohide);
+            this.tabPage1.Controls.Add(this.labelColumnSize);
+            this.tabPage1.Controls.Add(this.trackBarOpacity);
+            this.tabPage1.Controls.Add(this.labelFont);
+            this.tabPage1.Controls.Add(this.checkBoxShowOverlayButtons);
+            this.tabPage1.Controls.Add(this.labelCurrentFont);
+            this.tabPage1.Controls.Add(this.checkBoxMoveOverlayByDrag);
+            this.tabPage1.Controls.Add(this.udOverlayX);
+            this.tabPage1.Controls.Add(this.labelOverlayY);
+            this.tabPage1.Controls.Add(this.udNumRows);
+            this.tabPage1.Controls.Add(this.buttonFontSelect);
+            this.tabPage1.Controls.Add(this.udBarHeight);
+            this.tabPage1.Controls.Add(this.labelBar);
+            this.tabPage1.Controls.Add(this.udBarWidth);
+            this.tabPage1.Controls.Add(this.labelTextWidth);
+            this.tabPage1.Controls.Add(this.udOverlayY);
+            this.tabPage1.Controls.Add(this.labelOverlayX);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(528, 182);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Overlay1";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(528, 182);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Overlay2";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(528, 182);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Overlay3";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(528, 182);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Overlay4";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(528, 182);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Overlay5";
+            // 
             // ACTTabPageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -633,7 +753,6 @@
             this.groupBoxEnvironment.PerformLayout();
             this.groupBoxTimelines.ResumeLayout(false);
             this.groupBoxOverlay.ResumeLayout(false);
-            this.groupBoxOverlay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
@@ -643,6 +762,9 @@
             this.groupBoxTracker.ResumeLayout(false);
             this.groupBoxTracker.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -693,5 +815,15 @@
         private System.Windows.Forms.CheckBox checkBoxMoveOverlayByDrag;
         private System.Windows.Forms.CheckBox checkBoxAutoloadAfterChangeZone;
         private System.Windows.Forms.CheckBox checkBoxAutohide;
+        private System.Windows.Forms.CheckBox checkBoxPopup;
+        private System.Windows.Forms.CheckBox checkBoxShowCasting;
+        private System.Windows.Forms.CheckBox checkBoxUnder10;
+        private System.Windows.Forms.CheckBox checkBoxOver10;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPage5;
     }
 }
