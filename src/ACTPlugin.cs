@@ -22,9 +22,17 @@ namespace ACTTimeline
 
         private ACTTabPageControl tabPageControl;
         public TimelineView TimelineView { get; private set; }
+        public TimelineView TimelineView2 { get; private set; }
+        public TimelineView TimelineView3 { get; private set; }
+        public TimelineView TimelineView4 { get; private set; }
+        public TimelineView TimelineView5 { get; private set; }
         public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
-        public VisibilityControl VisibilityControl;
+        public VisibilityControl VisibilityControl { get; private set; }
+        public VisibilityControl VisibilityControl2 { get; private set; }
+        public VisibilityControl VisibilityControl3 { get; private set; }
+        public VisibilityControl VisibilityControl4 { get; private set; }
+        public VisibilityControl VisibilityControl5 { get; private set; }
 
         private System.Threading.Timer xivWindowTimer;
 
@@ -62,6 +70,87 @@ namespace ACTTimeline
             set { TimelineView.MyOpacity = (double)value / 100.0; }
         }
 
+        public string FontString2
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(TimelineView2.TimelineFont); }
+            set { TimelineView2.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
+        }
+        public int BarHeight2
+        {
+            get { return TimelineView2.BarHeight; }
+            set { TimelineView2.BarHeight = value; }
+        }
+        public int BarWidth2
+        {
+            get { return TimelineView2.BarWidth; }
+            set { TimelineView2.BarWidth = value; }
+        }
+        public int OpacityPercentage2
+        {
+            get { return (int)(TimelineView2.MyOpacity * 100.0); }
+            set { TimelineView2.MyOpacity = (double)value / 100.0; }
+        }
+        public string FontString3
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(TimelineView3.TimelineFont); }
+            set { TimelineView3.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
+        }
+        public int BarHeight3
+        {
+            get { return TimelineView3.BarHeight; }
+            set { TimelineView3.BarHeight = value; }
+        }
+        public int BarWidth3
+        {
+            get { return TimelineView3.BarWidth; }
+            set { TimelineView3.BarWidth = value; }
+        }
+        public int OpacityPercentage3
+        {
+            get { return (int)(TimelineView3.MyOpacity * 100.0); }
+            set { TimelineView3.MyOpacity = (double)value / 100.0; }
+        }
+        public string FontString4
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(TimelineView4.TimelineFont); }
+            set { TimelineView4.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
+        }
+        public int BarHeight4
+        {
+            get { return TimelineView4.BarHeight; }
+            set { TimelineView4.BarHeight = value; }
+        }
+        public int BarWidth4
+        {
+            get { return TimelineView4.BarWidth; }
+            set { TimelineView4.BarWidth = value; }
+        }
+        public int OpacityPercentage4
+        {
+            get { return (int)(TimelineView4.MyOpacity * 100.0); }
+            set { TimelineView4.MyOpacity = (double)value / 100.0; }
+        }
+        public string FontString5
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(TimelineView5.TimelineFont); }
+            set { TimelineView5.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
+        }
+        public int BarHeight5
+        {
+            get { return TimelineView5.BarHeight; }
+            set { TimelineView5.BarHeight = value; }
+        }
+        public int BarWidth5
+        {
+            get { return TimelineView5.BarWidth; }
+            set { TimelineView5.BarWidth = value; }
+        }
+        public int OpacityPercentage5
+        {
+            get { return (int)(TimelineView5.MyOpacity * 100.0); }
+            set { TimelineView5.MyOpacity = (double)value / 100.0; }
+        }
+
         #endregion
 
         public ACTPlugin()
@@ -96,8 +185,26 @@ namespace ACTTimeline
                 TimelineView = new TimelineView(Controller);
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
 
+                TimelineView2 = new TimelineView(Controller);
+                TimelineView2.DoubleClick += TimelineView_DoubleClick;
+                TimelineView3 = new TimelineView(Controller);
+                TimelineView3.DoubleClick += TimelineView_DoubleClick;
+                TimelineView4 = new TimelineView(Controller);
+                TimelineView4.DoubleClick += TimelineView_DoubleClick;
+                TimelineView5 = new TimelineView(Controller);
+                TimelineView5.DoubleClick += TimelineView_DoubleClick;
+
                 VisibilityControl = new VisibilityControl(TimelineView);
                 VisibilityControl.Visible = true;
+
+                VisibilityControl2 = new VisibilityControl(TimelineView2);
+                VisibilityControl2.Visible = true;
+                VisibilityControl3 = new VisibilityControl(TimelineView3);
+                VisibilityControl3.Visible = true;
+                VisibilityControl4 = new VisibilityControl(TimelineView4);
+                VisibilityControl4.Visible = true;
+                VisibilityControl5 = new VisibilityControl(TimelineView5);
+                VisibilityControl5.Visible = true;
 
                 TimelineAutoLoader = new TimelineAutoLoader(Controller);
                 TimelineAutoLoader.Start();
@@ -108,6 +215,22 @@ namespace ACTTimeline
                 Settings.AddIntSetting("BarHeight");
                 Settings.AddIntSetting("BarWidth");
                 Settings.AddIntSetting("OpacityPercentage");
+                Settings.AddStringSetting("FontString2");
+                Settings.AddIntSetting("BarHeight2");
+                Settings.AddIntSetting("BarWidth2");
+                Settings.AddIntSetting("OpacityPercentage2");
+                Settings.AddStringSetting("FontString3");
+                Settings.AddIntSetting("BarHeight3");
+                Settings.AddIntSetting("BarWidth3");
+                Settings.AddIntSetting("OpacityPercentage3");
+                Settings.AddStringSetting("FontString4");
+                Settings.AddIntSetting("BarHeight4");
+                Settings.AddIntSetting("BarWidth4");
+                Settings.AddIntSetting("OpacityPercentage4");
+                Settings.AddStringSetting("FontString5");
+                Settings.AddIntSetting("BarHeight5");
+                Settings.AddIntSetting("BarWidth5");
+                Settings.AddIntSetting("OpacityPercentage5");
 
                 SetupTab();
                 InjectButton();
@@ -137,10 +260,18 @@ namespace ACTTimeline
                                 Path.GetFileName(exePath) == "ffxiv_dx11.exe")
                             {
                                 this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = true));
+                                this.TimelineView2.Invoke(new Action(() => this.TimelineView2.Visible = true));
+                                this.TimelineView3.Invoke(new Action(() => this.TimelineView3.Visible = true));
+                                this.TimelineView4.Invoke(new Action(() => this.TimelineView4.Visible = true));
+                                this.TimelineView5.Invoke(new Action(() => this.TimelineView5.Visible = true));
                             }
                             else
                             {
                                 this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = false));
+                                this.TimelineView2.Invoke(new Action(() => this.TimelineView2.Visible = false));
+                                this.TimelineView3.Invoke(new Action(() => this.TimelineView3.Visible = false));
+                                this.TimelineView4.Invoke(new Action(() => this.TimelineView4.Visible = false));
+                                this.TimelineView5.Invoke(new Action(() => this.TimelineView5.Visible = false));
                             }
                         }
                     }
@@ -159,6 +290,10 @@ namespace ACTTimeline
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
             VisibilityControl.Visible = false;
+            VisibilityControl2.Visible = false;
+            VisibilityControl3.Visible = false;
+            VisibilityControl4.Visible = false;
+            VisibilityControl5.Visible = false;
             checkBoxShowView.Checked = false;
         }
 
@@ -186,6 +321,10 @@ namespace ACTTimeline
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
             VisibilityControl.Visible = checkBoxShowView.Checked;
+            VisibilityControl2.Visible = checkBoxShowView.Checked;
+            VisibilityControl3.Visible = checkBoxShowView.Checked;
+            VisibilityControl4.Visible = checkBoxShowView.Checked;
+            VisibilityControl5.Visible = checkBoxShowView.Checked;
         }
 
         void formMain_Resize(object sender, EventArgs e)
@@ -241,8 +380,26 @@ namespace ACTTimeline
             if (VisibilityControl != null)
                 VisibilityControl.Close();
 
+            if (VisibilityControl2 != null)
+                VisibilityControl2.Close();
+            if (VisibilityControl3 != null)
+                VisibilityControl3.Close();
+            if (VisibilityControl4 != null)
+                VisibilityControl4.Close();
+            if (VisibilityControl5 != null)
+                VisibilityControl5.Close();
+
             if (TimelineView != null)
                 TimelineView.Close();
+
+            if (TimelineView2 != null)
+                TimelineView2.Close();
+            if (TimelineView3 != null)
+                TimelineView3.Close();
+            if (TimelineView4 != null)
+                TimelineView4.Close();
+            if (TimelineView5 != null)
+                TimelineView5.Close();
 
             if (Controller != null)
                 Controller.Stop();
