@@ -24,7 +24,7 @@ namespace ACTTimeline
         public TimelineView TimelineView { get; private set; }
         public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
-        private VisibilityControl visibilityControl;
+        public VisibilityControl VisibilityControl;
 
         private System.Threading.Timer xivWindowTimer;
 
@@ -96,8 +96,8 @@ namespace ACTTimeline
                 TimelineView = new TimelineView(Controller);
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
 
-                visibilityControl = new VisibilityControl(TimelineView);
-                visibilityControl.Visible = true;
+                VisibilityControl = new VisibilityControl(TimelineView);
+                VisibilityControl.Visible = true;
 
                 TimelineAutoLoader = new TimelineAutoLoader(Controller);
                 TimelineAutoLoader.Start();
@@ -158,7 +158,7 @@ namespace ACTTimeline
 
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
-            visibilityControl.Visible = false;
+            VisibilityControl.Visible = false;
             checkBoxShowView.Checked = false;
         }
 
@@ -185,7 +185,7 @@ namespace ACTTimeline
 
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
-            visibilityControl.Visible = checkBoxShowView.Checked;
+            VisibilityControl.Visible = checkBoxShowView.Checked;
         }
 
         void formMain_Resize(object sender, EventArgs e)
@@ -238,8 +238,8 @@ namespace ACTTimeline
             if (Settings != null)
                 Settings.Save();
 
-            if (visibilityControl != null)
-                visibilityControl.Close();
+            if (VisibilityControl != null)
+                VisibilityControl.Close();
 
             if (TimelineView != null)
                 TimelineView.Close();

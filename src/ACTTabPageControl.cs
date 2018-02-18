@@ -28,6 +28,7 @@ namespace ACTTimeline
             settings.AddControlSetting("OverlayX", udOverlayX);
             settings.AddControlSetting("OverlayY", udOverlayY);
             settings.AddControlSetting("NumberOfRowsToDisplay", udNumRows);
+            settings.AddControlSetting("OverlayVisible", CheckBoxOverlayVisible);
             settings.AddControlSetting("MoveOverlayByDrag", checkBoxMoveOverlayByDrag);
             settings.AddControlSetting("ShowOverlayButtons", checkBoxShowOverlayButtons);
             settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
@@ -305,6 +306,11 @@ namespace ACTTimeline
         private void checkBoxPopup_CheckedChanged(object sender, EventArgs e)
         {
             plugin.TimelineView.PopupMode = this.checkBoxPopup.Checked;
+        }
+
+        private void CheckBoxOverlayVisible_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.VisibilityControl.OverlayVisible = this.CheckBoxOverlayVisible.Checked;
         }
     }
 }

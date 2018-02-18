@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ACTTimeline
 {
-    class VisibilityControl
+    public class VisibilityControl
     {
         [DllImport("user32.dll")]
         static extern int GetForegroundWindow();
@@ -22,6 +22,7 @@ namespace ACTTimeline
 
         private bool visibleViaFocus;
         public bool Visible { get; set; }
+        public bool OverlayVisible { get; set; }
 
         private string lastProcessName;
 
@@ -33,6 +34,7 @@ namespace ACTTimeline
 
             visibleViaFocus = false;
             Visible = true;
+            OverlayVisible = true;
 
             // Glue to avoid interop exceptions from calling Show/Hide directly
             VisibilityChecker myChecker = CheckVisibility;
@@ -55,7 +57,7 @@ namespace ACTTimeline
             if (targetControl == null)
                 return;
 
-            bool shouldBeVisible = Visible && CheckVisibilityViaFocus();
+            bool shouldBeVisible = Visible && OverlayVisible && CheckVisibilityViaFocus();
 
             // We use a visibility flag instead and compare "expected" vs "actual" here in order to avoid calling
             // Show all the time, which will potentially kick ACT to the foreground.
