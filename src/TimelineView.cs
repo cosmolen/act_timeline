@@ -131,6 +131,18 @@ namespace ACTTimeline
             }
         }
 
+        private bool overlayVisible;
+        public bool OverlayVisible
+        {
+            get { return overlayVisible; }
+            set
+            {
+                overlayVisible = value;
+                OnVisibleChanged(EventArgs.Empty);
+            }
+        }
+
+
         public event EventHandler TimelineFontChanged;
         public void OnTimelineFontChanged()
         {
@@ -224,6 +236,7 @@ namespace ACTTimeline
             Under10 = true;
             ShowCasting = true;
             PopupMode = false;
+            OverlayVisible = true;
             UpdateLayout();
 
             soundplayer = new CachedSoundPlayer();
@@ -233,7 +246,7 @@ namespace ACTTimeline
 
         void TimelineView_VisibleChanged(object sender, EventArgs e)
         {
-            buttons.Visible = Visible && showOverlayButtons;
+            buttons.Visible = Visible && showOverlayButtons && overlayVisible;
         }
 
         private void SetupUI()
@@ -388,6 +401,8 @@ namespace ACTTimeline
                         else              dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
                     else if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay).ToList();
                 }
+                if(!overlayVisible)
+                    dataGridView.DataSource = null;
             }
         }
 

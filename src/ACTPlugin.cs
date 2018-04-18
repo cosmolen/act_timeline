@@ -28,11 +28,6 @@ namespace ACTTimeline
         public TimelineView TimelineView5 { get; private set; }
         public TimelineAutoLoader TimelineAutoLoader { get; private set; }
         private CheckBox checkBoxShowView;
-        public VisibilityControl VisibilityControl { get; private set; }
-        public VisibilityControl VisibilityControl2 { get; private set; }
-        public VisibilityControl VisibilityControl3 { get; private set; }
-        public VisibilityControl VisibilityControl4 { get; private set; }
-        public VisibilityControl VisibilityControl5 { get; private set; }
 
         private System.Threading.Timer xivWindowTimer;
 
@@ -183,28 +178,21 @@ namespace ACTTimeline
                 Controller = new TimelineController();
 
                 TimelineView = new TimelineView(Controller);
+                TimelineView.Show();
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
 
                 TimelineView2 = new TimelineView(Controller);
+                TimelineView2.Show();
                 TimelineView2.DoubleClick += TimelineView_DoubleClick;
                 TimelineView3 = new TimelineView(Controller);
+                TimelineView3.Show();
                 TimelineView3.DoubleClick += TimelineView_DoubleClick;
                 TimelineView4 = new TimelineView(Controller);
+                TimelineView4.Show();
                 TimelineView4.DoubleClick += TimelineView_DoubleClick;
                 TimelineView5 = new TimelineView(Controller);
+                TimelineView5.Show();
                 TimelineView5.DoubleClick += TimelineView_DoubleClick;
-
-                VisibilityControl = new VisibilityControl(TimelineView);
-                VisibilityControl.Visible = true;
-
-                VisibilityControl2 = new VisibilityControl(TimelineView2);
-                VisibilityControl2.Visible = true;
-                VisibilityControl3 = new VisibilityControl(TimelineView3);
-                VisibilityControl3.Visible = true;
-                VisibilityControl4 = new VisibilityControl(TimelineView4);
-                VisibilityControl4.Visible = true;
-                VisibilityControl5 = new VisibilityControl(TimelineView5);
-                VisibilityControl5.Visible = true;
 
                 TimelineAutoLoader = new TimelineAutoLoader(Controller);
                 TimelineAutoLoader.Start();
@@ -289,11 +277,6 @@ namespace ACTTimeline
 
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
-            VisibilityControl.Visible = false;
-            VisibilityControl2.Visible = false;
-            VisibilityControl3.Visible = false;
-            VisibilityControl4.Visible = false;
-            VisibilityControl5.Visible = false;
             checkBoxShowView.Checked = false;
         }
 
@@ -320,11 +303,22 @@ namespace ACTTimeline
 
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
-            VisibilityControl.Visible = checkBoxShowView.Checked;
-            VisibilityControl2.Visible = checkBoxShowView.Checked;
-            VisibilityControl3.Visible = checkBoxShowView.Checked;
-            VisibilityControl4.Visible = checkBoxShowView.Checked;
-            VisibilityControl5.Visible = checkBoxShowView.Checked;
+            if (checkBoxShowView.Checked)
+            {
+                TimelineView.Show();
+                TimelineView2.Show();
+                TimelineView3.Show();
+                TimelineView4.Show();
+                TimelineView5.Show();
+            }
+            else
+            {
+                TimelineView.Hide();
+                TimelineView2.Hide();
+                TimelineView3.Hide();
+                TimelineView4.Hide();
+                TimelineView5.Hide();
+            }
         }
 
         void formMain_Resize(object sender, EventArgs e)
@@ -376,18 +370,6 @@ namespace ACTTimeline
 
             if (Settings != null)
                 Settings.Save();
-
-            if (VisibilityControl != null)
-                VisibilityControl.Close();
-
-            if (VisibilityControl2 != null)
-                VisibilityControl2.Close();
-            if (VisibilityControl3 != null)
-                VisibilityControl3.Close();
-            if (VisibilityControl4 != null)
-                VisibilityControl4.Close();
-            if (VisibilityControl5 != null)
-                VisibilityControl5.Close();
 
             if (TimelineView != null)
                 TimelineView.Close();
