@@ -501,9 +501,18 @@ namespace ACTTimeline
         private void CheckBoxOverlayVisible_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-            TimelineView tv = getTimelineView(cb.Name);
+            VisibilityControl vc = plugin.VisibilityControl;
 
-            tv.OverlayVisible = cb.Checked;
+            if (cb.Name[cb.Name.Length - 1] == '2')
+                vc = plugin.VisibilityControl2;
+            else if (cb.Name[cb.Name.Length - 1] == '3')
+                vc = plugin.VisibilityControl3;
+            else if (cb.Name[cb.Name.Length - 1] == '4')
+                vc = plugin.VisibilityControl4;
+            else if (cb.Name[cb.Name.Length - 1] == '5')
+                vc = plugin.VisibilityControl5;
+
+            vc.OverlayVisible = cb.Checked;
         }
     }
 }
