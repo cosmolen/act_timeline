@@ -18,7 +18,6 @@ namespace ACTTimeline
         private delegate void VisibilityChecker();
 
         private Control targetControl;
-        private System.Timers.Timer timer;
 
         private bool visibleViaFocus;
         public bool Visible { get; set; }
@@ -26,9 +25,7 @@ namespace ACTTimeline
 
         private string lastProcessName;
 
-        const double timerInterval = 200.0; // miliseconds
-
-        public VisibilityControl(Control control)
+        public VisibilityControl(Control control, System.Timers.Timer timer)
         {
             targetControl = control;
 
@@ -41,14 +38,11 @@ namespace ACTTimeline
             var currentDispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
 
             // Let the polling begin
-            timer = new System.Timers.Timer(timerInterval);
             timer.Elapsed += (o, e) => { currentDispatcher.Invoke(myChecker); };
-            timer.Start();
         }
 
         public void Close()
         {
-            timer.Stop();
             targetControl = null;
         }
 

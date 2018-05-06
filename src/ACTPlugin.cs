@@ -34,6 +34,9 @@ namespace ACTTimeline
         public VisibilityControl VisibilityControl4 { get; private set; }
         public VisibilityControl VisibilityControl5 { get; private set; }
 
+        const double timerInterval = 200.0; // miliseconds
+
+        private System.Timers.Timer timer;
         private System.Threading.Timer xivWindowTimer;
 
         public bool AutoHide { get; set; }
@@ -194,17 +197,21 @@ namespace ACTTimeline
                 TimelineView5 = new TimelineView(Controller);
                 TimelineView5.DoubleClick += TimelineView_DoubleClick;
 
-                VisibilityControl = new VisibilityControl(TimelineView);
+                timer = new System.Timers.Timer(timerInterval);
+
+                VisibilityControl = new VisibilityControl(TimelineView, timer);
                 VisibilityControl.Visible = true;
 
-                VisibilityControl2 = new VisibilityControl(TimelineView2);
+                VisibilityControl2 = new VisibilityControl(TimelineView2, timer);
                 VisibilityControl2.Visible = true;
-                VisibilityControl3 = new VisibilityControl(TimelineView3);
+                VisibilityControl3 = new VisibilityControl(TimelineView3, timer);
                 VisibilityControl3.Visible = true;
-                VisibilityControl4 = new VisibilityControl(TimelineView4);
+                VisibilityControl4 = new VisibilityControl(TimelineView4, timer);
                 VisibilityControl4.Visible = true;
-                VisibilityControl5 = new VisibilityControl(TimelineView5);
+                VisibilityControl5 = new VisibilityControl(TimelineView5, timer);
                 VisibilityControl5.Visible = true;
+
+                timer.Start();
 
                 TimelineAutoLoader = new TimelineAutoLoader(Controller);
                 TimelineAutoLoader.Start();
@@ -400,6 +407,8 @@ namespace ACTTimeline
                 TimelineView4.Close();
             if (TimelineView5 != null)
                 TimelineView5.Close();
+            
+            timer.Stop();
 
             if (Controller != null)
                 Controller.Stop();
