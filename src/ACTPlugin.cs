@@ -3,8 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
@@ -84,12 +82,13 @@ namespace ACTTimeline
             }
         }
 
-        public static string[] ASMCHK = new string[] { "Sprache" };
+        // public static string[] ASMCHK = new string[] { "Sprache" };
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             try
             {
+                /*
                 AppDomain.CurrentDomain.AssemblyResolve += delegate (object sender, ResolveEventArgs args)
                 {
                     string asmFile = (args.Name.Contains(",") ? args.Name.Substring(0, args.Name.IndexOf(",")) : args.Name);
@@ -108,6 +107,7 @@ namespace ACTTimeline
                         return null;
                     }
                 };
+                */
                 // DI log writer
                 Globals.WriteLogImpl = (str) => { ActGlobals.oFormActMain.WriteInfoLog(String.Format("act_timeline: {0}", str)); };
 
@@ -209,24 +209,12 @@ namespace ACTTimeline
             checkBoxShowView.CheckedChanged += checkBoxShowView_CheckedChanged;
             Settings.AddControlSetting("TimelineShown", checkBoxShowView);
 
-            var formMain = ActGlobals.oFormActMain;
-            formMain.Resize += formMain_Resize;
-            formMain.Controls.Add(checkBoxShowView);
-            formMain.Controls.SetChildIndex(checkBoxShowView, 0);
-
-            formMain_Resize(this, null);
+            ActGlobals.oFormActMain.CornerControlAdd(checkBoxShowView);
         }
 
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
             visibilityControl.Visible = checkBoxShowView.Checked;
-        }
-
-        void formMain_Resize(object sender, EventArgs e)
-        {
-            // update button location
-            var mainFormSize = ActGlobals.oFormActMain.Size;
-            checkBoxShowView.Location = new Point(mainFormSize.Width - 435, 0);
         }
 
         void SetupTab()
@@ -264,7 +252,7 @@ namespace ACTTimeline
         void IActPluginV1.DeInitPlugin()
         {
             if (checkBoxShowView != null)
-                ActGlobals.oFormActMain.Controls.Remove(checkBoxShowView);
+                ActGlobals.oFormActMain.CornerControlRemove(checkBoxShowView);
 
             if (TimelineAutoLoader != null)
                 TimelineAutoLoader.Stop();
