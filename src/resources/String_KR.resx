@@ -184,7 +184,7 @@
     <value>설정</value>
   </data>
   <data name="_LN_PluginStarted" xml:space="preserve">
-    <value>플러그인이 정상적으로 시작되었습니다.</value>
+    <value>Plugin Started.</value>
   </data>
   <data name="_LN_Tabname" xml:space="preserve">
     <value>ACT 타임라인</value>

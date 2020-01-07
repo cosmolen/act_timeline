@@ -24,21 +24,66 @@ namespace ACTTimeline
             timer.Tick += timer_CheckCurrentZone;
         }
 
+        void resetTimeline()
+        {
+            try
+            {
+                controller.Paused = true;
+                controller.CurrentTime = 0;
+            }
+            catch (Exception ex)
+            {
+                // ignore exception
+            }
+        }
+
         void timer_CheckCurrentZone(object sender, EventArgs e)
         {
+            if (!ActGlobals.oFormActMain.InitActDone)
+                return;
+
             if (!Autoload)
                 return;
+
             var zonename = ActGlobals.oFormActMain.CurrentZone;
+
             if (zonename.Length == 0)
                 return;
+
             if (m_currentzone != zonename)
             {
-                var file = String.Format("{0}/{1}.txt", Globals.TimelineTxtsRoot, zonename);
-                if (System.IO.File.Exists(file))
+                List<string> findList = new List<string>();
+
+                List<char> replacementList = new List<char>();
+                replacementList.Add('_');
+                replacementList.Add('-');
+
+                foreach (char replacement in replacementList)
                 {
-                    controller.Paused = true;
-                    controller.TimelineTxtFilePath = file;
+                    var safeFileName = zonename;
+                    foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+                    {
+                        safeFileName = safeFileName.Replace(c, replacement);
+                    }
+
+                    findList.Add(String.Format("{0}/{1}.txt", Globals.TimelineTxtsRoot, safeFileName));
+                    findList.Add(String.Format("{0}/{1}.txt", Globals.TimelineTxtsRoot, safeFileName.Replace($"{replacement} ", $" {replacement} ")));
                 }
+
+                foreach (string findName in findList)
+                {
+                    if (System.IO.File.Exists(findName))
+                    {
+                        controller.Paused = true;
+                        controller.TimelineTxtFilePath = findName;
+                        break;
+                    }
+                    else
+                    {
+                        resetTimeline();
+                    }
+                }
+
                 m_currentzone = zonename;
             }
         }

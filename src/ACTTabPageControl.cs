@@ -223,7 +223,18 @@ namespace ACTTimeline
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             string timelineTxtFilePath = getSelectedItem();
-            plugin.Controller.TimelineTxtFilePath = String.Format("{0}/{1}", Globals.TimelineTxtsRoot, timelineTxtFilePath);
+
+            try
+            {
+                plugin.Controller.TimelineTxtFilePath = String.Format("{0}/{1}", Globals.TimelineTxtsRoot, timelineTxtFilePath);
+
+                buttonRewind.Enabled = true;
+                buttonPlay.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                // pass
+            }
         }
 
         private void udOverlayX_ValueChanged(object sender, EventArgs e)
