@@ -1,22 +1,28 @@
 ﻿using Advanced_Combat_Tracker;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ACTTimeline
 {
     public class TimelineController
     {
+        public bool AutoStop { get; set; }
+
         private string timelineTxtFilePath;
         public string TimelineTxtFilePath
         {
             get { return timelineTxtFilePath; }
             set
             {
-                if (value == null || value == "")
+                if (value == null)
                     return;
+
+                if (value == String.Empty)
+                {
+                    timelineTxtFilePath = value;
+                    return;
+                }
 
                 try
                 {
@@ -47,6 +53,7 @@ namespace ACTTimeline
         public event EventHandler TimelineUpdate;
         public void OnTimelineUpdate()
         {
+            Paused = true;
             CurrentTime = 0;
 
             if (TimelineUpdate != null)
@@ -61,6 +68,7 @@ namespace ACTTimeline
         }
 
         private RelativeClock relativeClock;
+
         private double currentTime;
         public double CurrentTime
         {
@@ -102,8 +110,14 @@ namespace ACTTimeline
                 PausedUpdate(this, EventArgs.Empty);
         }
 
-        public TimelineController()
+        private List<string> keywordsEnd;
+
+        private ACTPlugin plugin;
+
+        public TimelineController(ACTPlugin plugin_)
         {
+            plugin = plugin_;
+
             timer = new Timer();
             timer.Tick += (object sender, EventArgs e) => { Synchronize(); };
             timer.Interval = 50;
@@ -111,6 +125,22 @@ namespace ACTTimeline
 
             relativeClock = new RelativeClock();
             Paused = true;
+
+            keywordsEnd = new List<string>();
+
+            keywordsEnd.Add("00:0139:");
+            keywordsEnd.Add("01:Changed Zone");
+
+            keywordsEnd.Add("입찰을 진행하십시오.");
+            keywordsEnd.Add("Cast your lot.");
+            keywordsEnd.Add("ロットを行ってください。");
+
+            keywordsEnd.Add("공략을 종료했습니다.");
+            keywordsEnd.Add("has ended.");
+            keywordsEnd.Add("の攻略を終了した。");
+
+            keywordsEnd.Add("준비 확인을 시작했습니다.");
+            keywordsEnd.Add("レディチェックを開始しました。");
 
             ActGlobals.oFormActMain.OnLogLineRead += act_OnLogLineRead;
         }
@@ -134,6 +164,46 @@ namespace ACTTimeline
                 {
                     CurrentTime = anchor.Jump > 0 ? anchor.Jump : anchor.TimeFromStart;
                     Paused = false;
+                }
+            }
+
+            // echo commands
+            if (logInfo.logLine.Contains("/timeline rewind"))
+            {
+                CurrentTime = 0;
+            }
+
+            if (logInfo.logLine.Contains("/timeline pause"))
+            {
+                Paused = true;
+            }
+
+            if (logInfo.logLine.Contains("/timeline play") || logInfo.logLine.Contains("/timeline start"))
+            {
+                Paused = false;
+            }
+
+            if (logInfo.logLine.Contains("/timeline stop"))
+            {
+                CurrentTime = 0;
+                Paused = true;
+            }
+
+            if (logInfo.logLine.Contains("/timeline unload") || logInfo.logLine.Contains("/timeline close"))
+            {
+                plugin.tabPageControl?.buttonUnload?.PerformClick();
+            }
+
+            // auto stop
+            if (AutoStop)
+            {
+                foreach (string k in keywordsEnd)
+                {
+                    if (logInfo.logLine.Contains(k))
+                    {
+                        CurrentTime = 0;
+                        Paused = true;
+                    }
                 }
             }
         }

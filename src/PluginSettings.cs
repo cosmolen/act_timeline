@@ -12,7 +12,17 @@ namespace ACTTimeline
         public PluginSettings(object actPlugin)
             : base(actPlugin)
         {
-            settingsFile = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "Config\\ACTTimeline_a.config.xml");
+            string configFolderPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "Config");
+
+            string oldSettingsFile = Path.Combine(configFolderPath, "ACTTimeline_a.config.xml");
+            string newSettingsFile = Path.Combine(configFolderPath, "ACTTimeline.config");
+
+            if (File.Exists(oldSettingsFile))
+            {
+                File.Move(oldSettingsFile, newSettingsFile);
+            }
+
+            settingsFile = newSettingsFile;
         }
 
         public void Load()

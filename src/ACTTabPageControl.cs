@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Advanced_Combat_Tracker;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,24 +17,50 @@ namespace ACTTimeline
         private ACTPlugin plugin;
         private bool updateFromOverlayMove;
 
+        public void languagePatch(ControlCollection ctrl)
+        {
+            foreach (Control c in ctrl)
+            {
+                if (CultureInfo.InstalledUICulture.Name == "ko-KR")
+                {
+                    c.Font = new Font("맑은 고딕", 9F, FontStyle.Regular);
+                }
+                c.Text = Translator.Get(c.Name) == c.Name ? c.Text : Translator.Get(c.Name);
+                if (c.HasChildren)
+                {
+                    if (c.Controls != null)
+                    {
+                        languagePatch(c.Controls);
+                    }
+                }
+            }
+        }
+
         public ACTTabPageControl(ACTPlugin plugin_)
         {
             InitializeComponent();
+
+            languagePatch(Controls);
 
             plugin = plugin_;
             updateFromOverlayMove = false;
 
             var settings = plugin.Settings;
+
             settings.AddControlSetting("ResourcesDir", textBoxResourceDir);
+
+            settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
+            settings.AddControlSetting("Autostop", checkBoxAutoStop);
+            settings.AddControlSetting("Autoload", checkBoxAutoloadAfterChangeZone);
+            settings.AddControlSetting("Autohide", checkBoxAutohide);
+
             settings.AddControlSetting("OverlayX", udOverlayX);
             settings.AddControlSetting("OverlayY", udOverlayY);
             settings.AddControlSetting("NumberOfRowsToDisplay", udNumRows);
             settings.AddControlSetting("OverlayVisible", CheckBoxOverlayVisible);
+            settings.AddControlSetting("ReverseOrder", checkBoxReverseOrder);
             settings.AddControlSetting("MoveOverlayByDrag", checkBoxMoveOverlayByDrag);
             settings.AddControlSetting("ShowOverlayButtons", checkBoxShowOverlayButtons);
-            settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
-            settings.AddControlSetting("Autoload", checkBoxAutoloadAfterChangeZone);
-            settings.AddControlSetting("Autohide", checkBoxAutohide);
             settings.AddControlSetting("Over10", checkBoxOver10);
             settings.AddControlSetting("Under10", checkBoxUnder10);
             settings.AddControlSetting("ShowCasting", checkBoxShowCasting);
@@ -43,6 +70,7 @@ namespace ACTTimeline
             settings.AddControlSetting("OverlayY2", udOverlayY2);
             settings.AddControlSetting("NumberOfRowsToDisplay2", udNumRows2);
             settings.AddControlSetting("OverlayVisible2", CheckBoxOverlayVisible2);
+            settings.AddControlSetting("ReverseOrder2", checkBoxReverseOrder2);
             settings.AddControlSetting("MoveOverlayByDrag2", checkBoxMoveOverlayByDrag2);
             settings.AddControlSetting("ShowOverlayButtons2", checkBoxShowOverlayButtons2);
             settings.AddControlSetting("Over102", checkBoxOver102);
@@ -54,6 +82,7 @@ namespace ACTTimeline
             settings.AddControlSetting("OverlayY3", udOverlayY3);
             settings.AddControlSetting("NumberOfRowsToDisplay3", udNumRows3);
             settings.AddControlSetting("OverlayVisible3", CheckBoxOverlayVisible3);
+            settings.AddControlSetting("ReverseOrder3", checkBoxReverseOrder3);
             settings.AddControlSetting("MoveOverlayByDrag3", checkBoxMoveOverlayByDrag3);
             settings.AddControlSetting("ShowOverlayButtons3", checkBoxShowOverlayButtons3);
             settings.AddControlSetting("Over103", checkBoxOver103);
@@ -65,6 +94,7 @@ namespace ACTTimeline
             settings.AddControlSetting("OverlayY4", udOverlayY4);
             settings.AddControlSetting("NumberOfRowsToDisplay4", udNumRows4);
             settings.AddControlSetting("OverlayVisible4", CheckBoxOverlayVisible4);
+            settings.AddControlSetting("ReverseOrder4", checkBoxReverseOrder4);
             settings.AddControlSetting("MoveOverlayByDrag4", checkBoxMoveOverlayByDrag4);
             settings.AddControlSetting("ShowOverlayButtons4", checkBoxShowOverlayButtons4);
             settings.AddControlSetting("Over104", checkBoxOver104);
@@ -76,6 +106,7 @@ namespace ACTTimeline
             settings.AddControlSetting("OverlayY5", udOverlayY5);
             settings.AddControlSetting("NumberOfRowsToDisplay5", udNumRows5);
             settings.AddControlSetting("OverlayVisible5", CheckBoxOverlayVisible5);
+            settings.AddControlSetting("ReverseOrder5", checkBoxReverseOrder5);
             settings.AddControlSetting("MoveOverlayByDrag5", checkBoxMoveOverlayByDrag5);
             settings.AddControlSetting("ShowOverlayButtons5", checkBoxShowOverlayButtons5);
             settings.AddControlSetting("Over105", checkBoxOver105);
@@ -83,13 +114,14 @@ namespace ACTTimeline
             settings.AddControlSetting("ShowCasting5", checkBoxShowCasting5);
             settings.AddControlSetting("PopupMode5", checkBoxPopup5);
 
+            plugin.Controller.CurrentTimeUpdate += Controller_CurrentTimeUpdate;
+            plugin.Controller.TimelineUpdate += Controller_TimelineUpdate;
+            plugin.Controller.PausedUpdate += Controller_PausedUpdate;
+
             plugin.TimelineView.Move += TimelineView_Move;
             plugin.TimelineView.TimelineFontChanged += TimelineView_TimelineFontChanged;
             plugin.TimelineView.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
             plugin.TimelineView.OpacityChanged += TimelineView_OpacityChanged;
-            plugin.Controller.CurrentTimeUpdate += Controller_CurrentTimeUpdate;
-            plugin.Controller.TimelineUpdate += Controller_TimelineUpdate;
-            plugin.Controller.PausedUpdate += Controller_PausedUpdate;
 
             plugin.TimelineView2.Move += TimelineView_Move;
             plugin.TimelineView2.TimelineFontChanged += TimelineView_TimelineFontChanged;
@@ -116,6 +148,26 @@ namespace ACTTimeline
             TimelineView_OpacityChanged(this, null);
             Controller_TimelineUpdate(this, null);
             Controller_PausedUpdate(this, null);
+
+            checkBoxPlaySoundByACT_CheckedChanged(this, null);
+            checkBoxAutoStop_CheckedChanged(this, null);
+            checkBoxAutoloadAfterChangeZone_CheckedChanged(this, null);
+            checkBoxAutohide_CheckedChanged(this, null);
+
+            if (plugin.Controller.TimelineTxtFilePath == null || plugin.Controller.TimelineTxtFilePath == "")
+            {
+                trackBar.Enabled = false;
+                buttonRewind.Enabled = false;
+                buttonPause.Enabled = false;
+                buttonPlay.Enabled = false;
+            }
+            else
+            {
+                trackBar.Enabled = true;
+                buttonRewind.Enabled = true;
+                buttonPause.Enabled = false;
+                buttonPlay.Enabled = true;
+            }
         }
 
         private void Controller_PausedUpdate(object sender, EventArgs e)
@@ -147,7 +199,9 @@ namespace ACTTimeline
             labelEndPos.Text = FormatMMSS(endtime);
             trackBar.Maximum = (int)Math.Ceiling(endtime);
 
-            labelLoadedTimeline.Text = timeline.Name;
+            labelLoadedTimeline.Text = Path.GetFileNameWithoutExtension(timeline.Name);
+
+            buttonUnload.Enabled = true;
         }
 
         private void Controller_CurrentTimeUpdate(object sender, EventArgs e)
@@ -202,9 +256,11 @@ namespace ACTTimeline
         private void buttonResourceDirSelect_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog.ShowDialog();
 
-            textBoxResourceDir.Text = folderBrowserDialog.SelectedPath;
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxResourceDir.Text = folderBrowserDialog.SelectedPath;
+            }
         }
 
         private void textBoxResourceDir_TextChanged(object sender, EventArgs e)
@@ -217,24 +273,24 @@ namespace ACTTimeline
         {
             if (!Directory.Exists(Globals.ResourceRoot))
             {
-                return "Resource dir not found :/";
+                return Translator.Get("_Resource_dir_not_found");
             }
 
-            string statusText = "Resource dir exists! ";
+            string statusText = Translator.Get("_Resource_dir_exists");
 
             if (!Directory.Exists(Globals.SoundFilesRoot))
             {
-                statusText += "Sound files dir not found!";
+                statusText += Translator.Get("_Sound_files_dir_not_found");
                 return statusText;
             }
-            statusText += String.Format("Found {0} sound files. ", Globals.NumberOfSoundFilesInResourcesDir());
+            statusText += String.Format(Translator.Get("_Found_N_sound_files"), Globals.NumberOfSoundFilesInResourcesDir());
             
             if (!Directory.Exists(Globals.TimelineTxtsRoot))
             {
-                statusText += "Timeline txt files dir not found!";
+                statusText += Translator.Get("_Timeline_txt_files_dir_not_found");
                 return statusText;
             }
-            statusText += String.Format("Found {0} timeline txt files.", Globals.TimelineTxtsInResourcesDir.Length);
+            statusText += String.Format(Translator.Get("_Found_N_timeline_txt_files"), Globals.TimelineTxtsInResourcesDir.Length);
 
             return statusText;
         }
@@ -247,8 +303,40 @@ namespace ACTTimeline
             listTimelines.Items.Clear();
             foreach (string fullpath in Globals.TimelineTxtsInResourcesDir)
             {
-                listTimelines.Items.Add(Path.GetFileName(fullpath));
+                listTimelines.Items.Add(Path.GetFileNameWithoutExtension(fullpath));
             }
+        }
+
+        private void listTimelines_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttonLoad.Enabled = true;
+        }
+
+        private void listTimelines_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            int fontHeight = 8;
+
+            if (e.Index < 0)
+                return;
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                e = new DrawItemEventArgs(e.Graphics,
+                                          e.Font,
+                                          e.Bounds,
+                                          e.Index,
+                                          e.State ^ DrawItemState.Selected,
+                                          e.ForeColor,
+                                          SystemColors.GradientActiveCaption);
+
+            e.DrawBackground();
+
+            int x = e.Bounds.X + fontHeight;
+            int y = e.Bounds.Y + fontHeight;
+
+            e.Graphics.DrawString(this.listTimelines.Items[e.Index].ToString(),
+                new Font(FontFamily.GenericSansSerif, fontHeight), Brushes.Black, x, y, StringFormat.GenericDefault);
+
+            e.DrawFocusRectangle();
         }
 
         private void buttonResourceDirOpen_Click(object sender, EventArgs e)
@@ -265,20 +353,74 @@ namespace ACTTimeline
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             string timelineTxtFilePath = (string)listTimelines.SelectedItem;
-            plugin.Controller.TimelineTxtFilePath = String.Format("{0}/{1}", Globals.TimelineTxtsRoot, timelineTxtFilePath);
+
+            try
+            {
+                plugin.Controller.TimelineTxtFilePath = String.Format("{0}/{1}.txt", Globals.TimelineTxtsRoot, timelineTxtFilePath);
+
+                trackBar.Enabled = true;
+                buttonRewind.Enabled = true;
+                buttonPlay.Enabled = true;
+
+                plugin.updateAllVisibility(true);
+            }
+            catch
+            {
+                // pass
+            }
+        }
+
+        public void unloadTimeline()
+        {
+            if (plugin.Controller != null)
+            {
+                try
+                {
+                    plugin.Controller.Paused = true;
+                    plugin.Controller.CurrentTime = 0;
+
+                    plugin.Controller.TimelineTxtFilePath = String.Empty;
+
+                    plugin.updateAllVisibility(false);
+                }
+                catch
+                {
+                    // pass
+                }
+            }
+
+            labelLoadedTimeline.Text = Translator.Get("labelLoadedTimeline");
+
+            buttonRewind.Enabled = false;
+            buttonPause.Enabled = false;
+            buttonPlay.Enabled = false;
+
+            buttonUnload.Enabled = false;
+
+            trackBar.Enabled = false;
+            trackBar.Maximum = 10;
+
+            labelEndPos.Text = "00:00";
+        }
+
+        private void buttonUnload_Click(object sender, EventArgs e)
+        {
+            unloadTimeline();
         }
 
         private TimelineView getTimelineView(string name)
         {
             TimelineView result = plugin.TimelineView;
 
-            if (name[name.Length - 1] == '2')
+            char overlayNumber = name[name.Length - 1];
+
+            if (overlayNumber == '2')
                 result = plugin.TimelineView2;
-            else if (name[name.Length - 1] == '3')
+            else if (overlayNumber == '3')
                 result = plugin.TimelineView3;
-            else if (name[name.Length - 1] == '4')
+            else if (overlayNumber == '4')
                 result = plugin.TimelineView4;
-            else if (name[name.Length - 1] == '5')
+            else if (overlayNumber == '5')
                 result = plugin.TimelineView5;
 
             return result;
@@ -348,11 +490,11 @@ namespace ACTTimeline
 
         private void TimelineView_TimelineFontChanged(object sender, EventArgs e)
         {
-            labelCurrentFont.Text = plugin.FontString;
-            labelCurrentFont2.Text = plugin.FontString2;
-            labelCurrentFont3.Text = plugin.FontString3;
-            labelCurrentFont4.Text = plugin.FontString4;
-            labelCurrentFont5.Text = plugin.FontString5;
+            buttonFontSelect.Text = plugin.FontString;
+            buttonFontSelect2.Text = plugin.FontString2;
+            buttonFontSelect3.Text = plugin.FontString3;
+            buttonFontSelect4.Text = plugin.FontString4;
+            buttonFontSelect5.Text = plugin.FontString5;
         }
 
         private void buttonFontSelect_Click(object sender, EventArgs e)
@@ -453,15 +595,20 @@ namespace ACTTimeline
 
         private void checkBoxPlaySoundByACT_CheckedChanged(object sender, EventArgs e)
         {
-            plugin.TimelineView.PlaySoundByACT = checkBoxPlaySoundByACT.Checked;
+            plugin.TimelineView.PlaySoundByACT = this.checkBoxPlaySoundByACT.Checked;
+        }
+
+        private void checkBoxAutoStop_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.Controller.AutoStop = this.checkBoxAutoStop.Checked;
         }
 
         private void checkBoxAutoloadAfterChangeZone_CheckedChanged(object sender, EventArgs e)
         {
-            plugin.TimelineAutoLoader.Autoload = checkBoxAutoloadAfterChangeZone.Checked;
+            plugin.TimelineAutoLoader.Autoload = this.checkBoxAutoloadAfterChangeZone.Checked;
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxAutohide_CheckedChanged(object sender, EventArgs e)
         {
             plugin.AutoHide = this.checkBoxAutohide.Checked;
         }
@@ -503,16 +650,37 @@ namespace ACTTimeline
             CheckBox cb = (CheckBox)sender;
             VisibilityControl vc = plugin.VisibilityControl;
 
-            if (cb.Name[cb.Name.Length - 1] == '2')
+            char overlayNumber = cb.Name[cb.Name.Length - 1];
+
+            if (overlayNumber == '2')
                 vc = plugin.VisibilityControl2;
-            else if (cb.Name[cb.Name.Length - 1] == '3')
+            else if (overlayNumber == '3')
                 vc = plugin.VisibilityControl3;
-            else if (cb.Name[cb.Name.Length - 1] == '4')
+            else if (overlayNumber == '4')
                 vc = plugin.VisibilityControl4;
-            else if (cb.Name[cb.Name.Length - 1] == '5')
+            else if (overlayNumber == '5')
                 vc = plugin.VisibilityControl5;
 
             vc.OverlayVisible = cb.Checked;
+        }
+
+        private void checkBoxReverseOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            TimelineView tv = plugin.TimelineView;
+
+            char overlayNumber = cb.Name[cb.Name.Length - 1];
+
+            if (overlayNumber == '2')
+                tv = plugin.TimelineView2;
+            else if (overlayNumber == '3')
+                tv = plugin.TimelineView3;
+            else if (overlayNumber == '4')
+                tv = plugin.TimelineView4;
+            else if (overlayNumber == '5')
+                tv = plugin.TimelineView5;
+
+            tv.ReverseOrder = cb.Checked;
         }
     }
 }

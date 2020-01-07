@@ -1,35 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ACTTimeline
 {
     public class VisibilityControl
     {
-        [DllImport("user32.dll")]
-        static extern int GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowThreadProcessId(int hWnd, out uint ProcessId);
-
         private delegate void VisibilityChecker();
 
         private Control targetControl;
-
-        private bool visibleViaFocus;
         public bool Visible { get; set; }
         public bool OverlayVisible { get; set; }
-
-        private string lastProcessName;
+        public bool VisibleViaFocus { get; set; }
 
         public VisibilityControl(Control control, System.Timers.Timer timer)
         {
             targetControl = control;
 
-            visibleViaFocus = false;
+            VisibleViaFocus = false;
             Visible = true;
             OverlayVisible = true;
 
@@ -51,7 +38,7 @@ namespace ACTTimeline
             if (targetControl == null)
                 return;
 
-            bool shouldBeVisible = Visible && OverlayVisible && CheckVisibilityViaFocus();
+            bool shouldBeVisible = Visible && OverlayVisible && VisibleViaFocus;
 
             // We use a visibility flag instead and compare "expected" vs "actual" here in order to avoid calling
             // Show all the time, which will potentially kick ACT to the foreground.
@@ -65,43 +52,6 @@ namespace ACTTimeline
                 targetControl.Show();
             else
                 targetControl.Hide();
-        }
-
-        private bool CheckVisibilityViaFocus()
-        {
-            string processName;
-
-            // Attempt to grab the process name of the current active window, if there is one
-            // Attempt to exit gracefully if there's an issue
-            try
-            {
-                uint pid = 0;
-                int handle = GetForegroundWindow();
-                GetWindowThreadProcessId(handle, out pid);
-                System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById((int)pid);
-                processName = p.ProcessName;
-            }
-            catch
-            {
-                visibleViaFocus = false;
-                return visibleViaFocus;
-            }
-
-            if (processName == lastProcessName)
-                return visibleViaFocus;
-
-            // Catches both DX9 and DX11 clients, as well as ACT (which happens to also be our parent process)
-            // Including ACT is important not only for debugging, but also because calling Show will usually kick
-            // ACT to the foreground
-            if (processName.StartsWith("ffxiv") || processName.StartsWith("Advanced Combat Tracker"))
-                visibleViaFocus = true;
-            else
-                visibleViaFocus = false;
-
-            // Store the last active process name to save ourselves time next go-around
-            lastProcessName = processName;
-
-            return visibleViaFocus;
         }
     }
 }

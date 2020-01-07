@@ -14,6 +14,8 @@ namespace ACTTimeline
         private OverlayButtonsForm buttons;
         private CachedSoundPlayer soundplayer;
 
+        public bool ReverseOrder { get; set; }
+
         private int numberOfRowsToDisplay;
         public int NumberOfRowsToDisplay
         {
@@ -204,6 +206,9 @@ namespace ACTTimeline
 
             SetupUI();
 
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+
             this.MouseDown += TimelineView_MouseDown;
             this.VisibleChanged += TimelineView_VisibleChanged;
             this.Move += TimelineView_Move;
@@ -372,21 +377,21 @@ namespace ACTTimeline
                 dataGridView.DataSource = null;
                 if (popupMode)
                 {
-                    dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime - 5, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                    dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime - 5, controller.CurrentTime, numberOfRowsToDisplay, ReverseOrder).ToList();
                 }
                 else if (over10)
                 {
                     if (under10)
-                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime, numberOfRowsToDisplay).ToList();
-                        else              dataGridView.DataSource = timeline.VisibleItemsAtWithoutCasting(controller.CurrentTime, numberOfRowsToDisplay).ToList();
-                    else                  dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
+                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAt(controller.CurrentTime, numberOfRowsToDisplay, ReverseOrder).ToList();
+                        else              dataGridView.DataSource = timeline.VisibleItemsAtWithoutCasting(controller.CurrentTime, numberOfRowsToDisplay, ReverseOrder).ToList();
+                    else                  dataGridView.DataSource = timeline.VisibleItemsAtLeast(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay, ReverseOrder).ToList();
                 }
                 else
                 {
                     if (under10)
-                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                        else              dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay).ToList();
-                    else if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay).ToList();
+                        if (showCasting)  dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay, ReverseOrder).ToList();
+                        else              dataGridView.DataSource = timeline.VisibleItemsAtMostWithoutCasting(controller.CurrentTime, controller.CurrentTime + 10, numberOfRowsToDisplay, ReverseOrder).ToList();
+                    else if (showCasting) dataGridView.DataSource = timeline.VisibleItemsAtMost(controller.CurrentTime, controller.CurrentTime, numberOfRowsToDisplay, ReverseOrder).ToList();
                 }
             }
         }

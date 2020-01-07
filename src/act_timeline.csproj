@@ -87,6 +87,18 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="3rdparty\IntervalTree.cs" />
+    <Compile Include="Language.cs" />
+    <Compile Include="LibZResolver.cs" />
+    <Compile Include="resources\String_en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>String_en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\String_ko-KR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>String_ko-KR.resx</DependentUpon>
+    </Compile>
     <Compile Include="SynthesizerWrapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="OverlayButtonsForm.cs">
@@ -118,6 +130,14 @@
       <DependentUpon>OverlayButtonsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="resources\String_en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>String_en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\String_ko-KR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>String_ko-KR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -147,12 +167,12 @@
       <HintPath>3rdparty\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LibZ.Bootstrap">
-      <HintPath>packages\LibZ.Bootstrap.1.1.0.2\lib\net40-client\LibZ.Bootstrap.dll</HintPath>
+    <Reference Include="LibZ.Bootstrap, Version=1.2.0.0, Culture=neutral, PublicKeyToken=62360e53307d6ba2, processorArchitecture=MSIL">
+      <HintPath>packages\LibZ.Bootstrap.1.2.0.0\lib\net4-client\LibZ.Bootstrap.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Sprache">
-      <HintPath>packages\Sprache.1.10.0.36\lib\net40\Sprache.dll</HintPath>
+    <Reference Include="Sprache, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Sprache.2.2.0\lib\net45\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -165,14 +185,22 @@
     <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set LIBZ="$(SolutionDir)packages\LibZ.Bootstrap.1.1.0.2\tools\libz.exe"
+    <PostBuildEvent>set LIBZ="$(SolutionDir)packages\LibZ.Bootstrap.1.2.0.0\tools\libz.exe"
 set EXE_7ZA="$(SolutionDir)packages\7ZipCLI.9.20.0\tools\7za.exe"
+
 if $(ConfigurationName) == Release (
+
 %25LIBZ%25 inject-dll --assembly $(TargetName).dll --include *.dll --exclude  $(TargetName).dll --move
+
 cd $(TargetDir)..\
-%25EXE_7ZA%25 a act_timeline.zip bin\BindingCoil.ACTTimeline.dll resources
+
+copy .\bin\BindingCoil.ACTTimeline.dll .\
+%25EXE_7ZA%25 a ..\ACT.Timeline_NalRo9.zip .\BindingCoil.ACTTimeline.dll .\resources
+del /F /Q .\BindingCoil.ACTTimeline.dll
+
 ) ELSE (
 echo "no post build on Debug"
 )</PostBuildEvent>

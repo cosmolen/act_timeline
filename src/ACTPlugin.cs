@@ -2,8 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Reflection;
-using System.Threading;
+using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
@@ -20,21 +19,22 @@ namespace ACTTimeline
 
         public PluginSettings Settings { get; private set; }
 
-        private ACTTabPageControl tabPageControl;
+        public ACTTabPageControl tabPageControl { get; private set; }
         public TimelineView TimelineView { get; private set; }
         public TimelineView TimelineView2 { get; private set; }
         public TimelineView TimelineView3 { get; private set; }
         public TimelineView TimelineView4 { get; private set; }
         public TimelineView TimelineView5 { get; private set; }
-        public TimelineAutoLoader TimelineAutoLoader { get; private set; }
-        private CheckBox checkBoxShowView;
         public VisibilityControl VisibilityControl { get; private set; }
         public VisibilityControl VisibilityControl2 { get; private set; }
         public VisibilityControl VisibilityControl3 { get; private set; }
         public VisibilityControl VisibilityControl4 { get; private set; }
         public VisibilityControl VisibilityControl5 { get; private set; }
 
-        const double timerInterval = 200.0; // miliseconds
+        public TimelineAutoLoader TimelineAutoLoader { get; private set; }
+        public CheckBox checkBoxShowView { get; private set; }
+
+        const double autoHideTimerInterval = 1000.0; // miliseconds
 
         private System.Timers.Timer timer;
         private System.Threading.Timer xivWindowTimer;
@@ -171,23 +171,23 @@ namespace ACTTimeline
                 ScreenSpace = pluginScreenSpace;
                 StatusText = pluginStatusText;
 
-                StatusText.Text = "Loading Sprache.dll";
 #if DEBUG
+                StatusText.Text = "Loading Sprache.dll";
                 // Sprache.dll is already injected by libZ in Release builds.
                 Assembly.LoadFrom("Sprache.dll");
-#endif
                 StatusText.Text = "Sprache.dll Load Success!";
+#endif
 
 #if DEBUG
                 // See Issue #1
                 // Control.CheckForIllegalCrossThreadCalls = true;
 #endif
 
-                Controller = new TimelineController();
+                Controller = new TimelineController(this);
+                Controller.TimelineTxtFilePath = String.Empty;
 
                 TimelineView = new TimelineView(Controller);
                 TimelineView.DoubleClick += TimelineView_DoubleClick;
-
                 TimelineView2 = new TimelineView(Controller);
                 TimelineView2.DoubleClick += TimelineView_DoubleClick;
                 TimelineView3 = new TimelineView(Controller);
@@ -197,46 +197,48 @@ namespace ACTTimeline
                 TimelineView5 = new TimelineView(Controller);
                 TimelineView5.DoubleClick += TimelineView_DoubleClick;
 
-                timer = new System.Timers.Timer(timerInterval);
+                timer = new System.Timers.Timer(autoHideTimerInterval);
 
                 VisibilityControl = new VisibilityControl(TimelineView, timer);
-                VisibilityControl.Visible = true;
-
+                VisibilityControl.Visible = false;
                 VisibilityControl2 = new VisibilityControl(TimelineView2, timer);
-                VisibilityControl2.Visible = true;
+                VisibilityControl2.Visible = false;
                 VisibilityControl3 = new VisibilityControl(TimelineView3, timer);
-                VisibilityControl3.Visible = true;
+                VisibilityControl3.Visible = false;
                 VisibilityControl4 = new VisibilityControl(TimelineView4, timer);
-                VisibilityControl4.Visible = true;
+                VisibilityControl4.Visible = false;
                 VisibilityControl5 = new VisibilityControl(TimelineView5, timer);
-                VisibilityControl5.Visible = true;
+                VisibilityControl5.Visible = false;
 
                 timer.Start();
 
-                TimelineAutoLoader = new TimelineAutoLoader(Controller);
+                TimelineAutoLoader = new TimelineAutoLoader(this);
                 TimelineAutoLoader.Start();
 
                 Settings = new PluginSettings(this);
-                Settings.AddStringSetting("TimelineTxtFilePath");
+
                 Settings.AddStringSetting("FontString");
-                Settings.AddIntSetting("BarHeight");
-                Settings.AddIntSetting("BarWidth");
-                Settings.AddIntSetting("OpacityPercentage");
                 Settings.AddStringSetting("FontString2");
-                Settings.AddIntSetting("BarHeight2");
-                Settings.AddIntSetting("BarWidth2");
-                Settings.AddIntSetting("OpacityPercentage2");
                 Settings.AddStringSetting("FontString3");
-                Settings.AddIntSetting("BarHeight3");
-                Settings.AddIntSetting("BarWidth3");
-                Settings.AddIntSetting("OpacityPercentage3");
                 Settings.AddStringSetting("FontString4");
-                Settings.AddIntSetting("BarHeight4");
-                Settings.AddIntSetting("BarWidth4");
-                Settings.AddIntSetting("OpacityPercentage4");
                 Settings.AddStringSetting("FontString5");
+
+                Settings.AddIntSetting("BarHeight");
+                Settings.AddIntSetting("BarHeight2");
+                Settings.AddIntSetting("BarHeight3");
+                Settings.AddIntSetting("BarHeight4");
                 Settings.AddIntSetting("BarHeight5");
+
+                Settings.AddIntSetting("BarWidth");
+                Settings.AddIntSetting("BarWidth2");
+                Settings.AddIntSetting("BarWidth3");
+                Settings.AddIntSetting("BarWidth4");
                 Settings.AddIntSetting("BarWidth5");
+
+                Settings.AddIntSetting("OpacityPercentage");
+                Settings.AddIntSetting("OpacityPercentage2");
+                Settings.AddIntSetting("OpacityPercentage3");
+                Settings.AddIntSetting("OpacityPercentage4");
                 Settings.AddIntSetting("OpacityPercentage5");
 
                 SetupTab();
@@ -246,46 +248,44 @@ namespace ACTTimeline
 
                 SetupUpdateChecker();
 
-                StatusText.Text = "Plugin Started (^^)!";
-
+                StatusText.Text = "Plugin Started.";
 
                 xivWindowTimer = new System.Threading.Timer(e => {
-                    try
+                    if (AutoHide)
                     {
-                        if (this.AutoHide)
-                        {
-                            uint pid;
-                            var hWndFg = NativeMethods.GetForegroundWindow();
-                            if (hWndFg == IntPtr.Zero)
-                            {
-                                return;
-                            }
-                            NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
-                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+                        bool visibleViaFocus = false;
+                        string processName = String.Empty;
 
-                            if (Path.GetFileName(exePath) == "ffxiv.exe" ||
-                                Path.GetFileName(exePath) == "ffxiv_dx11.exe")
-                            {
-                                this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = true));
-                                this.TimelineView2.Invoke(new Action(() => this.TimelineView2.Visible = true));
-                                this.TimelineView3.Invoke(new Action(() => this.TimelineView3.Visible = true));
-                                this.TimelineView4.Invoke(new Action(() => this.TimelineView4.Visible = true));
-                                this.TimelineView5.Invoke(new Action(() => this.TimelineView5.Visible = true));
-                            }
-                            else
-                            {
-                                this.TimelineView.Invoke(new Action(() => this.TimelineView.Visible = false));
-                                this.TimelineView2.Invoke(new Action(() => this.TimelineView2.Visible = false));
-                                this.TimelineView3.Invoke(new Action(() => this.TimelineView3.Visible = false));
-                                this.TimelineView4.Invoke(new Action(() => this.TimelineView4.Visible = false));
-                                this.TimelineView5.Invoke(new Action(() => this.TimelineView5.Visible = false));
-                            }
+                        // Attempt to grab the process name of the current active window, if there is one
+                        // Attempt to exit gracefully if there's an issue
+                        try
+                        {
+                            uint pid = 0;
+                            var handle = NativeMethods.GetForegroundWindow();
+                            NativeMethods.GetWindowThreadProcessId(handle, out pid);
+                            Process p = Process.GetProcessById((int)pid);
+                            processName = p.ProcessName;
                         }
+                        catch
+                        {
+                            visibleViaFocus = false;
+                        }
+
+                        // Catches both DX9 and DX11 clients, as well as ACT (which happens to also be our parent process)
+                        // Including ACT is important not only for debugging, but also because calling Show will usually kick
+                        // ACT to the foreground
+                        if (processName.StartsWith("ffxiv") || processName.StartsWith("Advanced Combat Tracker"))
+                            visibleViaFocus = true;
+                        else
+                            visibleViaFocus = false;
+
+                        VisibilityControl.VisibleViaFocus = visibleViaFocus;
+                        VisibilityControl2.VisibleViaFocus = visibleViaFocus;
+                        VisibilityControl3.VisibleViaFocus = visibleViaFocus;
+                        VisibilityControl4.VisibleViaFocus = visibleViaFocus;
+                        VisibilityControl5.VisibleViaFocus = visibleViaFocus;
                     }
-                    catch
-                    {
-                    }
-                });
+                }, null, 0, (int) autoHideTimerInterval);
             }
             catch(Exception e)
             {
@@ -294,13 +294,18 @@ namespace ACTTimeline
             }
         }
 
+        public void updateAllVisibility(bool visible)
+        {
+            VisibilityControl.Visible = visible;
+            VisibilityControl2.Visible = visible;
+            VisibilityControl3.Visible = visible;
+            VisibilityControl4.Visible = visible;
+            VisibilityControl5.Visible = visible;
+        }
+
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
-            VisibilityControl.Visible = false;
-            VisibilityControl2.Visible = false;
-            VisibilityControl3.Visible = false;
-            VisibilityControl4.Visible = false;
-            VisibilityControl5.Visible = false;
+            updateAllVisibility(false);
             checkBoxShowView.Checked = false;
         }
 
@@ -309,41 +314,25 @@ namespace ACTTimeline
             checkBoxShowView = new CheckBox();
             checkBoxShowView.Appearance = System.Windows.Forms.Appearance.Button;
             checkBoxShowView.Name = "checkBoxShowView";
-            checkBoxShowView.Size = new System.Drawing.Size(90, 24);
-            checkBoxShowView.Text = "Show Timeline";
+            checkBoxShowView.Size = new System.Drawing.Size(70, 24);
+            checkBoxShowView.Text = Translator.Get("_Show_Timeline");
             checkBoxShowView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             checkBoxShowView.UseVisualStyleBackColor = true;
             checkBoxShowView.Checked = true;
             checkBoxShowView.CheckedChanged += checkBoxShowView_CheckedChanged;
             Settings.AddControlSetting("TimelineShown", checkBoxShowView);
 
-            var formMain = ActGlobals.oFormActMain;
-            formMain.Resize += formMain_Resize;
-            formMain.Controls.Add(checkBoxShowView);
-            formMain.Controls.SetChildIndex(checkBoxShowView, 0);
-
-            formMain_Resize(this, null);
+            ActGlobals.oFormActMain.CornerControlAdd(checkBoxShowView);
         }
 
         void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
         {
-            VisibilityControl.Visible = checkBoxShowView.Checked;
-            VisibilityControl2.Visible = checkBoxShowView.Checked;
-            VisibilityControl3.Visible = checkBoxShowView.Checked;
-            VisibilityControl4.Visible = checkBoxShowView.Checked;
-            VisibilityControl5.Visible = checkBoxShowView.Checked;
-        }
-
-        void formMain_Resize(object sender, EventArgs e)
-        {
-            // update button location
-            var mainFormSize = ActGlobals.oFormActMain.Size;
-            checkBoxShowView.Location = new Point(mainFormSize.Width - 435, 0);
+            updateAllVisibility(checkBoxShowView.Checked);
         }
 
         void SetupTab()
         {
-            ScreenSpace.Text = "ACT Timeline";
+            ScreenSpace.Text = Translator.Get("_ACT_Timeline");
 
             tabPageControl = new ACTTabPageControl(this);
             ScreenSpace.Controls.Add(tabPageControl);
@@ -376,7 +365,7 @@ namespace ACTTimeline
         void IActPluginV1.DeInitPlugin()
         {
             if (checkBoxShowView != null)
-                ActGlobals.oFormActMain.Controls.Remove(checkBoxShowView);
+                ActGlobals.oFormActMain.CornerControlRemove(checkBoxShowView);
 
             if (TimelineAutoLoader != null)
                 TimelineAutoLoader.Stop();
@@ -416,7 +405,7 @@ namespace ACTTimeline
             ActGlobals.oFormActMain.UpdateCheckClicked -= CheckForUpdate;
 
             if (StatusText != null)
-                StatusText.Text = "Plugin Exited m(_ _)m";
+                StatusText.Text = "Plugin Exited.";
         }
 
         static class NativeMethods

@@ -9,10 +9,10 @@ namespace ACTTimeline
     public class RemoteVersionInfo
     {
         private string version;
-        private string changeSummaryJp; // FIXME: i18n
+        private string changeSummaryKo; // FIXME: i18n
         private string downloadUrl;
         public string Version { get { return version; } }
-        public string ChangeSummaryJp { get { return changeSummaryJp; } }
+        public string ChangeSummaryKo { get { return changeSummaryKo; } }
         public string DownloadUrl { get { return downloadUrl; } }
 
         RemoteVersionInfo() { }
@@ -38,10 +38,10 @@ namespace ACTTimeline
             xml.LoadXml(src);
 
             var version = GetNodeText(xml, "/versionInfo/version");
-            var changeSummaryJp = GetNodeText(xml, "/versionInfo/changeSummary/jp");
+            var changeSummaryKo = GetNodeText(xml, "/versionInfo/changeSummary/ko");
             var downloadUrl = GetNodeText(xml, "/versionInfo/downloadUrl");
 
-            return new RemoteVersionInfo { version = version, changeSummaryJp = changeSummaryJp, downloadUrl = downloadUrl };
+            return new RemoteVersionInfo { version = version, changeSummaryKo = changeSummaryKo, downloadUrl = downloadUrl };
         }
     }
 
@@ -49,7 +49,7 @@ namespace ACTTimeline
     {
         string localVersion;
 
-        const string DefaultVersionInfoUrl = "https://raw.githubusercontent.com/grindingcoil/act_timeline/master/version_info.xml";
+        const string DefaultVersionInfoUrl = "https://raw.githubusercontent.com/cosmolen/act_timeline/master/version_info.xml";
         string versionInfoUrl;
 
         public UpdateChecker(string localVersion_, string versionInfoUrl_ = DefaultVersionInfoUrl)
@@ -75,8 +75,8 @@ namespace ACTTimeline
                 var remoteInfo = RemoteVersionInfo.FetchUrl(versionInfoUrl);
                 if (CompareVersionString(remoteInfo.Version, localVersion) > 0)
                 {
-                    var msg = String.Format("act_timelineの更新版が公開されています: {0}\nお手元のバージョン: {1}\n主な変更:\n{2}\nダウンロードサイトを開きますか？",
-                        remoteInfo.Version, localVersion, remoteInfo.ChangeSummaryJp);
+                    var msg = String.Format("Update available!\nLatest version: {0}\nCurrent version: {1}",
+                        remoteInfo.Version, localVersion);
                     var result = MessageBox.Show(msg, "act_timeline", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {

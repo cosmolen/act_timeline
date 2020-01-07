@@ -256,46 +256,76 @@ namespace ACTTimeline
             int itemsToSkip = FindFirstItemIndexAfterEndTime(t);
             return Items.Skip(itemsToSkip);
         }
-        public IEnumerable<TimelineActivity> VisibleItemsAt(double t, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAt(double t, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
-        public IEnumerable<TimelineActivity> VisibleItemsAtWithoutCasting(double t, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAtWithoutCasting(double t, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden && e.TimeFromStart - t > 0
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
-        public IEnumerable<TimelineActivity> VisibleItemsAtLeast(double t, double tt, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAtLeast(double t, double tt, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden && e.TimeFromStart > tt
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
-        public IEnumerable<TimelineActivity> VisibleItemsAtLeastWithoutCasting(double t, double tt, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAtLeastWithoutCasting(double t, double tt, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden && e.TimeFromStart > tt && e.TimeFromStart - t > 0
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
-        public IEnumerable<TimelineActivity> VisibleItemsAtMost(double t, double tt, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAtMost(double t, double tt, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden && e.TimeFromStart < tt
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
-        public IEnumerable<TimelineActivity> VisibleItemsAtMostWithoutCasting(double t, double tt, int limit)
+        public IEnumerable<TimelineActivity> VisibleItemsAtMostWithoutCasting(double t, double tt, int limit, bool reverse)
         {
-            return (from e in ItemsBeforeEndTime(t)
+            var items = (from e in ItemsBeforeEndTime(t)
                     where !e.Hidden && e.TimeFromStart < tt && e.TimeFromStart - t > 0
-                    select e).Take(limit).Reverse();
+                    select e).Take(limit);
+
+            if (reverse)
+                items = items.Reverse();
+
+            return items;
         }
 
         List<TimelineAnchor> anchors;
