@@ -64,7 +64,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>E:\Advanced Combat Tracker\Plugins\ACT.Timeline\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -148,6 +148,7 @@
     <EmbeddedResource Include="resources\String_KR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>String_KR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TimelineView.resx">
       <DependentUpon>TimelineView.cs</DependentUpon>
@@ -186,11 +187,10 @@
       <HintPath>packages\LibZ.Bootstrap.1.2.0.0\lib\net4-client\LibZ.Bootstrap.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sprache, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Sprache.2.1.0\lib\net40\Sprache.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Sprache, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Sprache.2.2.0\lib\net45\Sprache.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -204,8 +204,22 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>set LIBZ="$(SolutionDir)packages\LibZ.Bootstrap.1.2.0.0\tools\libz.exe"
+set EXE_7ZA="$(SolutionDir)packages\7ZipCLI.9.20.0\tools\7za.exe"
+
+if $(ConfigurationName) == Release (
+
+%25LIBZ%25 inject-dll --assembly $(TargetName).dll --include *.dll --exclude  $(TargetName).dll --move
+
+cd $(TargetDir)..\
+
+copy .\bin\BindingCoil.ACTTimeline.dll .\
+%25EXE_7ZA%25 a ..\ACT.Timeline.zip .\BindingCoil.ACTTimeline.dll .\resources
+del /F /Q .\BindingCoil.ACTTimeline.dll
+
+) ELSE (
+echo "no post build on Debug"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

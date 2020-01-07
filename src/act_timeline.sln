@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "act_timeline", "act_timeline.csproj", "{3874EF4C-D3D7-48DE-BF5D-5D19D0E7B8A0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9A615561-6CEC-4857-870F-88F6FF07764C} = {9A615561-6CEC-4857-870F-88F6FF07764C}
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7} = {F20B280B-35B9-4462-A71E-E187CC2A60E7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACT.TTSYukkuri", "..\..\ACT.TTSYukkuri\ACT.TTSYukkuri\ACT.TTSYukkuri.csproj", "{9A615561-6CEC-4857-870F-88F6FF07764C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACT.TTSYukkuri", "..\..\ACT.TTSYukkuri\ACT.TTSYukkuri\ACT.TTSYukkuri.csproj", "{F20B280B-35B9-4462-A71E-E187CC2A60E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACT.TTSYukkuri.TTSServer.Core", "..\..\ACT.TTSYukkuri\ACT.TTSYukkuri.TTSServer.Core\ACT.TTSYukkuri.TTSServer.Core.csproj", "{5E73B99C-8FB8-4B3A-9FD0-C4179CD86036}"
 EndProject
@@ -34,16 +34,16 @@ Global
 		{3874EF4C-D3D7-48DE-BF5D-5D19D0E7B8A0}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3874EF4C-D3D7-48DE-BF5D-5D19D0E7B8A0}.Release|x86.ActiveCfg = Release|x86
 		{3874EF4C-D3D7-48DE-BF5D-5D19D0E7B8A0}.Release|x86.Build.0 = Release|x86
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9A615561-6CEC-4857-870F-88F6FF07764C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F20B280B-35B9-4462-A71E-E187CC2A60E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{5E73B99C-8FB8-4B3A-9FD0-C4179CD86036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E73B99C-8FB8-4B3A-9FD0-C4179CD86036}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E73B99C-8FB8-4B3A-9FD0-C4179CD86036}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -57,5 +57,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E122804-8CFB-44C4-BD9F-204C967D5236}
 	EndGlobalSection
 EndGlobal
