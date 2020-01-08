@@ -180,7 +180,10 @@ namespace ACTTimeline
 
             if (logInfo.logLine.Contains("/timeline play") || logInfo.logLine.Contains("/timeline start"))
             {
-                Paused = false;
+                if (timelineTxtFilePath != String.Empty && timeline != null)
+                {
+                    Paused = false;
+                }
             }
 
             if (logInfo.logLine.Contains("/timeline stop"))

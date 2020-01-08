@@ -198,7 +198,7 @@ if $(ConfigurationName) == Release (
 cd $(TargetDir)..\
 
 copy .\bin\BindingCoil.ACTTimeline.dll .\
-%25EXE_7ZA%25 a ..\ACT.Timeline_NalRo9.zip .\BindingCoil.ACTTimeline.dll .\resources
+%25EXE_7ZA%25 a ..\ACT.Timeline.zip .\BindingCoil.ACTTimeline.dll .\resources
 del /F /Q .\BindingCoil.ACTTimeline.dll
 
 ) ELSE (

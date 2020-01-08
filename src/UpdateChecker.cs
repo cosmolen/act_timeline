@@ -77,7 +77,7 @@ namespace ACTTimeline
                 {
                     var msg = String.Format("Update available!\nLatest version: {0}\nCurrent version: {1}",
                         remoteInfo.Version, localVersion);
-                    var result = MessageBox.Show(msg, "act_timeline", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var result = MessageBox.Show(msg, "ACT Timeline Plugin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         Process.Start(remoteInfo.DownloadUrl);
