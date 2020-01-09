@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ACT Timeline")]
-[assembly: AssemblyDescription("FFXIV Timeline Plugin for ACT with Yukkuri support")]
+[assembly: AssemblyDescription("Timeline Plugin for ACT with TTSYukkuri support")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ACT Timeline")]
@@ -14,6 +14,6 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("e3998ee6-8611-4915-9675-b3fbcfde0d54")]
 
-[assembly: AssemblyVersion("0.2.0.1")]
-[assembly: AssemblyFileVersion("0.2.0.1")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]
 [assembly: NeutralResourcesLanguage("")]
