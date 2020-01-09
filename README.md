@@ -5,6 +5,7 @@ ACT Timeline은 [ACT](http://advancedcombattracker.com/)용 플러그인입니�
 
 ![screenshot](https://raw.githubusercontent.com/cosmolen/act_timeline/master/doc/scrshot.gif)
 
+
 ## 설치
 ### 자동 설치
 해루@모그리님의 **HAERUBOT(해루봇)** 을 이용하면 플러그인 설치와 연결을 쉽게 할 수 있습니다.  
@@ -34,15 +35,19 @@ ACT Timeline은 [ACT](http://advancedcombattracker.com/)용 플러그인입니�
 ## 사용방법
 ![usage](https://raw.githubusercontent.com/cosmolen/act_timeline/master/doc/usage.png)
 
-[타임라인 작성 방법 (일본어)](doc/TimelineSyntax.md)
+- **리셋 시 타임라인 일시정지 및 되감기**: 지역 이동, 아이템 입찰, 공략 종료, 준비확인 시 타임라인을 멈춥니다.
+- **지역이 바뀌면 자동으로 불러오기**: 지역 이동 시 지역 이름과 일치하는 타임라인 파일이 있다면 자동으로 불러옵니다.
+- **오버레이 자동 숨김**: FF14 또는 ACT 창을 선택하고 있지 않은 경우 오버레이를 자동으로 숨깁니다.
+
+**[타임라인 작성 방법 (일본어)](doc/TimelineSyntax.md)**
+
 
 ## 라이센스
 소스 코드 및 타임라인 파일은 BSD 3-Clause 라이센스입니다.
 
-## Special Thanks!
 
+## Special Thanks!
 - RainbowMage님: TTS 대응 코드, 빌드 파일 수정
 
-부속 wav파일은 魔王魂님의 무료 소재 재배포입니다:  
-사이트: [音楽素材/魔王魂](http://maoudamashii.jokersounds.com/)  
-이용 시 [소재 이용 규약](http://maoudamashii.jokersounds.com/music_rule.html)을 따라주세요.
+부속 wav파일은 魔王魂님의 무료 소재 재배포입니다. (이용 시 [소재 이용 규약](http://maoudamashii.jokersounds.com/music_rule.html)을 따라주세요)  
+사이트: [音楽素材/魔王魂](http://maoudamashii.jokersounds.com/)
