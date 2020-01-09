@@ -14,7 +14,14 @@ namespace ACTTimeline
         private OverlayButtonsForm buttons;
         private CachedSoundPlayer soundplayer;
 
-        public bool ReverseOrder { get; set; }
+        private bool reverseOrder;
+        public bool ReverseOrder {
+            get { return reverseOrder; }
+            set {
+                reverseOrder = value;
+                controller.OnCurrentTimeUpdate();
+            }
+        }
 
         private int numberOfRowsToDisplay;
         public int NumberOfRowsToDisplay
@@ -204,15 +211,15 @@ namespace ACTTimeline
             barHeight = 25;
             barWidth = 200;
 
+            ShowIcon = false;
+            ShowInTaskbar = false;
+
             SetupUI();
 
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-
-            this.MouseDown += TimelineView_MouseDown;
-            this.VisibleChanged += TimelineView_VisibleChanged;
-            this.Move += TimelineView_Move;
-            this.FormClosing += TimelineView_FormClosing;
+            MouseDown += TimelineView_MouseDown;
+            VisibleChanged += TimelineView_VisibleChanged;
+            Move += TimelineView_Move;
+            FormClosing += TimelineView_FormClosing;
 
             typeof(DataGridView).
                 GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).
@@ -433,26 +440,23 @@ namespace ACTTimeline
 
     class TimeLeftCell : DataGridViewTextBoxCell
     {
-        public const float BLUE_BAR_START = 30.0F;
-        public const float RED_BAR_START = 10.0F;
-        public const float THRESHOLD = 0.0F;
+        public const float BarStartThreshold = 30.0F;
+        public const float EmStartThreshold = 10.0F;
         
         public const int MARGIN = 0; // px
 
-        private Font valueFont = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold);
-        static private readonly StringFormat ValueStringFormat = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center };
-        static private readonly Pen ValuePen = new Pen(Brushes.Black, 2.0F) { LineJoin = LineJoin.Round };
-        static private readonly Brush ValueFill = Brushes.White;
+        static private Font valueFont = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold);
 
+        static private readonly StringFormat ValueStringFormat = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center };
         static private readonly StringFormat NameStringFormat = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center };
         static private readonly StringFormat PopupStringFormat = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
 
-        public static Color BarColorAtTimeLeft(float timeLeft)
+        private Color BarColorAtTimeLeft(float timeLeft)
         {
             if (timeLeft > 10)
-                return Color.FromArgb(64, 80, 176);
+                return ((TimeLeftColumn)OwningColumn).Controller.BarColor;
             else
-                return Color.Red;
+                return ((TimeLeftColumn)OwningColumn).Controller.BarEmColor;
         }
 
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
@@ -512,8 +516,10 @@ namespace ACTTimeline
 
             GraphicsState state = graphics.Save();
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.DrawPath(ValuePen, pathText);
-            graphics.FillPath(ValueFill, pathText);
+            graphics.DrawPath(
+                new Pen(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontStrokeColor), 2.0F) { LineJoin = LineJoin.Round },
+                pathText);
+            graphics.FillPath(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontColor), pathText);
             graphics.Restore(state);
         }
 
@@ -528,8 +534,10 @@ namespace ACTTimeline
 
             GraphicsState state = graphics.Save();
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.DrawPath(ValuePen, pathText);
-            graphics.FillPath(ValueFill, pathText);
+            graphics.DrawPath(
+                new Pen(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontStrokeColor), 2.0F) { LineJoin = LineJoin.Round },
+                pathText);
+            graphics.FillPath(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontColor), pathText);
             graphics.Restore(state);
         }
 
@@ -551,8 +559,10 @@ namespace ACTTimeline
 
             GraphicsState state = graphics.Save();
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.DrawPath(ValuePen, pathText);
-            graphics.FillPath(ValueFill, pathText);
+            graphics.DrawPath(
+                new Pen(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontStrokeColor), 2.0F) { LineJoin = LineJoin.Round },
+                pathText);
+            graphics.FillPath(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.FontColor), pathText);
             graphics.Restore(state);
         }
 
@@ -564,38 +574,41 @@ namespace ACTTimeline
             Color colorA;
             Color colorB;
             Rectangle gradientRect;
-            if (timeTillStart > BLUE_BAR_START)
+
+            bool solidBar = ((TimeLeftColumn)OwningColumn).Controller.SolidBar;
+
+            if (timeTillStart > BarStartThreshold)
             {
                 float bar = 1.0F;
                 
                 barFill.Width *= bar;
 
                 colorA = BarColorAtTimeLeft(timeTillStart);
-                colorB = ControlPaint.Dark(colorA, 0.2F);
+                colorB = solidBar ? colorA : ControlPaint.Dark(colorA, 0.2F);
                 gradientRect = Rectangle.Ceiling(barFill);
             }
             else if (timeTillStart > 10)
             {
-                float bar = timeTillStart / BLUE_BAR_START;
+                float bar = timeTillStart / BarStartThreshold;
                 if (bar > 1.0F)
                     bar = 1.0F;
                 
                 barFill.Width *= bar;
 
                 colorA = BarColorAtTimeLeft(timeTillStart);
-                colorB = ControlPaint.Dark(colorA, 0.2F);
+                colorB = solidBar ? colorA : ControlPaint.Dark(colorA, 0.2F);
                 gradientRect = Rectangle.Ceiling(barFill);
             }
             else if (timeTillStart > 0)
             {
-                float bar = timeTillStart / RED_BAR_START;
+                float bar = timeTillStart / EmStartThreshold;
                 if (bar > 1.0F)
                     bar = 1.0F;
 
                 barFill.Width *= bar;
 
                 colorA = BarColorAtTimeLeft(timeTillStart);
-                colorB = ControlPaint.Dark(colorA, 0.2F);
+                colorB = solidBar ? colorA : ControlPaint.Dark(colorA, 0.2F);
                 gradientRect = Rectangle.Ceiling(barFill);
             }
             else
@@ -604,12 +617,12 @@ namespace ACTTimeline
                 if (bar > 1.0F)
                     bar = 1.0F;
                 
-                graphics.FillRectangle(new SolidBrush(Color.FromArgb(247, 154, 0)), barFill);
+                graphics.FillRectangle(new SolidBrush(((TimeLeftColumn)OwningColumn).Controller.DurationBackColor), barFill);
 
                 barFill.Width *= bar;
 
-                colorA = Color.White;
-                colorB = Color.White;
+                colorA = ((TimeLeftColumn)OwningColumn).Controller.DurationColor;
+                colorB = ((TimeLeftColumn)OwningColumn).Controller.DurationColor;
                 gradientRect = Rectangle.Ceiling(barFill);
             }
 

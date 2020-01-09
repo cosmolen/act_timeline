@@ -22,6 +22,14 @@ namespace ACTTimeline
                 File.Move(oldSettingsFile, newSettingsFile);
             }
 
+            if (File.Exists(newSettingsFile))
+            {
+                string temp = File.ReadAllText(newSettingsFile);
+                temp = temp.Replace("Int32 Name=\"Bar", "NumericUpDown Name=\"Bar");
+                temp = temp.Replace("Int32 Name=\"OpacityPercentage", "TrackBar Name=\"OpacityPercentage");
+                File.WriteAllText(newSettingsFile, temp);
+            }
+
             settingsFile = newSettingsFile;
         }
 

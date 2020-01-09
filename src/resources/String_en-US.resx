@@ -144,6 +144,24 @@
   <data name="buttonRefreshList" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="buttonResetBarColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="buttonResetBarEmColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="buttonResetDurationBackColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="buttonResetDurationColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="buttonResetFontColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="buttonResetFontStrokeColor" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="buttonResourceDirOpen" xml:space="preserve">
     <value>Open Folder</value>
   </data>
@@ -270,6 +288,9 @@
   <data name="checkBoxShowOverlayButtons5" xml:space="preserve">
     <value>Show control buttons</value>
   </data>
+  <data name="checkBoxSolidBar" xml:space="preserve">
+    <value>Use solid color bar</value>
+  </data>
   <data name="checkBoxUnder10" xml:space="preserve">
     <value>Show under 10 seconds</value>
   </data>
@@ -300,6 +321,12 @@
   <data name="labelBar5" xml:space="preserve">
     <value>Width:</value>
   </data>
+  <data name="labelBarColor" xml:space="preserve">
+    <value>Bar color:</value>
+  </data>
+  <data name="labelBarEmColor" xml:space="preserve">
+    <value>Emphatic color:</value>
+  </data>
   <data name="labelColumnSize" xml:space="preserve">
     <value>Row</value>
   </data>
@@ -315,6 +342,12 @@
   <data name="labelColumnSize5" xml:space="preserve">
     <value>Row</value>
   </data>
+  <data name="labelDurationBackColor" xml:space="preserve">
+    <value>Duration background color:</value>
+  </data>
+  <data name="labelDurationColor" xml:space="preserve">
+    <value>Duration progress color:</value>
+  </data>
   <data name="labelFont" xml:space="preserve">
     <value>Font:</value>
   </data>
@@ -329,6 +362,12 @@
   </data>
   <data name="labelFont5" xml:space="preserve">
     <value>Font:</value>
+  </data>
+  <data name="labelFontColor" xml:space="preserve">
+    <value>Font color:</value>
+  </data>
+  <data name="labelFontStrokeColor" xml:space="preserve">
+    <value>Stroke color:</value>
   </data>
   <data name="labelLoadedTimeline" xml:space="preserve">
     <value>-- No active timeline --</value>
@@ -402,6 +441,9 @@
   <data name="lblCtrl" xml:space="preserve">
     <value>Timeline Control</value>
   </data>
+  <data name="lblFontColorSet" xml:space="preserve">
+    <value>Font</value>
+  </data>
   <data name="lblInfo" xml:space="preserve">
     <value>Timeline Information</value>
   </data>
@@ -410,6 +452,9 @@
   </data>
   <data name="lblOverlaySet" xml:space="preserve">
     <value>Timeline Overlay Settings</value>
+  </data>
+  <data name="lblRowColorSet" xml:space="preserve">
+    <value>Row</value>
   </data>
   <data name="lblSettings" xml:space="preserve">
     <value>Timeline Settings</value>
@@ -428,6 +473,9 @@
   </data>
   <data name="tabPage5" xml:space="preserve">
     <value>Overlay 5</value>
+  </data>
+  <data name="tabPage6" xml:space="preserve">
+    <value>Colors</value>
   </data>
   <data name="_ACT_Timeline" xml:space="preserve">
     <value>ACT Timeline</value>

@@ -1,6 +1,7 @@
 ﻿using Advanced_Combat_Tracker;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ACTTimeline
@@ -8,6 +9,138 @@ namespace ACTTimeline
     public class TimelineController
     {
         public bool AutoStop { get; set; }
+
+        private bool solidBar;
+        public bool SolidBar
+        {
+            get { return solidBar; }
+            set
+            {
+                solidBar = value;
+                OnSolidBarUpdate();
+            }
+        }
+
+        public event EventHandler SolidBarUpdate;
+        public void OnSolidBarUpdate()
+        {
+            OnCurrentTimeUpdate();
+            SolidBarUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultBarColor { get; private set; }
+        private Color barColor;
+        public Color BarColor
+        {
+            get { return barColor; }
+            set
+            {
+                barColor = value;
+                OnBarColorUpdate();
+            }
+        }
+
+        public event EventHandler BarColorUpdate;
+        public void OnBarColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            BarColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultBarEmColor { get; private set; }
+        private Color barEmColor;
+        public Color BarEmColor
+        {
+            get { return barEmColor; }
+            set
+            {
+                barEmColor = value;
+                OnBarEmColorUpdate();
+            }
+        }
+
+        public event EventHandler BarEmColorUpdate;
+        public void OnBarEmColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            BarEmColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultDurationBackColor { get; private set; }
+        private Color durationBackColor;
+        public Color DurationBackColor
+        {
+            get { return durationBackColor; }
+            set
+            {
+                durationBackColor = value;
+                OnDurationBackColorUpdate();
+            }
+        }
+
+        public event EventHandler DurationBackColorUpdate;
+        public void OnDurationBackColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            DurationBackColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultDurationColor { get; private set; }
+        private Color durationColor;
+        public Color DurationColor
+        {
+            get { return durationColor; }
+            set
+            {
+                durationColor = value;
+                OnDurationColorUpdate();
+            }
+        }
+
+        public event EventHandler DurationColorUpdate;
+        public void OnDurationColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            DurationColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultFontColor { get; private set; }
+        private Color fontColor;
+        public Color FontColor
+        {
+            get { return fontColor; }
+            set
+            {
+                fontColor = value;
+                OnFontColorUpdate();
+            }
+        }
+
+        public event EventHandler FontColorUpdate;
+        public void OnFontColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            FontColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color DefaultFontStrokeColor { get; private set; }
+        private Color fontStrokeColor;
+        public Color FontStrokeColor
+        {
+            get { return fontStrokeColor; }
+            set
+            {
+                fontStrokeColor = value;
+                OnFontStrokeColorUpdate();
+            }
+        }
+
+        public event EventHandler FontStrokeColorUpdate;
+        public void OnFontStrokeColorUpdate()
+        {
+            OnCurrentTimeUpdate();
+            FontStrokeColorUpdate?.Invoke(this, EventArgs.Empty);
+        }
 
         private string timelineTxtFilePath;
         public string TimelineTxtFilePath
@@ -56,15 +189,13 @@ namespace ACTTimeline
             Paused = true;
             CurrentTime = 0;
 
-            if (TimelineUpdate != null)
-                TimelineUpdate(this, EventArgs.Empty);
+            TimelineUpdate?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler CurrentTimeUpdate;
         public void OnCurrentTimeUpdate()
         {
-            if (CurrentTimeUpdate != null)
-                CurrentTimeUpdate(this, EventArgs.Empty);
+            CurrentTimeUpdate?.Invoke(this, EventArgs.Empty);
         }
 
         private RelativeClock relativeClock;
@@ -106,8 +237,7 @@ namespace ACTTimeline
             if (!paused)
                 relativeClock.CurrentTime = currentTime;
 
-            if (PausedUpdate != null)
-                PausedUpdate(this, EventArgs.Empty);
+            PausedUpdate?.Invoke(this, EventArgs.Empty);
         }
 
         private List<string> keywordsEnd;
@@ -117,6 +247,22 @@ namespace ACTTimeline
         public TimelineController(ACTPlugin plugin_)
         {
             plugin = plugin_;
+
+            solidBar = false;
+
+            DefaultBarColor = Color.FromArgb(64, 80, 176);
+            DefaultBarEmColor = Color.Red;
+            DefaultDurationBackColor = Color.FromArgb(247, 154, 0);
+            DefaultDurationColor = Color.White;
+            DefaultFontColor = Color.White;
+            DefaultFontStrokeColor = Color.Black;
+
+            barColor = DefaultBarColor;
+            barEmColor = DefaultBarEmColor;
+            durationBackColor = DefaultDurationBackColor;
+            durationColor = DefaultDurationColor;
+            fontColor = DefaultFontColor;
+            FontStrokeColor = DefaultFontStrokeColor;
 
             timer = new Timer();
             timer.Tick += (object sender, EventArgs e) => { Synchronize(); };

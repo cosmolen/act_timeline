@@ -1,21 +1,39 @@
 ﻿using Advanced_Combat_Tracker;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace ACTTimeline
 {
     public partial class ACTTabPageControl : UserControl
     {
         private ACTPlugin plugin;
+
         private bool updateFromOverlayMove;
+        private const int NumberOfOverlays = 5;
+
+        private List<NumericUpDown> udOverlayXList;
+        private List<NumericUpDown> udOverlayYList;
+        private List<NumericUpDown> udNumRowsList;
+        private List<NumericUpDown> udBarHeightList;
+        private List<NumericUpDown> udBarWidthList;
+        private List<TrackBar> trackBarOpacityList;
+        private List<Button> buttonFontSelectList;
+        private List<CheckBox> CheckBoxOverlayVisibleList;
+        private List<CheckBox> checkBoxReverseOrderList;
+        private List<CheckBox> checkBoxMoveOverlayByDragList;
+        private List<CheckBox> checkBoxShowOverlayButtonsList;
+        private List<CheckBox> checkBoxOver10List;
+        private List<CheckBox> checkBoxUnder10List;
+        private List<CheckBox> checkBoxShowCastingList;
+        private List<CheckBox> checkBoxPopupList;
+        private List<Label> labelCurrOpacityList;
 
         public void languagePatch(ControlCollection ctrl)
         {
@@ -54,98 +72,116 @@ namespace ACTTimeline
             settings.AddControlSetting("Autoload", checkBoxAutoloadAfterChangeZone);
             settings.AddControlSetting("Autohide", checkBoxAutohide);
 
-            settings.AddControlSetting("OverlayX", udOverlayX);
-            settings.AddControlSetting("OverlayY", udOverlayY);
-            settings.AddControlSetting("NumberOfRowsToDisplay", udNumRows);
-            settings.AddControlSetting("OverlayVisible", CheckBoxOverlayVisible);
-            settings.AddControlSetting("ReverseOrder", checkBoxReverseOrder);
-            settings.AddControlSetting("MoveOverlayByDrag", checkBoxMoveOverlayByDrag);
-            settings.AddControlSetting("ShowOverlayButtons", checkBoxShowOverlayButtons);
-            settings.AddControlSetting("Over10", checkBoxOver10);
-            settings.AddControlSetting("Under10", checkBoxUnder10);
-            settings.AddControlSetting("ShowCasting", checkBoxShowCasting);
-            settings.AddControlSetting("PopupMode", checkBoxPopup);
+            udOverlayXList = new List<NumericUpDown>();
+            udOverlayYList = new List<NumericUpDown>();
+            udNumRowsList = new List<NumericUpDown>();
+            udBarHeightList = new List<NumericUpDown>();
+            udBarWidthList = new List<NumericUpDown>();
+            trackBarOpacityList = new List<TrackBar>();
+            buttonFontSelectList = new List<Button>();
+            CheckBoxOverlayVisibleList = new List<CheckBox>();
+            checkBoxReverseOrderList = new List<CheckBox>();
+            checkBoxMoveOverlayByDragList = new List<CheckBox>();
+            checkBoxShowOverlayButtonsList = new List<CheckBox>();
+            checkBoxOver10List = new List<CheckBox>();
+            checkBoxUnder10List = new List<CheckBox>();
+            checkBoxShowCastingList = new List<CheckBox>();
+            checkBoxPopupList = new List<CheckBox>();
+            labelCurrOpacityList = new List<Label>();
 
-            settings.AddControlSetting("OverlayX2", udOverlayX2);
-            settings.AddControlSetting("OverlayY2", udOverlayY2);
-            settings.AddControlSetting("NumberOfRowsToDisplay2", udNumRows2);
-            settings.AddControlSetting("OverlayVisible2", CheckBoxOverlayVisible2);
-            settings.AddControlSetting("ReverseOrder2", checkBoxReverseOrder2);
-            settings.AddControlSetting("MoveOverlayByDrag2", checkBoxMoveOverlayByDrag2);
-            settings.AddControlSetting("ShowOverlayButtons2", checkBoxShowOverlayButtons2);
-            settings.AddControlSetting("Over102", checkBoxOver102);
-            settings.AddControlSetting("Under102", checkBoxUnder102);
-            settings.AddControlSetting("ShowCasting2", checkBoxShowCasting2);
-            settings.AddControlSetting("PopupMode2", checkBoxPopup2);
+            for (int i = 0; i < NumberOfOverlays; i++)
+            {
+                string numbering = i > 0 ? (i + 1).ToString() : "";
 
-            settings.AddControlSetting("OverlayX3", udOverlayX3);
-            settings.AddControlSetting("OverlayY3", udOverlayY3);
-            settings.AddControlSetting("NumberOfRowsToDisplay3", udNumRows3);
-            settings.AddControlSetting("OverlayVisible3", CheckBoxOverlayVisible3);
-            settings.AddControlSetting("ReverseOrder3", checkBoxReverseOrder3);
-            settings.AddControlSetting("MoveOverlayByDrag3", checkBoxMoveOverlayByDrag3);
-            settings.AddControlSetting("ShowOverlayButtons3", checkBoxShowOverlayButtons3);
-            settings.AddControlSetting("Over103", checkBoxOver103);
-            settings.AddControlSetting("Under103", checkBoxUnder103);
-            settings.AddControlSetting("ShowCasting3", checkBoxShowCasting3);
-            settings.AddControlSetting("PopupMode3", checkBoxPopup3);
+                NumericUpDown udOverlayXTemp = (NumericUpDown)this.GetType().GetField("udOverlayX" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                NumericUpDown udOverlayYTemp = (NumericUpDown)this.GetType().GetField("udOverlayY" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                NumericUpDown udNumRowsTemp = (NumericUpDown)this.GetType().GetField("udNumRows" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                NumericUpDown udBarHeightTemp = (NumericUpDown)this.GetType().GetField("udBarHeight" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                NumericUpDown udBarWidthTemp = (NumericUpDown)this.GetType().GetField("udBarWidth" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                TrackBar trackBarOpacityTemp = (TrackBar)this.GetType().GetField("trackBarOpacity" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                Button buttonFontSelectTemp = (Button)this.GetType().GetField("buttonFontSelect" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox CheckBoxOverlayVisibleTemp = (CheckBox)this.GetType().GetField("CheckBoxOverlayVisible" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxReverseOrderTemp = (CheckBox)this.GetType().GetField("checkBoxReverseOrder" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxMoveOverlayByDragTemp = (CheckBox)this.GetType().GetField("checkBoxMoveOverlayByDrag" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxShowOverlayButtonsTemp = (CheckBox)this.GetType().GetField("checkBoxShowOverlayButtons" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxOver10Temp = (CheckBox)this.GetType().GetField("checkBoxOver10" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxUnder10Temp = (CheckBox)this.GetType().GetField("checkBoxUnder10" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxShowCastingTemp = (CheckBox)this.GetType().GetField("checkBoxShowCasting" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                CheckBox checkBoxPopupTemp = (CheckBox)this.GetType().GetField("checkBoxPopup" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+                Label labelCurrOpacityTemp = (Label)this.GetType().GetField("labelCurrOpacity" + numbering, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
 
-            settings.AddControlSetting("OverlayX4", udOverlayX4);
-            settings.AddControlSetting("OverlayY4", udOverlayY4);
-            settings.AddControlSetting("NumberOfRowsToDisplay4", udNumRows4);
-            settings.AddControlSetting("OverlayVisible4", CheckBoxOverlayVisible4);
-            settings.AddControlSetting("ReverseOrder4", checkBoxReverseOrder4);
-            settings.AddControlSetting("MoveOverlayByDrag4", checkBoxMoveOverlayByDrag4);
-            settings.AddControlSetting("ShowOverlayButtons4", checkBoxShowOverlayButtons4);
-            settings.AddControlSetting("Over104", checkBoxOver104);
-            settings.AddControlSetting("Under104", checkBoxUnder104);
-            settings.AddControlSetting("ShowCasting4", checkBoxShowCasting4);
-            settings.AddControlSetting("PopupMode4", checkBoxPopup4);
+                udOverlayXList.Add(udOverlayXTemp);
+                udOverlayYList.Add(udOverlayYTemp);
+                udNumRowsList.Add(udNumRowsTemp);
+                udBarHeightList.Add(udBarHeightTemp);
+                udBarWidthList.Add(udBarWidthTemp);
+                trackBarOpacityList.Add(trackBarOpacityTemp);
+                buttonFontSelectList.Add(buttonFontSelectTemp);
+                CheckBoxOverlayVisibleList.Add(CheckBoxOverlayVisibleTemp);
+                checkBoxReverseOrderList.Add(checkBoxReverseOrderTemp);
+                checkBoxMoveOverlayByDragList.Add(checkBoxMoveOverlayByDragTemp);
+                checkBoxShowOverlayButtonsList.Add(checkBoxShowOverlayButtonsTemp);
+                checkBoxOver10List.Add(checkBoxOver10Temp);
+                checkBoxUnder10List.Add(checkBoxUnder10Temp);
+                checkBoxShowCastingList.Add(checkBoxShowCastingTemp);
+                checkBoxPopupList.Add(checkBoxPopupTemp);
+                labelCurrOpacityList.Add(labelCurrOpacityTemp);
 
-            settings.AddControlSetting("OverlayX5", udOverlayX5);
-            settings.AddControlSetting("OverlayY5", udOverlayY5);
-            settings.AddControlSetting("NumberOfRowsToDisplay5", udNumRows5);
-            settings.AddControlSetting("OverlayVisible5", CheckBoxOverlayVisible5);
-            settings.AddControlSetting("ReverseOrder5", checkBoxReverseOrder5);
-            settings.AddControlSetting("MoveOverlayByDrag5", checkBoxMoveOverlayByDrag5);
-            settings.AddControlSetting("ShowOverlayButtons5", checkBoxShowOverlayButtons5);
-            settings.AddControlSetting("Over105", checkBoxOver105);
-            settings.AddControlSetting("Under105", checkBoxUnder105);
-            settings.AddControlSetting("ShowCasting5", checkBoxShowCasting5);
-            settings.AddControlSetting("PopupMode5", checkBoxPopup5);
+                settings.AddControlSetting("OverlayX" + numbering, udOverlayXTemp);
+                settings.AddControlSetting("OverlayY" + numbering, udOverlayYTemp);
+                settings.AddControlSetting("NumberOfRowsToDisplay" + numbering, udNumRowsTemp);
+                settings.AddControlSetting("BarHeight" + numbering, udBarHeightTemp);
+                settings.AddControlSetting("BarWidth" + numbering, udBarWidthTemp);
+                settings.AddControlSetting("FontString" + numbering, buttonFontSelectTemp);
+                settings.AddControlSetting("OpacityPercentage" + numbering, trackBarOpacityTemp);
+                settings.AddControlSetting("OverlayVisible" + numbering, CheckBoxOverlayVisibleTemp);
+                settings.AddControlSetting("ReverseOrder" + numbering, checkBoxReverseOrderTemp);
+                settings.AddControlSetting("MoveOverlayByDrag" + numbering, checkBoxMoveOverlayByDragTemp);
+                settings.AddControlSetting("ShowOverlayButtons" + numbering, checkBoxShowOverlayButtonsTemp);
+                settings.AddControlSetting("Over10" + numbering, checkBoxOver10Temp);
+                settings.AddControlSetting("Under10" + numbering, checkBoxUnder10Temp);
+                settings.AddControlSetting("ShowCasting" + numbering, checkBoxShowCastingTemp);
+                settings.AddControlSetting("PopupMode" + numbering, checkBoxPopupTemp);
+
+                plugin.TimelineViewList[i].Move += TimelineView_Move;
+                plugin.TimelineViewList[i].TimelineFontChanged += TimelineView_TimelineFontChanged;
+                plugin.TimelineViewList[i].ColumnWidthChanged += TimelineView_ColumnWidthChanged;
+                plugin.TimelineViewList[i].OpacityChanged += TimelineView_OpacityChanged;
+            }
+
+            settings.AddControlSetting("BarColor", textBoxBarColor);
+            settings.AddControlSetting("BarEmColor", textBoxBarEmColor);
+            settings.AddControlSetting("DurationBackColor", textBoxDurationBackColor);
+            settings.AddControlSetting("DurationColor", textBoxDurationColor);
+            settings.AddControlSetting("FontColor", textBoxFontColor);
+            settings.AddControlSetting("FontStrokeColor", textBoxFontStrokeColor);
+            settings.AddControlSetting("SolidBar", checkBoxSolidBar);
+
+            plugin.Controller.BarColorUpdate += Controller_BarColorUpdate;
+            plugin.Controller.BarEmColorUpdate += Controller_BarEmColorUpdate;
+            plugin.Controller.DurationBackColorUpdate += Controller_DurationBackColorUpdate;
+            plugin.Controller.DurationColorUpdate += Controller_DurationColorUpdate;
+            plugin.Controller.FontColorUpdate += Controller_FontColorUpdate;
+            plugin.Controller.FontStrokeColorUpdate += Controller_FontStrokeColorUpdate;
+            plugin.Controller.SolidBarUpdate += Controller_SolidBarUpdate;
 
             plugin.Controller.CurrentTimeUpdate += Controller_CurrentTimeUpdate;
             plugin.Controller.TimelineUpdate += Controller_TimelineUpdate;
             plugin.Controller.PausedUpdate += Controller_PausedUpdate;
 
-            plugin.TimelineView.Move += TimelineView_Move;
-            plugin.TimelineView.TimelineFontChanged += TimelineView_TimelineFontChanged;
-            plugin.TimelineView.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
-            plugin.TimelineView.OpacityChanged += TimelineView_OpacityChanged;
-
-            plugin.TimelineView2.Move += TimelineView_Move;
-            plugin.TimelineView2.TimelineFontChanged += TimelineView_TimelineFontChanged;
-            plugin.TimelineView2.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
-            plugin.TimelineView2.OpacityChanged += TimelineView_OpacityChanged;
-
-            plugin.TimelineView3.Move += TimelineView_Move;
-            plugin.TimelineView3.TimelineFontChanged += TimelineView_TimelineFontChanged;
-            plugin.TimelineView3.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
-            plugin.TimelineView3.OpacityChanged += TimelineView_OpacityChanged;
-
-            plugin.TimelineView4.Move += TimelineView_Move;
-            plugin.TimelineView4.TimelineFontChanged += TimelineView_TimelineFontChanged;
-            plugin.TimelineView4.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
-            plugin.TimelineView4.OpacityChanged += TimelineView_OpacityChanged;
-
-            plugin.TimelineView5.Move += TimelineView_Move;
-            plugin.TimelineView5.TimelineFontChanged += TimelineView_TimelineFontChanged;
-            plugin.TimelineView5.ColumnWidthChanged += TimelineView_ColumnWidthChanged;
-            plugin.TimelineView5.OpacityChanged += TimelineView_OpacityChanged;
-
             TimelineView_TimelineFontChanged(this, null);
             TimelineView_ColumnWidthChanged(this, null);
             TimelineView_OpacityChanged(this, null);
+
+            Controller_BarColorUpdate(this, null);
+            Controller_BarEmColorUpdate(this, null);
+            Controller_DurationBackColorUpdate(this, null);
+            Controller_DurationColorUpdate(this, null);
+            Controller_FontColorUpdate(this, null);
+            Controller_FontStrokeColorUpdate(this, null);
+
+            Controller_SolidBarUpdate(this, null);
+
             Controller_TimelineUpdate(this, null);
             Controller_PausedUpdate(this, null);
 
@@ -168,6 +204,106 @@ namespace ACTTimeline
                 buttonPause.Enabled = false;
                 buttonPlay.Enabled = true;
             }
+        }
+
+        private static string ColorToString(Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
+
+        private void Controller_BarColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_BarColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.BarColor;
+
+            textBoxBarColor.Text = ColorToString(c);
+            buttonBarColor.BackColor = c;
+        }
+
+        private void Controller_BarEmColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_BarEmColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.BarEmColor;
+
+            textBoxBarEmColor.Text = ColorToString(c);
+            buttonBarEmColor.BackColor = c;
+        }
+
+        private void Controller_DurationBackColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_DurationBackColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.DurationBackColor;
+
+            textBoxDurationBackColor.Text = ColorToString(c);
+            buttonDurationBackColor.BackColor = c;
+        }
+
+        private void Controller_DurationColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_DurationColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.DurationColor;
+
+            textBoxDurationColor.Text = ColorToString(c);
+            buttonDurationColor.BackColor = c;
+        }
+
+        private void Controller_FontColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_FontColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.FontColor;
+
+            textBoxFontColor.Text = ColorToString(c);
+            buttonFontColor.BackColor = c;
+        }
+
+        private void Controller_FontStrokeColorUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_FontStrokeColorUpdate(sender, e)));
+                return;
+            }
+
+            Color c = plugin.Controller.FontStrokeColor;
+
+            textBoxFontStrokeColor.Text = ColorToString(c);
+            buttonFontStrokeColor.BackColor = c;
+        }
+
+        private void Controller_SolidBarUpdate(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Controller_SolidBarUpdate(sender, e)));
+                return;
+            }
+
+            checkBoxSolidBar.Checked = plugin.Controller.SolidBar;
         }
 
         private void Controller_PausedUpdate(object sender, EventArgs e)
@@ -226,25 +362,14 @@ namespace ACTTimeline
             NumericUpDown udy = udOverlayY;
             TimelineView tv = (TimelineView)sender;
 
-            if(sender == plugin.TimelineView2)
+            for (int i = 0; i < plugin.NumberOfOverlays; i++)
             {
-                udx = udOverlayX2;
-                udy = udOverlayY2;
-            }
-            else if (sender == plugin.TimelineView3)
-            {
-                udx = udOverlayX3;
-                udy = udOverlayY3;
-            }
-            else if (sender == plugin.TimelineView4)
-            {
-                udx = udOverlayX4;
-                udy = udOverlayY4;
-            }
-            else if (sender == plugin.TimelineView5)
-            {
-                udx = udOverlayX5;
-                udy = udOverlayY5;
+                if (sender == plugin.TimelineViewList[i])
+                {
+                    udx = udOverlayXList[i];
+                    udy = udOverlayYList[i];
+                    break;
+                }
             }
 
             updateFromOverlayMove = true;
@@ -297,6 +422,8 @@ namespace ACTTimeline
 
         private void Synchronize()
         {
+            buttonLoad.Enabled = false;
+
             labelResourceDirStatus.Text = GenerateDirStatusString();
             
             // update timeline list
@@ -410,18 +537,24 @@ namespace ACTTimeline
 
         private TimelineView getTimelineView(string name)
         {
-            TimelineView result = plugin.TimelineView;
+            TimelineView result = plugin.TimelineViewList[0];
 
-            char overlayNumber = name[name.Length - 1];
+            int overlayNumber = (int)Char.GetNumericValue(name[name.Length - 1]);
 
-            if (overlayNumber == '2')
-                result = plugin.TimelineView2;
-            else if (overlayNumber == '3')
-                result = plugin.TimelineView3;
-            else if (overlayNumber == '4')
-                result = plugin.TimelineView4;
-            else if (overlayNumber == '5')
-                result = plugin.TimelineView5;
+            if (overlayNumber > 1)
+                result = plugin.TimelineViewList[overlayNumber - 1];
+
+            return result;
+        }
+
+        private VisibilityControl getVisibilityControl(string name)
+        {
+            VisibilityControl result = plugin.VisibilityControlList[0];
+
+            int overlayNumber = (int)Char.GetNumericValue(name[name.Length - 1]);
+
+            if (overlayNumber > 1)
+                result = plugin.VisibilityControlList[overlayNumber - 1];
 
             return result;
         }
@@ -460,7 +593,7 @@ namespace ACTTimeline
             tv.MoveByDrag = cb.Checked;
         }
 
-        private void trackbar_Scroll(object sender, EventArgs e)
+        private void trackbar_ValueChanged(object sender, EventArgs e)
         {
             plugin.Controller.CurrentTime = (int)trackBar.Value;
         }
@@ -490,11 +623,10 @@ namespace ACTTimeline
 
         private void TimelineView_TimelineFontChanged(object sender, EventArgs e)
         {
-            buttonFontSelect.Text = plugin.FontString;
-            buttonFontSelect2.Text = plugin.FontString2;
-            buttonFontSelect3.Text = plugin.FontString3;
-            buttonFontSelect4.Text = plugin.FontString4;
-            buttonFontSelect5.Text = plugin.FontString5;
+            for (int i = 0; i < plugin.NumberOfOverlays; i++)
+            {
+                buttonFontSelectList[i].Text = TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(plugin.TimelineViewList[i].TimelineFont);
+            }
         }
 
         private void buttonFontSelect_Click(object sender, EventArgs e)
@@ -506,24 +638,34 @@ namespace ACTTimeline
 
             fontdialog.Font = tv.TimelineFont;
 
-            if (fontdialog.ShowDialog() != DialogResult.Cancel)
+            if (fontdialog.ShowDialog() == DialogResult.OK)
             {
                 tv.TimelineFont = fontdialog.Font;
             }
         }
 
+        private void buttonFontSelect_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Button btn = (Button)sender;
+                TimelineView tv = getTimelineView(btn.Name);
+
+                tv.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(btn.Text) as Font;
+            }
+            catch
+            {
+                // pass
+            }
+        }
+
         private void TimelineView_ColumnWidthChanged(object sender, EventArgs e)
         {
-            udBarHeight.Value = plugin.TimelineView.BarHeight;
-            udBarWidth.Value = plugin.TimelineView.BarWidth;
-            udBarHeight2.Value = plugin.TimelineView2.BarHeight;
-            udBarWidth2.Value = plugin.TimelineView2.BarWidth;
-            udBarHeight3.Value = plugin.TimelineView3.BarHeight;
-            udBarWidth3.Value = plugin.TimelineView3.BarWidth;
-            udBarHeight4.Value = plugin.TimelineView4.BarHeight;
-            udBarWidth4.Value = plugin.TimelineView4.BarWidth;
-            udBarHeight5.Value = plugin.TimelineView5.BarHeight;
-            udBarWidth5.Value = plugin.TimelineView5.BarWidth;
+            for (int i = 0; i < plugin.NumberOfOverlays; i++)
+            {
+                udBarHeightList[i].Value = plugin.TimelineViewList[i].BarHeight;
+                udBarWidthList[i].Value = plugin.TimelineViewList[i].BarWidth;
+            }
         }
 
         private void udTextWidth_ValueChanged(object sender, EventArgs e)
@@ -544,58 +686,29 @@ namespace ACTTimeline
 
         private void TimelineView_OpacityChanged(object sender, EventArgs e)
         {
-            int percentage = (int)(plugin.TimelineView.MyOpacity * 100);
+            for (int i = 0; i < plugin.NumberOfOverlays; i++)
+            {
+                int percentage = (int)(plugin.TimelineViewList[i].MyOpacity * 100);
 
-            labelCurrOpacity.Text = String.Format("{0}%", percentage);
+                percentage = Math.Min(trackBarOpacityList[i].Maximum, percentage);
+                percentage = Math.Max(trackBarOpacityList[i].Minimum, percentage);
 
-            percentage = Math.Min(trackBarOpacity.Maximum, percentage);
-            percentage = Math.Max(trackBarOpacity.Minimum, percentage);
-            trackBarOpacity.Value = percentage;
-
-            percentage = (int)(plugin.TimelineView2.MyOpacity * 100);
-
-            labelCurrOpacity2.Text = String.Format("{0}%", percentage);
-
-            percentage = Math.Min(trackBarOpacity2.Maximum, percentage);
-            percentage = Math.Max(trackBarOpacity2.Minimum, percentage);
-            trackBarOpacity2.Value = percentage;
-
-            percentage = (int)(plugin.TimelineView3.MyOpacity * 100);
-
-            labelCurrOpacity3.Text = String.Format("{0}%", percentage);
-
-            percentage = Math.Min(trackBarOpacity3.Maximum, percentage);
-            percentage = Math.Max(trackBarOpacity3.Minimum, percentage);
-            trackBarOpacity3.Value = percentage;
-
-            percentage = (int)(plugin.TimelineView4.MyOpacity * 100);
-
-            labelCurrOpacity4.Text = String.Format("{0}%", percentage);
-
-            percentage = Math.Min(trackBarOpacity4.Maximum, percentage);
-            percentage = Math.Max(trackBarOpacity4.Minimum, percentage);
-            trackBarOpacity4.Value = percentage;
-
-            percentage = (int)(plugin.TimelineView5.MyOpacity * 100);
-
-            labelCurrOpacity5.Text = String.Format("{0}%", percentage);
-
-            percentage = Math.Min(trackBarOpacity5.Maximum, percentage);
-            percentage = Math.Max(trackBarOpacity5.Minimum, percentage);
-            trackBarOpacity5.Value = percentage;
+                trackBarOpacityList[i].Value = percentage;
+                labelCurrOpacityList[i].Text = String.Format("{0}%", percentage);
+            }
         }
 
-        private void trackBarOpacity_Scroll(object sender, EventArgs e)
+        private void trackBarOpacity_ValueChanged(object sender, EventArgs e)
         {
             TrackBar tb = (TrackBar)sender;
             TimelineView tv = getTimelineView(tb.Name);
 
-            tv.MyOpacity = ((double)tb.Value) / 100;
+            tv.MyOpacity = (double) tb.Value / 100;
         }
 
         private void checkBoxPlaySoundByACT_CheckedChanged(object sender, EventArgs e)
         {
-            plugin.TimelineView.PlaySoundByACT = this.checkBoxPlaySoundByACT.Checked;
+            plugin.TimelineViewList[0].PlaySoundByACT = this.checkBoxPlaySoundByACT.Checked;
         }
 
         private void checkBoxAutoStop_CheckedChanged(object sender, EventArgs e)
@@ -645,42 +758,298 @@ namespace ACTTimeline
             tv.PopupMode = cb.Checked;
         }
 
+        private void checkBoxReverseOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            TimelineView tv = getTimelineView(cb.Name);
+
+            tv.ReverseOrder = cb.Checked;
+        }
+
         private void CheckBoxOverlayVisible_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-            VisibilityControl vc = plugin.VisibilityControl;
-
-            char overlayNumber = cb.Name[cb.Name.Length - 1];
-
-            if (overlayNumber == '2')
-                vc = plugin.VisibilityControl2;
-            else if (overlayNumber == '3')
-                vc = plugin.VisibilityControl3;
-            else if (overlayNumber == '4')
-                vc = plugin.VisibilityControl4;
-            else if (overlayNumber == '5')
-                vc = plugin.VisibilityControl5;
+            VisibilityControl vc = getVisibilityControl(cb.Name);
 
             vc.OverlayVisible = cb.Checked;
         }
 
-        private void checkBoxReverseOrder_CheckedChanged(object sender, EventArgs e)
+        private void buttonColorClick(string setting, Button b, TextBox tb)
         {
-            CheckBox cb = (CheckBox)sender;
-            TimelineView tv = plugin.TimelineView;
+            ColorDialog dialog = new ColorDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Color c = dialog.Color;
+                plugin.Controller.GetType().GetProperty(setting).SetValue(plugin.Controller, c);
+                tb.Text = ColorToString(c);
+                b.BackColor = c;
+            }
+        }
 
-            char overlayNumber = cb.Name[cb.Name.Length - 1];
+        private void textBoxColorApply(string setting, Button b, TextBox tb)
+        {
+            Color c = (Color)plugin.Controller.GetType().GetProperty(setting).GetValue(plugin.Controller);
 
-            if (overlayNumber == '2')
-                tv = plugin.TimelineView2;
-            else if (overlayNumber == '3')
-                tv = plugin.TimelineView3;
-            else if (overlayNumber == '4')
-                tv = plugin.TimelineView4;
-            else if (overlayNumber == '5')
-                tv = plugin.TimelineView5;
+            try
+            {
+                c = ColorTranslator.FromHtml(tb.Text);
+            }
+            catch
+            {
+                // pass
+            }
 
-            tv.ReverseOrder = cb.Checked;
+            plugin.Controller.GetType().GetProperty(setting).SetValue(plugin.Controller, c);
+            tb.Text = ColorToString(c);
+            b.BackColor = c;
+        }
+
+        private void textBoxColorTextChanged(string setting, Button b, TextBox tb)
+        {
+            Color c = (Color)plugin.Controller.GetType().GetProperty(setting).GetValue(plugin.Controller);
+
+            try
+            {
+                c = ColorTranslator.FromHtml(tb.Text);
+            }
+            catch
+            {
+                c = (Color)plugin.Controller.GetType().GetProperty("Default" + setting).GetValue(plugin.Controller); ;
+            }
+
+            if (!tb.Focused)
+            {
+                plugin.Controller.GetType().GetProperty(setting).SetValue(plugin.Controller, c);
+            }
+
+            b.BackColor = c;
+        }
+
+        private bool? textBoxColorKeyPress(KeyPressEventArgs e)
+        {
+            char c = e.KeyChar;
+
+            if (c == 13)
+                return null;
+
+            if ((ModifierKeys & Keys.Control) != Keys.Control && c != '#' && c != '\b' && !((c <= 57 && c >= 48) || (c <= 70 && c >= 65) || (c <= 102 && c >= 92)))
+                return true;
+
+            return false;
+        }
+
+        // bar color
+        private void buttonBarColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("BarColor", buttonBarColor, textBoxBarColor);
+        }
+
+        private void textBoxBarColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("BarColor", buttonBarColor, textBoxBarColor);
+        }
+
+        private void textBoxBarColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("BarColor", buttonBarColor, textBoxBarColor);
+        }
+
+        private void textBoxBarColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxBarColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetBarColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.BarColor = plugin.Controller.DefaultBarColor;
+        }
+
+        // bar em color
+        private void buttonBarEmColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("BarEmColor", buttonBarEmColor, textBoxBarEmColor);
+        }
+
+        private void textBoxBarEmColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("BarEmColor", buttonBarEmColor, textBoxBarEmColor);
+        }
+
+        private void textBoxBarEmColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("BarEmColor", buttonBarEmColor, textBoxBarEmColor);
+        }
+
+        private void textBoxBarEmColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxBarEmColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetBarEmColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.BarEmColor = plugin.Controller.DefaultBarEmColor;
+        }
+
+        // duration back color
+        private void buttonDurationBackColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("DurationBackColor", buttonDurationBackColor, textBoxDurationBackColor);
+        }
+
+        private void textBoxDurationBackColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("DurationBackColor", buttonDurationBackColor, textBoxDurationBackColor);
+        }
+
+        private void textBoxDurationBackColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("DurationBackColor", buttonDurationBackColor, textBoxDurationBackColor);
+        }
+
+        private void textBoxDurationBackColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxDurationBackColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetDurationBackColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.DurationBackColor = plugin.Controller.DefaultDurationBackColor;
+        }
+
+        // duration color
+        private void buttonDurationColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("DurationColor", buttonDurationColor, textBoxDurationColor);
+        }
+
+        private void textBoxDurationColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("DurationColor", buttonDurationColor, textBoxDurationColor);
+        }
+
+        private void textBoxDurationColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("DurationColor", buttonDurationColor, textBoxDurationColor);
+        }
+
+        private void textBoxDurationColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxDurationColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetDurationColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.DurationColor = plugin.Controller.DefaultDurationColor;
+        }
+
+        // font color
+        private void buttonFontColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("FontColor", buttonFontColor, textBoxFontColor);
+        }
+
+        private void textBoxFontColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("FontColor", buttonFontColor, textBoxFontColor);
+        }
+
+        private void textBoxFontColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("FontColor", buttonFontColor, textBoxFontColor);
+        }
+
+        private void textBoxFontColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxFontColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetFontColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.FontColor = plugin.Controller.DefaultFontColor;
+        }
+
+        // font stroke color
+        private void buttonFontStrokeColor_Click(object sender, EventArgs e)
+        {
+            buttonColorClick("FontStrokeColor", buttonFontStrokeColor, textBoxFontStrokeColor);
+        }
+        private void textBoxFontStrokeColor_Apply(object sender, EventArgs e)
+        {
+            textBoxColorApply("FontStrokeColor", buttonFontStrokeColor, textBoxFontStrokeColor);
+        }
+
+        private void textBoxFontStrokeColor_TextChanged(object sender, EventArgs e)
+        {
+            textBoxColorTextChanged("FontStrokeColor", buttonFontStrokeColor, textBoxFontStrokeColor);
+        }
+
+        private void textBoxFontStrokeColor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool? validated = textBoxColorKeyPress(e);
+
+            if (validated == null)
+            {
+                textBoxFontStrokeColor_Apply(this, null);
+            }
+            else
+            {
+                e.Handled = (bool)validated;
+            }
+        }
+
+        private void buttonResetFontStrokeColor_Click(object sender, EventArgs e)
+        {
+            plugin.Controller.FontStrokeColor = plugin.Controller.DefaultFontStrokeColor;
+        }
+
+        private void checkBoxSolidBar_CheckedChanged(object sender, EventArgs e)
+        {
+            plugin.Controller.SolidBar = checkBoxSolidBar.Checked;
         }
     }
 }

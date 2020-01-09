@@ -214,6 +214,60 @@ namespace ACTTimeline.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetBarColor {
+            get {
+                return ResourceManager.GetString("buttonResetBarColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetBarEmColor {
+            get {
+                return ResourceManager.GetString("buttonResetBarEmColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetDurationBackColor {
+            get {
+                return ResourceManager.GetString("buttonResetDurationBackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetDurationColor {
+            get {
+                return ResourceManager.GetString("buttonResetDurationColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetFontColor {
+            get {
+                return ResourceManager.GetString("buttonResetFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 기본값.
+        /// </summary>
+        internal static string buttonResetFontStrokeColor {
+            get {
+                return ResourceManager.GetString("buttonResetFontStrokeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 폴더열기.
         /// </summary>
         internal static string buttonResourceDirOpen {
@@ -592,6 +646,15 @@ namespace ACTTimeline.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 단색 배경.
+        /// </summary>
+        internal static string checkBoxSolidBar {
+            get {
+                return ResourceManager.GetString("checkBoxSolidBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10초 미만 남은 항목 표시.
         /// </summary>
         internal static string checkBoxUnder10 {
@@ -682,6 +745,24 @@ namespace ACTTimeline.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 배경 색:.
+        /// </summary>
+        internal static string labelBarColor {
+            get {
+                return ResourceManager.GetString("labelBarColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 강조 배경 색:.
+        /// </summary>
+        internal static string labelBarEmColor {
+            get {
+                return ResourceManager.GetString("labelBarEmColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 행.
         /// </summary>
         internal static string labelColumnSize {
@@ -727,6 +808,24 @@ namespace ACTTimeline.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 진행중 항목 색:.
+        /// </summary>
+        internal static string labelDurationBackColor {
+            get {
+                return ResourceManager.GetString("labelDurationBackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 진행중 배경 색:.
+        /// </summary>
+        internal static string labelDurationColor {
+            get {
+                return ResourceManager.GetString("labelDurationColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 글꼴:.
         /// </summary>
         internal static string labelFont {
@@ -768,6 +867,24 @@ namespace ACTTimeline.resources {
         internal static string labelFont5 {
             get {
                 return ResourceManager.GetString("labelFont5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 글꼴 색:.
+        /// </summary>
+        internal static string labelFontColor {
+            get {
+                return ResourceManager.GetString("labelFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 윤곽선 색:.
+        /// </summary>
+        internal static string labelFontStrokeColor {
+            get {
+                return ResourceManager.GetString("labelFontStrokeColor", resourceCulture);
             }
         }
         
@@ -988,6 +1105,15 @@ namespace ACTTimeline.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 글꼴.
+        /// </summary>
+        internal static string lblFontColorSet {
+            get {
+                return ResourceManager.GetString("lblFontColorSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 타임라인 정보.
         /// </summary>
         internal static string lblInfo {
@@ -1011,6 +1137,15 @@ namespace ACTTimeline.resources {
         internal static string lblOverlaySet {
             get {
                 return ResourceManager.GetString("lblOverlaySet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 행.
+        /// </summary>
+        internal static string lblRowColorSet {
+            get {
+                return ResourceManager.GetString("lblRowColorSet", resourceCulture);
             }
         }
         
@@ -1065,6 +1200,15 @@ namespace ACTTimeline.resources {
         internal static string tabPage5 {
             get {
                 return ResourceManager.GetString("tabPage5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 색상.
+        /// </summary>
+        internal static string tabPage6 {
+            get {
+                return ResourceManager.GetString("tabPage6", resourceCulture);
             }
         }
     }

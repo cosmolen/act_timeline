@@ -195,6 +195,34 @@
             this.checkBoxOver105 = new System.Windows.Forms.CheckBox();
             this.checkBoxShowOverlayButtons5 = new System.Windows.Forms.CheckBox();
             this.checkBoxMoveOverlayByDrag5 = new System.Windows.Forms.CheckBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.buttonResetFontStrokeColor = new System.Windows.Forms.Button();
+            this.buttonResetFontColor = new System.Windows.Forms.Button();
+            this.buttonResetDurationColor = new System.Windows.Forms.Button();
+            this.buttonResetDurationBackColor = new System.Windows.Forms.Button();
+            this.buttonResetBarEmColor = new System.Windows.Forms.Button();
+            this.buttonResetBarColor = new System.Windows.Forms.Button();
+            this.buttonFontStrokeColor = new System.Windows.Forms.Button();
+            this.textBoxFontStrokeColor = new System.Windows.Forms.TextBox();
+            this.buttonFontColor = new System.Windows.Forms.Button();
+            this.textBoxFontColor = new System.Windows.Forms.TextBox();
+            this.buttonDurationColor = new System.Windows.Forms.Button();
+            this.textBoxDurationColor = new System.Windows.Forms.TextBox();
+            this.buttonDurationBackColor = new System.Windows.Forms.Button();
+            this.textBoxDurationBackColor = new System.Windows.Forms.TextBox();
+            this.checkBoxSolidBar = new System.Windows.Forms.CheckBox();
+            this.labelFontStrokeColor = new System.Windows.Forms.Label();
+            this.labelFontColor = new System.Windows.Forms.Label();
+            this.lblFontColorSet = new System.Windows.Forms.Label();
+            this.labelDurationColor = new System.Windows.Forms.Label();
+            this.labelDurationBackColor = new System.Windows.Forms.Label();
+            this.lblRowColorSet = new System.Windows.Forms.Label();
+            this.buttonBarEmColor = new System.Windows.Forms.Button();
+            this.textBoxBarEmColor = new System.Windows.Forms.TextBox();
+            this.labelBarEmColor = new System.Windows.Forms.Label();
+            this.buttonBarColor = new System.Windows.Forms.Button();
+            this.textBoxBarColor = new System.Windows.Forms.TextBox();
+            this.labelBarColor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -244,6 +272,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udBarHeight5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayY5)).BeginInit();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -412,7 +441,7 @@
             this.trackBar.Size = new System.Drawing.Size(573, 45);
             this.trackBar.TabIndex = 0;
             this.trackBar.TickFrequency = 30;
-            this.trackBar.Scroll += new System.EventHandler(this.trackbar_Scroll);
+            this.trackBar.ValueChanged += new System.EventHandler(this.trackbar_ValueChanged);
             // 
             // buttonPause
             // 
@@ -494,9 +523,8 @@
             this.labelResourceDirStatus.AutoSize = true;
             this.labelResourceDirStatus.Location = new System.Drawing.Point(13, 52);
             this.labelResourceDirStatus.Name = "labelResourceDirStatus";
-            this.labelResourceDirStatus.Size = new System.Drawing.Size(117, 12);
+            this.labelResourceDirStatus.Size = new System.Drawing.Size(0, 12);
             this.labelResourceDirStatus.TabIndex = 3;
-            this.labelResourceDirStatus.Text = "Resource Dir Status";
             // 
             // buttonResourceDirSelect
             // 
@@ -599,6 +627,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 328F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(400, 594);
             this.tableLayoutPanel2.TabIndex = 0;
@@ -714,6 +743,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(1, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -758,7 +788,7 @@
             // checkBoxReverseOrder
             // 
             this.checkBoxReverseOrder.AutoSize = true;
-            this.checkBoxReverseOrder.Location = new System.Drawing.Point(171, 200);
+            this.checkBoxReverseOrder.Location = new System.Drawing.Point(181, 200);
             this.checkBoxReverseOrder.Name = "checkBoxReverseOrder";
             this.checkBoxReverseOrder.Size = new System.Drawing.Size(148, 16);
             this.checkBoxReverseOrder.TabIndex = 6;
@@ -782,7 +812,7 @@
             // checkBoxPopup
             // 
             this.checkBoxPopup.AutoSize = true;
-            this.checkBoxPopup.Location = new System.Drawing.Point(171, 266);
+            this.checkBoxPopup.Location = new System.Drawing.Point(181, 266);
             this.checkBoxPopup.Name = "checkBoxPopup";
             this.checkBoxPopup.Size = new System.Drawing.Size(96, 16);
             this.checkBoxPopup.TabIndex = 9;
@@ -826,7 +856,7 @@
             this.checkBoxUnder10.AutoSize = true;
             this.checkBoxUnder10.Checked = true;
             this.checkBoxUnder10.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUnder10.Location = new System.Drawing.Point(171, 244);
+            this.checkBoxUnder10.Location = new System.Drawing.Point(181, 244);
             this.checkBoxUnder10.Name = "checkBoxUnder10";
             this.checkBoxUnder10.Size = new System.Drawing.Size(161, 16);
             this.checkBoxUnder10.TabIndex = 7;
@@ -884,7 +914,7 @@
             this.trackBarOpacity.TabIndex = 4;
             this.trackBarOpacity.TickFrequency = 10;
             this.trackBarOpacity.Value = 1;
-            this.trackBarOpacity.Scroll += new System.EventHandler(this.trackBarOpacity_Scroll);
+            this.trackBarOpacity.ValueChanged += new System.EventHandler(this.trackBarOpacity_ValueChanged);
             // 
             // labelFont
             // 
@@ -900,7 +930,7 @@
             this.checkBoxShowOverlayButtons.AutoSize = true;
             this.checkBoxShowOverlayButtons.Checked = true;
             this.checkBoxShowOverlayButtons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(171, 222);
+            this.checkBoxShowOverlayButtons.Location = new System.Drawing.Point(181, 222);
             this.checkBoxShowOverlayButtons.Name = "checkBoxShowOverlayButtons";
             this.checkBoxShowOverlayButtons.Size = new System.Drawing.Size(143, 16);
             this.checkBoxShowOverlayButtons.TabIndex = 3;
@@ -974,6 +1004,7 @@
             this.buttonFontSelect.TabIndex = 0;
             this.buttonFontSelect.Text = "Select Font";
             this.buttonFontSelect.UseVisualStyleBackColor = true;
+            this.buttonFontSelect.TextChanged += new System.EventHandler(this.buttonFontSelect_TextChanged);
             this.buttonFontSelect.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // udBarHeight
@@ -1115,7 +1146,7 @@
             // checkBoxReverseOrder2
             // 
             this.checkBoxReverseOrder2.AutoSize = true;
-            this.checkBoxReverseOrder2.Location = new System.Drawing.Point(171, 200);
+            this.checkBoxReverseOrder2.Location = new System.Drawing.Point(181, 200);
             this.checkBoxReverseOrder2.Name = "checkBoxReverseOrder2";
             this.checkBoxReverseOrder2.Size = new System.Drawing.Size(148, 16);
             this.checkBoxReverseOrder2.TabIndex = 37;
@@ -1173,7 +1204,7 @@
             this.trackBarOpacity2.TabIndex = 30;
             this.trackBarOpacity2.TickFrequency = 10;
             this.trackBarOpacity2.Value = 1;
-            this.trackBarOpacity2.Scroll += new System.EventHandler(this.trackBarOpacity_Scroll);
+            this.trackBarOpacity2.ValueChanged += new System.EventHandler(this.trackBarOpacity_ValueChanged);
             // 
             // labelFont2
             // 
@@ -1239,6 +1270,7 @@
             this.buttonFontSelect2.TabIndex = 16;
             this.buttonFontSelect2.Text = "Select Font";
             this.buttonFontSelect2.UseVisualStyleBackColor = true;
+            this.buttonFontSelect2.TextChanged += new System.EventHandler(this.buttonFontSelect_TextChanged);
             this.buttonFontSelect2.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // udBarHeight2
@@ -1361,7 +1393,7 @@
             // checkBoxPopup2
             // 
             this.checkBoxPopup2.AutoSize = true;
-            this.checkBoxPopup2.Location = new System.Drawing.Point(171, 266);
+            this.checkBoxPopup2.Location = new System.Drawing.Point(181, 266);
             this.checkBoxPopup2.Name = "checkBoxPopup2";
             this.checkBoxPopup2.Size = new System.Drawing.Size(96, 16);
             this.checkBoxPopup2.TabIndex = 35;
@@ -1387,7 +1419,7 @@
             this.checkBoxUnder102.AutoSize = true;
             this.checkBoxUnder102.Checked = true;
             this.checkBoxUnder102.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUnder102.Location = new System.Drawing.Point(171, 244);
+            this.checkBoxUnder102.Location = new System.Drawing.Point(181, 244);
             this.checkBoxUnder102.Name = "checkBoxUnder102";
             this.checkBoxUnder102.Size = new System.Drawing.Size(161, 16);
             this.checkBoxUnder102.TabIndex = 33;
@@ -1422,7 +1454,7 @@
             this.checkBoxShowOverlayButtons2.AutoSize = true;
             this.checkBoxShowOverlayButtons2.Checked = true;
             this.checkBoxShowOverlayButtons2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons2.Location = new System.Drawing.Point(171, 222);
+            this.checkBoxShowOverlayButtons2.Location = new System.Drawing.Point(181, 222);
             this.checkBoxShowOverlayButtons2.Name = "checkBoxShowOverlayButtons2";
             this.checkBoxShowOverlayButtons2.Size = new System.Drawing.Size(143, 16);
             this.checkBoxShowOverlayButtons2.TabIndex = 28;
@@ -1481,7 +1513,7 @@
             // checkBoxReverseOrder3
             // 
             this.checkBoxReverseOrder3.AutoSize = true;
-            this.checkBoxReverseOrder3.Location = new System.Drawing.Point(171, 200);
+            this.checkBoxReverseOrder3.Location = new System.Drawing.Point(181, 200);
             this.checkBoxReverseOrder3.Name = "checkBoxReverseOrder3";
             this.checkBoxReverseOrder3.Size = new System.Drawing.Size(148, 16);
             this.checkBoxReverseOrder3.TabIndex = 62;
@@ -1539,7 +1571,7 @@
             this.trackBarOpacity3.TabIndex = 56;
             this.trackBarOpacity3.TickFrequency = 10;
             this.trackBarOpacity3.Value = 1;
-            this.trackBarOpacity3.Scroll += new System.EventHandler(this.trackBarOpacity_Scroll);
+            this.trackBarOpacity3.ValueChanged += new System.EventHandler(this.trackBarOpacity_ValueChanged);
             // 
             // labelFont3
             // 
@@ -1605,6 +1637,7 @@
             this.buttonFontSelect3.TabIndex = 42;
             this.buttonFontSelect3.Text = "Select Font";
             this.buttonFontSelect3.UseVisualStyleBackColor = true;
+            this.buttonFontSelect3.TextChanged += new System.EventHandler(this.buttonFontSelect_TextChanged);
             this.buttonFontSelect3.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // udBarHeight3
@@ -1727,7 +1760,7 @@
             // checkBoxPopup3
             // 
             this.checkBoxPopup3.AutoSize = true;
-            this.checkBoxPopup3.Location = new System.Drawing.Point(171, 266);
+            this.checkBoxPopup3.Location = new System.Drawing.Point(181, 266);
             this.checkBoxPopup3.Name = "checkBoxPopup3";
             this.checkBoxPopup3.Size = new System.Drawing.Size(96, 16);
             this.checkBoxPopup3.TabIndex = 60;
@@ -1753,7 +1786,7 @@
             this.checkBoxUnder103.AutoSize = true;
             this.checkBoxUnder103.Checked = true;
             this.checkBoxUnder103.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUnder103.Location = new System.Drawing.Point(171, 244);
+            this.checkBoxUnder103.Location = new System.Drawing.Point(181, 244);
             this.checkBoxUnder103.Name = "checkBoxUnder103";
             this.checkBoxUnder103.Size = new System.Drawing.Size(161, 16);
             this.checkBoxUnder103.TabIndex = 58;
@@ -1788,7 +1821,7 @@
             this.checkBoxShowOverlayButtons3.AutoSize = true;
             this.checkBoxShowOverlayButtons3.Checked = true;
             this.checkBoxShowOverlayButtons3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons3.Location = new System.Drawing.Point(171, 222);
+            this.checkBoxShowOverlayButtons3.Location = new System.Drawing.Point(181, 222);
             this.checkBoxShowOverlayButtons3.Name = "checkBoxShowOverlayButtons3";
             this.checkBoxShowOverlayButtons3.Size = new System.Drawing.Size(143, 16);
             this.checkBoxShowOverlayButtons3.TabIndex = 54;
@@ -1847,7 +1880,7 @@
             // checkBoxReverseOrder4
             // 
             this.checkBoxReverseOrder4.AutoSize = true;
-            this.checkBoxReverseOrder4.Location = new System.Drawing.Point(171, 200);
+            this.checkBoxReverseOrder4.Location = new System.Drawing.Point(181, 200);
             this.checkBoxReverseOrder4.Name = "checkBoxReverseOrder4";
             this.checkBoxReverseOrder4.Size = new System.Drawing.Size(148, 16);
             this.checkBoxReverseOrder4.TabIndex = 62;
@@ -1901,7 +1934,7 @@
             this.trackBarOpacity4.TabIndex = 56;
             this.trackBarOpacity4.TickFrequency = 10;
             this.trackBarOpacity4.Value = 1;
-            this.trackBarOpacity4.Scroll += new System.EventHandler(this.trackBarOpacity_Scroll);
+            this.trackBarOpacity4.ValueChanged += new System.EventHandler(this.trackBarOpacity_ValueChanged);
             // 
             // labelFont4
             // 
@@ -1965,6 +1998,7 @@
             this.buttonFontSelect4.TabIndex = 42;
             this.buttonFontSelect4.Text = "Select Font";
             this.buttonFontSelect4.UseVisualStyleBackColor = true;
+            this.buttonFontSelect4.TextChanged += new System.EventHandler(this.buttonFontSelect_TextChanged);
             this.buttonFontSelect4.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // udBarHeight4
@@ -2084,7 +2118,7 @@
             // checkBoxPopup4
             // 
             this.checkBoxPopup4.AutoSize = true;
-            this.checkBoxPopup4.Location = new System.Drawing.Point(171, 266);
+            this.checkBoxPopup4.Location = new System.Drawing.Point(181, 266);
             this.checkBoxPopup4.Name = "checkBoxPopup4";
             this.checkBoxPopup4.Size = new System.Drawing.Size(96, 16);
             this.checkBoxPopup4.TabIndex = 60;
@@ -2110,7 +2144,7 @@
             this.checkBoxUnder104.AutoSize = true;
             this.checkBoxUnder104.Checked = true;
             this.checkBoxUnder104.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUnder104.Location = new System.Drawing.Point(171, 244);
+            this.checkBoxUnder104.Location = new System.Drawing.Point(181, 244);
             this.checkBoxUnder104.Name = "checkBoxUnder104";
             this.checkBoxUnder104.Size = new System.Drawing.Size(161, 16);
             this.checkBoxUnder104.TabIndex = 58;
@@ -2145,7 +2179,7 @@
             this.checkBoxShowOverlayButtons4.AutoSize = true;
             this.checkBoxShowOverlayButtons4.Checked = true;
             this.checkBoxShowOverlayButtons4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons4.Location = new System.Drawing.Point(171, 222);
+            this.checkBoxShowOverlayButtons4.Location = new System.Drawing.Point(181, 222);
             this.checkBoxShowOverlayButtons4.Name = "checkBoxShowOverlayButtons4";
             this.checkBoxShowOverlayButtons4.Size = new System.Drawing.Size(143, 16);
             this.checkBoxShowOverlayButtons4.TabIndex = 54;
@@ -2204,7 +2238,7 @@
             // checkBoxReverseOrder5
             // 
             this.checkBoxReverseOrder5.AutoSize = true;
-            this.checkBoxReverseOrder5.Location = new System.Drawing.Point(171, 200);
+            this.checkBoxReverseOrder5.Location = new System.Drawing.Point(181, 200);
             this.checkBoxReverseOrder5.Name = "checkBoxReverseOrder5";
             this.checkBoxReverseOrder5.Size = new System.Drawing.Size(148, 16);
             this.checkBoxReverseOrder5.TabIndex = 62;
@@ -2258,7 +2292,7 @@
             this.trackBarOpacity5.TabIndex = 56;
             this.trackBarOpacity5.TickFrequency = 10;
             this.trackBarOpacity5.Value = 1;
-            this.trackBarOpacity5.Scroll += new System.EventHandler(this.trackBarOpacity_Scroll);
+            this.trackBarOpacity5.ValueChanged += new System.EventHandler(this.trackBarOpacity_ValueChanged);
             // 
             // labelFont5
             // 
@@ -2322,6 +2356,7 @@
             this.buttonFontSelect5.TabIndex = 42;
             this.buttonFontSelect5.Text = "Select Font";
             this.buttonFontSelect5.UseVisualStyleBackColor = true;
+            this.buttonFontSelect5.TextChanged += new System.EventHandler(this.buttonFontSelect_TextChanged);
             this.buttonFontSelect5.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // udBarHeight5
@@ -2450,7 +2485,7 @@
             // checkBoxPopup5
             // 
             this.checkBoxPopup5.AutoSize = true;
-            this.checkBoxPopup5.Location = new System.Drawing.Point(171, 266);
+            this.checkBoxPopup5.Location = new System.Drawing.Point(181, 266);
             this.checkBoxPopup5.Name = "checkBoxPopup5";
             this.checkBoxPopup5.Size = new System.Drawing.Size(96, 16);
             this.checkBoxPopup5.TabIndex = 60;
@@ -2476,7 +2511,7 @@
             this.checkBoxUnder105.AutoSize = true;
             this.checkBoxUnder105.Checked = true;
             this.checkBoxUnder105.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUnder105.Location = new System.Drawing.Point(171, 244);
+            this.checkBoxUnder105.Location = new System.Drawing.Point(181, 244);
             this.checkBoxUnder105.Name = "checkBoxUnder105";
             this.checkBoxUnder105.Size = new System.Drawing.Size(161, 16);
             this.checkBoxUnder105.TabIndex = 58;
@@ -2502,7 +2537,7 @@
             this.checkBoxShowOverlayButtons5.AutoSize = true;
             this.checkBoxShowOverlayButtons5.Checked = true;
             this.checkBoxShowOverlayButtons5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxShowOverlayButtons5.Location = new System.Drawing.Point(171, 222);
+            this.checkBoxShowOverlayButtons5.Location = new System.Drawing.Point(181, 222);
             this.checkBoxShowOverlayButtons5.Name = "checkBoxShowOverlayButtons5";
             this.checkBoxShowOverlayButtons5.Size = new System.Drawing.Size(143, 16);
             this.checkBoxShowOverlayButtons5.TabIndex = 54;
@@ -2522,6 +2557,314 @@
             this.checkBoxMoveOverlayByDrag5.Text = "Allow mouse click";
             this.checkBoxMoveOverlayByDrag5.UseVisualStyleBackColor = true;
             this.checkBoxMoveOverlayByDrag5.CheckedChanged += new System.EventHandler(this.checkBoxMoveOverlayByDrag_CheckedChanged);
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.buttonResetFontStrokeColor);
+            this.tabPage6.Controls.Add(this.buttonResetFontColor);
+            this.tabPage6.Controls.Add(this.buttonResetDurationColor);
+            this.tabPage6.Controls.Add(this.buttonResetDurationBackColor);
+            this.tabPage6.Controls.Add(this.buttonResetBarEmColor);
+            this.tabPage6.Controls.Add(this.buttonResetBarColor);
+            this.tabPage6.Controls.Add(this.buttonFontStrokeColor);
+            this.tabPage6.Controls.Add(this.textBoxFontStrokeColor);
+            this.tabPage6.Controls.Add(this.buttonFontColor);
+            this.tabPage6.Controls.Add(this.textBoxFontColor);
+            this.tabPage6.Controls.Add(this.buttonDurationColor);
+            this.tabPage6.Controls.Add(this.textBoxDurationColor);
+            this.tabPage6.Controls.Add(this.buttonDurationBackColor);
+            this.tabPage6.Controls.Add(this.textBoxDurationBackColor);
+            this.tabPage6.Controls.Add(this.checkBoxSolidBar);
+            this.tabPage6.Controls.Add(this.labelFontStrokeColor);
+            this.tabPage6.Controls.Add(this.labelFontColor);
+            this.tabPage6.Controls.Add(this.lblFontColorSet);
+            this.tabPage6.Controls.Add(this.labelDurationColor);
+            this.tabPage6.Controls.Add(this.labelDurationBackColor);
+            this.tabPage6.Controls.Add(this.lblRowColorSet);
+            this.tabPage6.Controls.Add(this.buttonBarEmColor);
+            this.tabPage6.Controls.Add(this.textBoxBarEmColor);
+            this.tabPage6.Controls.Add(this.labelBarEmColor);
+            this.tabPage6.Controls.Add(this.buttonBarColor);
+            this.tabPage6.Controls.Add(this.textBoxBarColor);
+            this.tabPage6.Controls.Add(this.labelBarColor);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(381, 290);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Colors";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // buttonResetFontStrokeColor
+            // 
+            this.buttonResetFontStrokeColor.Location = new System.Drawing.Point(305, 238);
+            this.buttonResetFontStrokeColor.Name = "buttonResetFontStrokeColor";
+            this.buttonResetFontStrokeColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetFontStrokeColor.TabIndex = 37;
+            this.buttonResetFontStrokeColor.Text = "Reset";
+            this.buttonResetFontStrokeColor.UseVisualStyleBackColor = true;
+            this.buttonResetFontStrokeColor.Click += new System.EventHandler(this.buttonResetFontStrokeColor_Click);
+            // 
+            // buttonResetFontColor
+            // 
+            this.buttonResetFontColor.Location = new System.Drawing.Point(115, 238);
+            this.buttonResetFontColor.Name = "buttonResetFontColor";
+            this.buttonResetFontColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetFontColor.TabIndex = 36;
+            this.buttonResetFontColor.Text = "Reset";
+            this.buttonResetFontColor.UseVisualStyleBackColor = true;
+            this.buttonResetFontColor.Click += new System.EventHandler(this.buttonResetFontColor_Click);
+            // 
+            // buttonResetDurationColor
+            // 
+            this.buttonResetDurationColor.Location = new System.Drawing.Point(305, 107);
+            this.buttonResetDurationColor.Name = "buttonResetDurationColor";
+            this.buttonResetDurationColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetDurationColor.TabIndex = 35;
+            this.buttonResetDurationColor.Text = "Reset";
+            this.buttonResetDurationColor.UseVisualStyleBackColor = true;
+            this.buttonResetDurationColor.Click += new System.EventHandler(this.buttonResetDurationColor_Click);
+            // 
+            // buttonResetDurationBackColor
+            // 
+            this.buttonResetDurationBackColor.Location = new System.Drawing.Point(115, 107);
+            this.buttonResetDurationBackColor.Name = "buttonResetDurationBackColor";
+            this.buttonResetDurationBackColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetDurationBackColor.TabIndex = 34;
+            this.buttonResetDurationBackColor.Text = "Reset";
+            this.buttonResetDurationBackColor.UseVisualStyleBackColor = true;
+            this.buttonResetDurationBackColor.Click += new System.EventHandler(this.buttonResetDurationBackColor_Click);
+            // 
+            // buttonResetBarEmColor
+            // 
+            this.buttonResetBarEmColor.Location = new System.Drawing.Point(305, 52);
+            this.buttonResetBarEmColor.Name = "buttonResetBarEmColor";
+            this.buttonResetBarEmColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetBarEmColor.TabIndex = 33;
+            this.buttonResetBarEmColor.Text = "Reset";
+            this.buttonResetBarEmColor.UseVisualStyleBackColor = true;
+            this.buttonResetBarEmColor.Click += new System.EventHandler(this.buttonResetBarEmColor_Click);
+            // 
+            // buttonResetBarColor
+            // 
+            this.buttonResetBarColor.Location = new System.Drawing.Point(115, 52);
+            this.buttonResetBarColor.Name = "buttonResetBarColor";
+            this.buttonResetBarColor.Size = new System.Drawing.Size(60, 25);
+            this.buttonResetBarColor.TabIndex = 32;
+            this.buttonResetBarColor.Text = "Reset";
+            this.buttonResetBarColor.UseVisualStyleBackColor = true;
+            this.buttonResetBarColor.Click += new System.EventHandler(this.buttonResetBarColor_Click);
+            // 
+            // buttonFontStrokeColor
+            // 
+            this.buttonFontStrokeColor.Location = new System.Drawing.Point(274, 238);
+            this.buttonFontStrokeColor.Name = "buttonFontStrokeColor";
+            this.buttonFontStrokeColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonFontStrokeColor.TabIndex = 29;
+            this.buttonFontStrokeColor.UseVisualStyleBackColor = true;
+            this.buttonFontStrokeColor.Click += new System.EventHandler(this.buttonFontStrokeColor_Click);
+            // 
+            // textBoxFontStrokeColor
+            // 
+            this.textBoxFontStrokeColor.Location = new System.Drawing.Point(198, 239);
+            this.textBoxFontStrokeColor.MaxLength = 7;
+            this.textBoxFontStrokeColor.Name = "textBoxFontStrokeColor";
+            this.textBoxFontStrokeColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxFontStrokeColor.TabIndex = 28;
+            this.textBoxFontStrokeColor.TextChanged += new System.EventHandler(this.textBoxFontStrokeColor_TextChanged);
+            this.textBoxFontStrokeColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFontStrokeColor_KeyPress);
+            this.textBoxFontStrokeColor.Leave += new System.EventHandler(this.textBoxFontStrokeColor_Apply);
+            // 
+            // buttonFontColor
+            // 
+            this.buttonFontColor.Location = new System.Drawing.Point(84, 238);
+            this.buttonFontColor.Name = "buttonFontColor";
+            this.buttonFontColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonFontColor.TabIndex = 26;
+            this.buttonFontColor.UseVisualStyleBackColor = true;
+            this.buttonFontColor.Click += new System.EventHandler(this.buttonFontColor_Click);
+            // 
+            // textBoxFontColor
+            // 
+            this.textBoxFontColor.Location = new System.Drawing.Point(8, 239);
+            this.textBoxFontColor.MaxLength = 7;
+            this.textBoxFontColor.Name = "textBoxFontColor";
+            this.textBoxFontColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxFontColor.TabIndex = 25;
+            this.textBoxFontColor.TextChanged += new System.EventHandler(this.textBoxFontColor_TextChanged);
+            this.textBoxFontColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFontColor_KeyPress);
+            this.textBoxFontColor.Leave += new System.EventHandler(this.textBoxFontColor_Apply);
+            // 
+            // buttonDurationColor
+            // 
+            this.buttonDurationColor.Location = new System.Drawing.Point(274, 107);
+            this.buttonDurationColor.Name = "buttonDurationColor";
+            this.buttonDurationColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonDurationColor.TabIndex = 22;
+            this.buttonDurationColor.UseVisualStyleBackColor = true;
+            this.buttonDurationColor.Click += new System.EventHandler(this.buttonDurationColor_Click);
+            // 
+            // textBoxDurationColor
+            // 
+            this.textBoxDurationColor.Location = new System.Drawing.Point(198, 108);
+            this.textBoxDurationColor.MaxLength = 7;
+            this.textBoxDurationColor.Name = "textBoxDurationColor";
+            this.textBoxDurationColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxDurationColor.TabIndex = 21;
+            this.textBoxDurationColor.TextChanged += new System.EventHandler(this.textBoxDurationColor_TextChanged);
+            this.textBoxDurationColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDurationColor_KeyPress);
+            this.textBoxDurationColor.Leave += new System.EventHandler(this.textBoxDurationColor_Apply);
+            // 
+            // buttonDurationBackColor
+            // 
+            this.buttonDurationBackColor.Location = new System.Drawing.Point(84, 107);
+            this.buttonDurationBackColor.Name = "buttonDurationBackColor";
+            this.buttonDurationBackColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonDurationBackColor.TabIndex = 19;
+            this.buttonDurationBackColor.UseVisualStyleBackColor = true;
+            this.buttonDurationBackColor.Click += new System.EventHandler(this.buttonDurationBackColor_Click);
+            // 
+            // textBoxDurationBackColor
+            // 
+            this.textBoxDurationBackColor.Location = new System.Drawing.Point(8, 108);
+            this.textBoxDurationBackColor.MaxLength = 7;
+            this.textBoxDurationBackColor.Name = "textBoxDurationBackColor";
+            this.textBoxDurationBackColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxDurationBackColor.TabIndex = 18;
+            this.textBoxDurationBackColor.TextChanged += new System.EventHandler(this.textBoxDurationBackColor_TextChanged);
+            this.textBoxDurationBackColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDurationBackColor_KeyPress);
+            this.textBoxDurationBackColor.Leave += new System.EventHandler(this.textBoxDurationBackColor_Apply);
+            // 
+            // checkBoxSolidBar
+            // 
+            this.checkBoxSolidBar.AutoSize = true;
+            this.checkBoxSolidBar.Location = new System.Drawing.Point(8, 149);
+            this.checkBoxSolidBar.Name = "checkBoxSolidBar";
+            this.checkBoxSolidBar.Size = new System.Drawing.Size(131, 16);
+            this.checkBoxSolidBar.TabIndex = 31;
+            this.checkBoxSolidBar.Text = "Use solid color bar";
+            this.checkBoxSolidBar.UseVisualStyleBackColor = true;
+            this.checkBoxSolidBar.CheckedChanged += new System.EventHandler(this.checkBoxSolidBar_CheckedChanged);
+            // 
+            // labelFontStrokeColor
+            // 
+            this.labelFontStrokeColor.AutoSize = true;
+            this.labelFontStrokeColor.Location = new System.Drawing.Point(196, 219);
+            this.labelFontStrokeColor.Name = "labelFontStrokeColor";
+            this.labelFontStrokeColor.Size = new System.Drawing.Size(76, 12);
+            this.labelFontStrokeColor.TabIndex = 30;
+            this.labelFontStrokeColor.Text = "Stroke color:";
+            // 
+            // labelFontColor
+            // 
+            this.labelFontColor.AutoSize = true;
+            this.labelFontColor.Location = new System.Drawing.Point(6, 219);
+            this.labelFontColor.Name = "labelFontColor";
+            this.labelFontColor.Size = new System.Drawing.Size(65, 12);
+            this.labelFontColor.TabIndex = 27;
+            this.labelFontColor.Text = "Font color:";
+            // 
+            // lblFontColorSet
+            // 
+            this.lblFontColorSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFontColorSet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblFontColorSet.Location = new System.Drawing.Point(0, 185);
+            this.lblFontColorSet.Name = "lblFontColorSet";
+            this.lblFontColorSet.Padding = new System.Windows.Forms.Padding(5);
+            this.lblFontColorSet.Size = new System.Drawing.Size(381, 24);
+            this.lblFontColorSet.TabIndex = 24;
+            this.lblFontColorSet.Text = "Font";
+            this.lblFontColorSet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelDurationColor
+            // 
+            this.labelDurationColor.AutoSize = true;
+            this.labelDurationColor.Location = new System.Drawing.Point(196, 88);
+            this.labelDurationColor.Name = "labelDurationColor";
+            this.labelDurationColor.Size = new System.Drawing.Size(141, 12);
+            this.labelDurationColor.TabIndex = 23;
+            this.labelDurationColor.Text = "Duration progress color:";
+            // 
+            // labelDurationBackColor
+            // 
+            this.labelDurationBackColor.AutoSize = true;
+            this.labelDurationBackColor.Location = new System.Drawing.Point(6, 88);
+            this.labelDurationBackColor.Name = "labelDurationBackColor";
+            this.labelDurationBackColor.Size = new System.Drawing.Size(157, 12);
+            this.labelDurationBackColor.TabIndex = 20;
+            this.labelDurationBackColor.Text = "Duration background color:";
+            // 
+            // lblRowColorSet
+            // 
+            this.lblRowColorSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRowColorSet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblRowColorSet.Location = new System.Drawing.Point(0, 0);
+            this.lblRowColorSet.Name = "lblRowColorSet";
+            this.lblRowColorSet.Padding = new System.Windows.Forms.Padding(5);
+            this.lblRowColorSet.Size = new System.Drawing.Size(381, 24);
+            this.lblRowColorSet.TabIndex = 17;
+            this.lblRowColorSet.Text = "Row";
+            this.lblRowColorSet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // buttonBarEmColor
+            // 
+            this.buttonBarEmColor.Location = new System.Drawing.Point(274, 52);
+            this.buttonBarEmColor.Name = "buttonBarEmColor";
+            this.buttonBarEmColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonBarEmColor.TabIndex = 16;
+            this.buttonBarEmColor.UseVisualStyleBackColor = true;
+            this.buttonBarEmColor.Click += new System.EventHandler(this.buttonBarEmColor_Click);
+            // 
+            // textBoxBarEmColor
+            // 
+            this.textBoxBarEmColor.Location = new System.Drawing.Point(198, 53);
+            this.textBoxBarEmColor.MaxLength = 7;
+            this.textBoxBarEmColor.Name = "textBoxBarEmColor";
+            this.textBoxBarEmColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxBarEmColor.TabIndex = 15;
+            this.textBoxBarEmColor.TextChanged += new System.EventHandler(this.textBoxBarEmColor_TextChanged);
+            this.textBoxBarEmColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBarEmColor_KeyPress);
+            this.textBoxBarEmColor.Leave += new System.EventHandler(this.textBoxBarEmColor_Apply);
+            // 
+            // labelBarEmColor
+            // 
+            this.labelBarEmColor.AutoSize = true;
+            this.labelBarEmColor.Location = new System.Drawing.Point(196, 34);
+            this.labelBarEmColor.Name = "labelBarEmColor";
+            this.labelBarEmColor.Size = new System.Drawing.Size(94, 12);
+            this.labelBarEmColor.TabIndex = 14;
+            this.labelBarEmColor.Text = "Emphatic color:";
+            // 
+            // buttonBarColor
+            // 
+            this.buttonBarColor.Location = new System.Drawing.Point(84, 52);
+            this.buttonBarColor.Name = "buttonBarColor";
+            this.buttonBarColor.Size = new System.Drawing.Size(25, 25);
+            this.buttonBarColor.TabIndex = 12;
+            this.buttonBarColor.UseVisualStyleBackColor = true;
+            this.buttonBarColor.Click += new System.EventHandler(this.buttonBarColor_Click);
+            // 
+            // textBoxBarColor
+            // 
+            this.textBoxBarColor.Location = new System.Drawing.Point(8, 53);
+            this.textBoxBarColor.MaxLength = 7;
+            this.textBoxBarColor.Name = "textBoxBarColor";
+            this.textBoxBarColor.Size = new System.Drawing.Size(70, 21);
+            this.textBoxBarColor.TabIndex = 11;
+            this.textBoxBarColor.TextChanged += new System.EventHandler(this.textBoxBarColor_TextChanged);
+            this.textBoxBarColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxBarColor_KeyPress);
+            this.textBoxBarColor.Leave += new System.EventHandler(this.textBoxBarColor_Apply);
+            // 
+            // labelBarColor
+            // 
+            this.labelBarColor.AutoSize = true;
+            this.labelBarColor.Location = new System.Drawing.Point(6, 33);
+            this.labelBarColor.Name = "labelBarColor";
+            this.labelBarColor.Size = new System.Drawing.Size(60, 12);
+            this.labelBarColor.TabIndex = 13;
+            this.labelBarColor.Text = "Bar color:";
             // 
             // ACTTabPageControl
             // 
@@ -2588,6 +2931,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.udBarHeight5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOverlayY5)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2760,5 +3105,33 @@
         private System.Windows.Forms.CheckBox checkBoxReverseOrder4;
         private System.Windows.Forms.CheckBox checkBoxReverseOrder5;
         public System.Windows.Forms.Button buttonUnload;
+        private System.Windows.Forms.Button buttonBarColor;
+        private System.Windows.Forms.TextBox textBoxBarColor;
+        private System.Windows.Forms.Label labelBarColor;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Button buttonBarEmColor;
+        private System.Windows.Forms.TextBox textBoxBarEmColor;
+        private System.Windows.Forms.Label labelBarEmColor;
+        private System.Windows.Forms.CheckBox checkBoxSolidBar;
+        private System.Windows.Forms.Button buttonFontStrokeColor;
+        private System.Windows.Forms.TextBox textBoxFontStrokeColor;
+        private System.Windows.Forms.Label labelFontStrokeColor;
+        private System.Windows.Forms.Button buttonFontColor;
+        private System.Windows.Forms.TextBox textBoxFontColor;
+        private System.Windows.Forms.Label labelFontColor;
+        private System.Windows.Forms.Label lblFontColorSet;
+        private System.Windows.Forms.Button buttonDurationColor;
+        private System.Windows.Forms.TextBox textBoxDurationColor;
+        private System.Windows.Forms.Label labelDurationColor;
+        private System.Windows.Forms.Button buttonDurationBackColor;
+        private System.Windows.Forms.TextBox textBoxDurationBackColor;
+        private System.Windows.Forms.Label labelDurationBackColor;
+        private System.Windows.Forms.Label lblRowColorSet;
+        private System.Windows.Forms.Button buttonResetBarColor;
+        private System.Windows.Forms.Button buttonResetFontStrokeColor;
+        private System.Windows.Forms.Button buttonResetFontColor;
+        private System.Windows.Forms.Button buttonResetDurationColor;
+        private System.Windows.Forms.Button buttonResetDurationBackColor;
+        private System.Windows.Forms.Button buttonResetBarEmColor;
     }
 }

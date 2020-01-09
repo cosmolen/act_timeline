@@ -144,6 +144,24 @@
   <data name="buttonRefreshList" xml:space="preserve">
     <value>새로고침</value>
   </data>
+  <data name="buttonResetBarColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="buttonResetBarEmColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="buttonResetDurationBackColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="buttonResetDurationColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="buttonResetFontColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="buttonResetFontStrokeColor" xml:space="preserve">
+    <value>기본값</value>
+  </data>
   <data name="buttonResourceDirOpen" xml:space="preserve">
     <value>폴더열기</value>
   </data>
@@ -270,6 +288,9 @@
   <data name="checkBoxShowOverlayButtons5" xml:space="preserve">
     <value>조작 버튼 표시</value>
   </data>
+  <data name="checkBoxSolidBar" xml:space="preserve">
+    <value>단색 배경</value>
+  </data>
   <data name="checkBoxUnder10" xml:space="preserve">
     <value>10초 미만 남은 항목 표시</value>
   </data>
@@ -300,6 +321,12 @@
   <data name="labelBar5" xml:space="preserve">
     <value>너비:</value>
   </data>
+  <data name="labelBarColor" xml:space="preserve">
+    <value>배경 색:</value>
+  </data>
+  <data name="labelBarEmColor" xml:space="preserve">
+    <value>강조 배경 색:</value>
+  </data>
   <data name="labelColumnSize" xml:space="preserve">
     <value>행</value>
   </data>
@@ -315,6 +342,12 @@
   <data name="labelColumnSize5" xml:space="preserve">
     <value>행</value>
   </data>
+  <data name="labelDurationBackColor" xml:space="preserve">
+    <value>진행중 항목 색:</value>
+  </data>
+  <data name="labelDurationColor" xml:space="preserve">
+    <value>진행중 배경 색:</value>
+  </data>
   <data name="labelFont" xml:space="preserve">
     <value>글꼴:</value>
   </data>
@@ -329,6 +362,12 @@
   </data>
   <data name="labelFont5" xml:space="preserve">
     <value>글꼴:</value>
+  </data>
+  <data name="labelFontColor" xml:space="preserve">
+    <value>글꼴 색:</value>
+  </data>
+  <data name="labelFontStrokeColor" xml:space="preserve">
+    <value>윤곽선 색:</value>
   </data>
   <data name="labelLoadedTimeline" xml:space="preserve">
     <value>-- 불러온 타임라인 없음 --</value>
@@ -402,6 +441,9 @@
   <data name="lblCtrl" xml:space="preserve">
     <value>타임라인 조작</value>
   </data>
+  <data name="lblFontColorSet" xml:space="preserve">
+    <value>글꼴</value>
+  </data>
   <data name="lblInfo" xml:space="preserve">
     <value>타임라인 정보</value>
   </data>
@@ -410,6 +452,9 @@
   </data>
   <data name="lblOverlaySet" xml:space="preserve">
     <value>타임라인 오버레이 설정</value>
+  </data>
+  <data name="lblRowColorSet" xml:space="preserve">
+    <value>행</value>
   </data>
   <data name="lblSettings" xml:space="preserve">
     <value>타임라인 설정</value>
@@ -428,6 +473,9 @@
   </data>
   <data name="tabPage5" xml:space="preserve">
     <value>오버레이 5</value>
+  </data>
+  <data name="tabPage6" xml:space="preserve">
+    <value>색상</value>
   </data>
   <data name="_ACT_Timeline" xml:space="preserve">
     <value>ACT 타임라인</value>
