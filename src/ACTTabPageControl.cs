@@ -777,6 +777,7 @@ namespace ACTTimeline
         private void buttonColorClick(string setting, Button b, TextBox tb)
         {
             ColorDialog dialog = new ColorDialog();
+            dialog.FullOpen = true;
             dialog.Color = ColorTranslator.FromHtml(tb.Text);
 
             if (dialog.ShowDialog() == DialogResult.OK)
