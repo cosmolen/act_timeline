@@ -314,6 +314,16 @@ namespace ACTTimeline
             }
 
             // echo commands
+            if (logInfo.logLine.Contains("/timeline show"))
+            {
+                plugin.checkBoxShowView.Checked = true;
+            }
+
+            if (logInfo.logLine.Contains("/timeline hide"))
+            {
+                plugin.checkBoxShowView.Checked = false;
+            }
+
             if (logInfo.logLine.Contains("/timeline rewind"))
             {
                 CurrentTime = 0;
