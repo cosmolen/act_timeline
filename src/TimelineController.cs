@@ -240,7 +240,7 @@ namespace ACTTimeline
             PausedUpdate?.Invoke(this, EventArgs.Empty);
         }
 
-        private List<string> keywordsEnd;
+        private string[] keywordsEnd;
 
         private ACTPlugin plugin;
 
@@ -272,21 +272,24 @@ namespace ACTTimeline
             relativeClock = new RelativeClock();
             Paused = true;
 
-            keywordsEnd = new List<string>();
-
-            keywordsEnd.Add("00:0139:");
-            keywordsEnd.Add("01:Changed Zone");
-
-            keywordsEnd.Add("입찰을 진행하십시오.");
-            keywordsEnd.Add("Cast your lot.");
-            keywordsEnd.Add("ロットを行ってください。");
-
-            keywordsEnd.Add("공략을 종료했습니다.");
-            keywordsEnd.Add("has ended.");
-            keywordsEnd.Add("の攻略を終了した。");
-
-            keywordsEnd.Add("준비 확인을 시작했습니다.");
-            keywordsEnd.Add("レディチェックを開始しました。");
+            keywordsEnd = new string[]
+            {
+                "00:0139:",
+                // zone changed
+                "01:Changed Zone",
+                // lot started
+                "입찰을 진행하십시오.",
+                "Cast your lot.",
+                "ロットを行ってください。",
+                // dungeon ended
+                "공략을 종료했습니다.",
+                "has ended.",
+                "の攻略を終了した。",
+                // ready-check
+                "준비 확인을 시작했습니다.",
+                "initiated a ready check.",
+                "レディチェックを開始しました。"
+            };
 
             ActGlobals.oFormActMain.OnLogLineRead += act_OnLogLineRead;
         }
@@ -350,13 +353,13 @@ namespace ACTTimeline
 
             if (logInfo.logLine.Contains("/timeline unload") || logInfo.logLine.Contains("/timeline close"))
             {
-                plugin.tabPageControl?.buttonUnload?.PerformClick();
+                plugin.TabPageControl?.buttonUnload?.PerformClick();
             }
 
             // auto stop
             if (AutoStop)
             {
-                foreach (string k in keywordsEnd)
+                foreach (var k in keywordsEnd)
                 {
                     if (logInfo.logLine.Contains(k))
                     {

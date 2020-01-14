@@ -71,7 +71,7 @@ namespace ACTTimeline
 
                 if (!timelineLoaded)
                 {
-                    plugin.tabPageControl?.buttonUnload?.PerformClick();
+                    plugin.TabPageControl?.buttonUnload?.PerformClick();
                 }
 
                 m_currentzone = zonename;

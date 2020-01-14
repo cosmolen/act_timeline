@@ -20,7 +20,7 @@ namespace ACTTimeline
 
         public PluginSettings Settings { get; private set; }
 
-        public ACTTabPageControl tabPageControl { get; private set; }
+        public ACTTabPageControl TabPageControl { get; private set; }
 
         public int NumberOfOverlays { get; private set; }
 
@@ -37,10 +37,7 @@ namespace ACTTimeline
 
         public bool AutoHide { get; set; }
 
-        public ACTPlugin()
-        {
-            // See |InitPlugin()|
-        }
+        public ACTPlugin() { }
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
@@ -100,7 +97,7 @@ namespace ACTTimeline
                 StatusText.Text = "Plugin Started.";
 
                 xivWindowTimer = new System.Threading.Timer(e => {
-                    bool visibleViaFocus = false;
+                    bool visibleViaFocus = true;
 
                     if (AutoHide)
                     {
@@ -128,10 +125,6 @@ namespace ACTTimeline
                             visibleViaFocus = true;
                         else
                             visibleViaFocus = false;
-                    }
-                    else
-                    {
-                        visibleViaFocus = true;
                     }
 
                     foreach (VisibilityControl vc in VisibilityControlList)
@@ -188,18 +181,18 @@ namespace ACTTimeline
         {
             ScreenSpace.Text = Translator.Get("_ACT_Timeline");
 
-            tabPageControl = new ACTTabPageControl(this);
-            ScreenSpace.Controls.Add(tabPageControl);
+            TabPageControl = new ACTTabPageControl(this);
+            ScreenSpace.Controls.Add(TabPageControl);
             ScreenSpace.Resize += ScreenSpace_Resize;
             ScreenSpace_Resize(this, null);
 
-            tabPageControl.Show();
+            TabPageControl.Show();
         }
 
         void ScreenSpace_Resize(object sender, EventArgs e)
         {
-            tabPageControl.Location = new System.Drawing.Point(0, 0);
-            tabPageControl.Size = ScreenSpace.Size;
+            TabPageControl.Location = new System.Drawing.Point(0, 0);
+            TabPageControl.Size = ScreenSpace.Size;
         }
 
         void SetupUpdateChecker()
