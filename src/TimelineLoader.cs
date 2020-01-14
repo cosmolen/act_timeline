@@ -126,12 +126,13 @@ namespace ACTTimeline
             from duration in Parse.Optional(Duration)
             from sync in Parse.Optional(Sync)
             from jump in Parse.Optional(Jump)
+            from tailingDuration in Parse.Optional(Duration)
             select new Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>(new TimelineActivity
             {
                 Jump = jump.GetOrElse(-1),
                 TimeFromStart = double.Parse(timeFromStart, CultureInfo.InvariantCulture),
                 Name = name,
-                Duration = duration.GetOrElse(0)
+                Duration = tailingDuration.GetOrElse(0) != 0 ? tailingDuration.GetOrElse(0) : duration.GetOrElse(0)
             }, sync.GetOrElse(null));
 
         static readonly Parser<ConfigOp> TimelineActivityStatement =
@@ -140,10 +141,18 @@ namespace ACTTimeline
                 config.Items.Add(t.Item1);
                 if (t.Item2 != null)
                 {
+                    var timeFromStart = t.Item1.TimeFromStart;
                     var windowSettings = t.Item2.Item2;
+
+                    if (timeFromStart == 0 && windowSettings.WindowBefore == 0 && windowSettings.WindowAfter == 1)
+                    {
+                        windowSettings.WindowBefore = 5000;
+                        windowSettings.WindowAfter = 5000;
+                    }
+
                     config.Anchors.Add(new TimelineAnchor {
                         Jump = t.Item1.Jump,
-                        TimeFromStart = t.Item1.TimeFromStart,
+                        TimeFromStart = timeFromStart,
                         Regex = new System.Text.RegularExpressions.Regex(t.Item2.Item1),
                         WindowBefore = windowSettings.WindowBefore,
                         WindowAfter = windowSettings.WindowAfter
